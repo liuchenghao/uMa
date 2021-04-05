@@ -1,6 +1,6 @@
-(global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],[
-/* 0 */,
-/* 1 */
+(global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],{
+
+/***/ 1:
 /*!************************************************************!*\
   !*** ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js ***!
   \************************************************************/
@@ -1797,7 +1797,2215 @@ var uni$1 = uni;var _default =
 uni$1;exports.default = _default;
 
 /***/ }),
-/* 2 */
+
+/***/ 10:
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \**********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode, /* vue-cli only */
+  components, // fixed by xxxxxx auto components
+  renderjs // fixed by xxxxxx renderjs
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // fixed by xxxxxx auto components
+  if (components) {
+    if (!options.components) {
+      options.components = {}
+    }
+    var hasOwn = Object.prototype.hasOwnProperty
+    for (var name in components) {
+      if (hasOwn.call(components, name) && !hasOwn.call(options.components, name)) {
+        options.components[name] = components[name]
+      }
+    }
+  }
+  // fixed by xxxxxx renderjs
+  if (renderjs) {
+    (renderjs.beforeCreate || (renderjs.beforeCreate = [])).unshift(function() {
+      this[renderjs.__module] = this
+    });
+    (options.mixins || (options.mixins = [])).push(renderjs)
+  }
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ 11:
+/*!****************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/store/index.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 12));
+var _state = _interopRequireDefault(__webpack_require__(/*! ./state */ 13));
+var _mutations = _interopRequireDefault(__webpack_require__(/*! ./mutations */ 14));
+var _logger = _interopRequireDefault(__webpack_require__(/*! vuex/dist/logger */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+_vue.default.use(_vuex.default);
+
+var debug = "development" !== 'production';var _default =
+
+new _vuex.default.Store({
+  state: _state.default,
+  mutations: _mutations.default,
+  strict: debug,
+  plugins: debug ? [(0, _logger.default)()] : [] });exports.default = _default;
+
+/***/ }),
+
+/***/ 12:
+/*!********************************************!*\
+  !*** ./node_modules/vuex/dist/vuex.esm.js ***!
+  \********************************************/
+/*! exports provided: default, Store, createNamespacedHelpers, install, mapActions, mapGetters, mapMutations, mapState */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "install", function() { return install; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapGetters", function() { return mapGetters; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapMutations", function() { return mapMutations; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapState", function() { return mapState; });
+/*!
+ * vuex v3.4.0
+ * (c) 2020 Evan You
+ * @license MIT
+ */
+function applyMixin (Vue) {
+  var version = Number(Vue.version.split('.')[0]);
+
+  if (version >= 2) {
+    Vue.mixin({ beforeCreate: vuexInit });
+  } else {
+    // override init and inject vuex init procedure
+    // for 1.x backwards compatibility.
+    var _init = Vue.prototype._init;
+    Vue.prototype._init = function (options) {
+      if ( options === void 0 ) options = {};
+
+      options.init = options.init
+        ? [vuexInit].concat(options.init)
+        : vuexInit;
+      _init.call(this, options);
+    };
+  }
+
+  /**
+   * Vuex init hook, injected into each instances init hooks list.
+   */
+
+  function vuexInit () {
+    var options = this.$options;
+    // store injection
+    if (options.store) {
+      this.$store = typeof options.store === 'function'
+        ? options.store()
+        : options.store;
+    } else if (options.parent && options.parent.$store) {
+      this.$store = options.parent.$store;
+    }
+  }
+}
+
+var target = typeof window !== 'undefined'
+  ? window
+  : typeof global !== 'undefined'
+    ? global
+    : {};
+var devtoolHook = target.__VUE_DEVTOOLS_GLOBAL_HOOK__;
+
+function devtoolPlugin (store) {
+  if (!devtoolHook) { return }
+
+  store._devtoolHook = devtoolHook;
+
+  devtoolHook.emit('vuex:init', store);
+
+  devtoolHook.on('vuex:travel-to-state', function (targetState) {
+    store.replaceState(targetState);
+  });
+
+  store.subscribe(function (mutation, state) {
+    devtoolHook.emit('vuex:mutation', mutation, state);
+  }, { prepend: true });
+
+  store.subscribeAction(function (action, state) {
+    devtoolHook.emit('vuex:action', action, state);
+  }, { prepend: true });
+}
+
+/**
+ * Get the first item that pass the test
+ * by second argument function
+ *
+ * @param {Array} list
+ * @param {Function} f
+ * @return {*}
+ */
+
+/**
+ * forEach for object
+ */
+function forEachValue (obj, fn) {
+  Object.keys(obj).forEach(function (key) { return fn(obj[key], key); });
+}
+
+function isObject (obj) {
+  return obj !== null && typeof obj === 'object'
+}
+
+function isPromise (val) {
+  return val && typeof val.then === 'function'
+}
+
+function assert (condition, msg) {
+  if (!condition) { throw new Error(("[vuex] " + msg)) }
+}
+
+function partial (fn, arg) {
+  return function () {
+    return fn(arg)
+  }
+}
+
+// Base data struct for store's module, package with some attribute and method
+var Module = function Module (rawModule, runtime) {
+  this.runtime = runtime;
+  // Store some children item
+  this._children = Object.create(null);
+  // Store the origin module object which passed by programmer
+  this._rawModule = rawModule;
+  var rawState = rawModule.state;
+
+  // Store the origin module's state
+  this.state = (typeof rawState === 'function' ? rawState() : rawState) || {};
+};
+
+var prototypeAccessors = { namespaced: { configurable: true } };
+
+prototypeAccessors.namespaced.get = function () {
+  return !!this._rawModule.namespaced
+};
+
+Module.prototype.addChild = function addChild (key, module) {
+  this._children[key] = module;
+};
+
+Module.prototype.removeChild = function removeChild (key) {
+  delete this._children[key];
+};
+
+Module.prototype.getChild = function getChild (key) {
+  return this._children[key]
+};
+
+Module.prototype.hasChild = function hasChild (key) {
+  return key in this._children
+};
+
+Module.prototype.update = function update (rawModule) {
+  this._rawModule.namespaced = rawModule.namespaced;
+  if (rawModule.actions) {
+    this._rawModule.actions = rawModule.actions;
+  }
+  if (rawModule.mutations) {
+    this._rawModule.mutations = rawModule.mutations;
+  }
+  if (rawModule.getters) {
+    this._rawModule.getters = rawModule.getters;
+  }
+};
+
+Module.prototype.forEachChild = function forEachChild (fn) {
+  forEachValue(this._children, fn);
+};
+
+Module.prototype.forEachGetter = function forEachGetter (fn) {
+  if (this._rawModule.getters) {
+    forEachValue(this._rawModule.getters, fn);
+  }
+};
+
+Module.prototype.forEachAction = function forEachAction (fn) {
+  if (this._rawModule.actions) {
+    forEachValue(this._rawModule.actions, fn);
+  }
+};
+
+Module.prototype.forEachMutation = function forEachMutation (fn) {
+  if (this._rawModule.mutations) {
+    forEachValue(this._rawModule.mutations, fn);
+  }
+};
+
+Object.defineProperties( Module.prototype, prototypeAccessors );
+
+var ModuleCollection = function ModuleCollection (rawRootModule) {
+  // register root module (Vuex.Store options)
+  this.register([], rawRootModule, false);
+};
+
+ModuleCollection.prototype.get = function get (path) {
+  return path.reduce(function (module, key) {
+    return module.getChild(key)
+  }, this.root)
+};
+
+ModuleCollection.prototype.getNamespace = function getNamespace (path) {
+  var module = this.root;
+  return path.reduce(function (namespace, key) {
+    module = module.getChild(key);
+    return namespace + (module.namespaced ? key + '/' : '')
+  }, '')
+};
+
+ModuleCollection.prototype.update = function update$1 (rawRootModule) {
+  update([], this.root, rawRootModule);
+};
+
+ModuleCollection.prototype.register = function register (path, rawModule, runtime) {
+    var this$1 = this;
+    if ( runtime === void 0 ) runtime = true;
+
+  if ((true)) {
+    assertRawModule(path, rawModule);
+  }
+
+  var newModule = new Module(rawModule, runtime);
+  if (path.length === 0) {
+    this.root = newModule;
+  } else {
+    var parent = this.get(path.slice(0, -1));
+    parent.addChild(path[path.length - 1], newModule);
+  }
+
+  // register nested modules
+  if (rawModule.modules) {
+    forEachValue(rawModule.modules, function (rawChildModule, key) {
+      this$1.register(path.concat(key), rawChildModule, runtime);
+    });
+  }
+};
+
+ModuleCollection.prototype.unregister = function unregister (path) {
+  var parent = this.get(path.slice(0, -1));
+  var key = path[path.length - 1];
+  if (!parent.getChild(key).runtime) { return }
+
+  parent.removeChild(key);
+};
+
+ModuleCollection.prototype.isRegistered = function isRegistered (path) {
+  var parent = this.get(path.slice(0, -1));
+  var key = path[path.length - 1];
+
+  return parent.hasChild(key)
+};
+
+function update (path, targetModule, newModule) {
+  if ((true)) {
+    assertRawModule(path, newModule);
+  }
+
+  // update target module
+  targetModule.update(newModule);
+
+  // update nested modules
+  if (newModule.modules) {
+    for (var key in newModule.modules) {
+      if (!targetModule.getChild(key)) {
+        if ((true)) {
+          console.warn(
+            "[vuex] trying to add a new module '" + key + "' on hot reloading, " +
+            'manual reload is needed'
+          );
+        }
+        return
+      }
+      update(
+        path.concat(key),
+        targetModule.getChild(key),
+        newModule.modules[key]
+      );
+    }
+  }
+}
+
+var functionAssert = {
+  assert: function (value) { return typeof value === 'function'; },
+  expected: 'function'
+};
+
+var objectAssert = {
+  assert: function (value) { return typeof value === 'function' ||
+    (typeof value === 'object' && typeof value.handler === 'function'); },
+  expected: 'function or object with "handler" function'
+};
+
+var assertTypes = {
+  getters: functionAssert,
+  mutations: functionAssert,
+  actions: objectAssert
+};
+
+function assertRawModule (path, rawModule) {
+  Object.keys(assertTypes).forEach(function (key) {
+    if (!rawModule[key]) { return }
+
+    var assertOptions = assertTypes[key];
+
+    forEachValue(rawModule[key], function (value, type) {
+      assert(
+        assertOptions.assert(value),
+        makeAssertionMessage(path, key, type, value, assertOptions.expected)
+      );
+    });
+  });
+}
+
+function makeAssertionMessage (path, key, type, value, expected) {
+  var buf = key + " should be " + expected + " but \"" + key + "." + type + "\"";
+  if (path.length > 0) {
+    buf += " in module \"" + (path.join('.')) + "\"";
+  }
+  buf += " is " + (JSON.stringify(value)) + ".";
+  return buf
+}
+
+var Vue; // bind on install
+
+var Store = function Store (options) {
+  var this$1 = this;
+  if ( options === void 0 ) options = {};
+
+  // Auto install if it is not done yet and `window` has `Vue`.
+  // To allow users to avoid auto-installation in some cases,
+  // this code should be placed here. See #731
+  if (!Vue && typeof window !== 'undefined' && window.Vue) {
+    install(window.Vue);
+  }
+
+  if ((true)) {
+    assert(Vue, "must call Vue.use(Vuex) before creating a store instance.");
+    assert(typeof Promise !== 'undefined', "vuex requires a Promise polyfill in this browser.");
+    assert(this instanceof Store, "store must be called with the new operator.");
+  }
+
+  var plugins = options.plugins; if ( plugins === void 0 ) plugins = [];
+  var strict = options.strict; if ( strict === void 0 ) strict = false;
+
+  // store internal state
+  this._committing = false;
+  this._actions = Object.create(null);
+  this._actionSubscribers = [];
+  this._mutations = Object.create(null);
+  this._wrappedGetters = Object.create(null);
+  this._modules = new ModuleCollection(options);
+  this._modulesNamespaceMap = Object.create(null);
+  this._subscribers = [];
+  this._watcherVM = new Vue();
+  this._makeLocalGettersCache = Object.create(null);
+
+  // bind commit and dispatch to self
+  var store = this;
+  var ref = this;
+  var dispatch = ref.dispatch;
+  var commit = ref.commit;
+  this.dispatch = function boundDispatch (type, payload) {
+    return dispatch.call(store, type, payload)
+  };
+  this.commit = function boundCommit (type, payload, options) {
+    return commit.call(store, type, payload, options)
+  };
+
+  // strict mode
+  this.strict = strict;
+
+  var state = this._modules.root.state;
+
+  // init root module.
+  // this also recursively registers all sub-modules
+  // and collects all module getters inside this._wrappedGetters
+  installModule(this, state, [], this._modules.root);
+
+  // initialize the store vm, which is responsible for the reactivity
+  // (also registers _wrappedGetters as computed properties)
+  resetStoreVM(this, state);
+
+  // apply plugins
+  plugins.forEach(function (plugin) { return plugin(this$1); });
+
+  var useDevtools = options.devtools !== undefined ? options.devtools : Vue.config.devtools;
+  if (useDevtools) {
+    devtoolPlugin(this);
+  }
+};
+
+var prototypeAccessors$1 = { state: { configurable: true } };
+
+prototypeAccessors$1.state.get = function () {
+  return this._vm._data.$$state
+};
+
+prototypeAccessors$1.state.set = function (v) {
+  if ((true)) {
+    assert(false, "use store.replaceState() to explicit replace store state.");
+  }
+};
+
+Store.prototype.commit = function commit (_type, _payload, _options) {
+    var this$1 = this;
+
+  // check object-style commit
+  var ref = unifyObjectStyle(_type, _payload, _options);
+    var type = ref.type;
+    var payload = ref.payload;
+    var options = ref.options;
+
+  var mutation = { type: type, payload: payload };
+  var entry = this._mutations[type];
+  if (!entry) {
+    if ((true)) {
+      console.error(("[vuex] unknown mutation type: " + type));
+    }
+    return
+  }
+  this._withCommit(function () {
+    entry.forEach(function commitIterator (handler) {
+      handler(payload);
+    });
+  });
+
+  this._subscribers
+    .slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
+    .forEach(function (sub) { return sub(mutation, this$1.state); });
+
+  if (
+    ( true) &&
+    options && options.silent
+  ) {
+    console.warn(
+      "[vuex] mutation type: " + type + ". Silent option has been removed. " +
+      'Use the filter functionality in the vue-devtools'
+    );
+  }
+};
+
+Store.prototype.dispatch = function dispatch (_type, _payload) {
+    var this$1 = this;
+
+  // check object-style dispatch
+  var ref = unifyObjectStyle(_type, _payload);
+    var type = ref.type;
+    var payload = ref.payload;
+
+  var action = { type: type, payload: payload };
+  var entry = this._actions[type];
+  if (!entry) {
+    if ((true)) {
+      console.error(("[vuex] unknown action type: " + type));
+    }
+    return
+  }
+
+  try {
+    this._actionSubscribers
+      .slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
+      .filter(function (sub) { return sub.before; })
+      .forEach(function (sub) { return sub.before(action, this$1.state); });
+  } catch (e) {
+    if ((true)) {
+      console.warn("[vuex] error in before action subscribers: ");
+      console.error(e);
+    }
+  }
+
+  var result = entry.length > 1
+    ? Promise.all(entry.map(function (handler) { return handler(payload); }))
+    : entry[0](payload);
+
+  return new Promise(function (resolve, reject) {
+    result.then(function (res) {
+      try {
+        this$1._actionSubscribers
+          .filter(function (sub) { return sub.after; })
+          .forEach(function (sub) { return sub.after(action, this$1.state); });
+      } catch (e) {
+        if ((true)) {
+          console.warn("[vuex] error in after action subscribers: ");
+          console.error(e);
+        }
+      }
+      resolve(res);
+    }, function (error) {
+      try {
+        this$1._actionSubscribers
+          .filter(function (sub) { return sub.error; })
+          .forEach(function (sub) { return sub.error(action, this$1.state, error); });
+      } catch (e) {
+        if ((true)) {
+          console.warn("[vuex] error in error action subscribers: ");
+          console.error(e);
+        }
+      }
+      reject(error);
+    });
+  })
+};
+
+Store.prototype.subscribe = function subscribe (fn, options) {
+  return genericSubscribe(fn, this._subscribers, options)
+};
+
+Store.prototype.subscribeAction = function subscribeAction (fn, options) {
+  var subs = typeof fn === 'function' ? { before: fn } : fn;
+  return genericSubscribe(subs, this._actionSubscribers, options)
+};
+
+Store.prototype.watch = function watch (getter, cb, options) {
+    var this$1 = this;
+
+  if ((true)) {
+    assert(typeof getter === 'function', "store.watch only accepts a function.");
+  }
+  return this._watcherVM.$watch(function () { return getter(this$1.state, this$1.getters); }, cb, options)
+};
+
+Store.prototype.replaceState = function replaceState (state) {
+    var this$1 = this;
+
+  this._withCommit(function () {
+    this$1._vm._data.$$state = state;
+  });
+};
+
+Store.prototype.registerModule = function registerModule (path, rawModule, options) {
+    if ( options === void 0 ) options = {};
+
+  if (typeof path === 'string') { path = [path]; }
+
+  if ((true)) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+    assert(path.length > 0, 'cannot register the root module by using registerModule.');
+  }
+
+  this._modules.register(path, rawModule);
+  installModule(this, this.state, path, this._modules.get(path), options.preserveState);
+  // reset store to update getters...
+  resetStoreVM(this, this.state);
+};
+
+Store.prototype.unregisterModule = function unregisterModule (path) {
+    var this$1 = this;
+
+  if (typeof path === 'string') { path = [path]; }
+
+  if ((true)) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+  }
+
+  this._modules.unregister(path);
+  this._withCommit(function () {
+    var parentState = getNestedState(this$1.state, path.slice(0, -1));
+    Vue.delete(parentState, path[path.length - 1]);
+  });
+  resetStore(this);
+};
+
+Store.prototype.hasModule = function hasModule (path) {
+  if (typeof path === 'string') { path = [path]; }
+
+  if ((true)) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+  }
+
+  return this._modules.isRegistered(path)
+};
+
+Store.prototype.hotUpdate = function hotUpdate (newOptions) {
+  this._modules.update(newOptions);
+  resetStore(this, true);
+};
+
+Store.prototype._withCommit = function _withCommit (fn) {
+  var committing = this._committing;
+  this._committing = true;
+  fn();
+  this._committing = committing;
+};
+
+Object.defineProperties( Store.prototype, prototypeAccessors$1 );
+
+function genericSubscribe (fn, subs, options) {
+  if (subs.indexOf(fn) < 0) {
+    options && options.prepend
+      ? subs.unshift(fn)
+      : subs.push(fn);
+  }
+  return function () {
+    var i = subs.indexOf(fn);
+    if (i > -1) {
+      subs.splice(i, 1);
+    }
+  }
+}
+
+function resetStore (store, hot) {
+  store._actions = Object.create(null);
+  store._mutations = Object.create(null);
+  store._wrappedGetters = Object.create(null);
+  store._modulesNamespaceMap = Object.create(null);
+  var state = store.state;
+  // init all modules
+  installModule(store, state, [], store._modules.root, true);
+  // reset vm
+  resetStoreVM(store, state, hot);
+}
+
+function resetStoreVM (store, state, hot) {
+  var oldVm = store._vm;
+
+  // bind store public getters
+  store.getters = {};
+  // reset local getters cache
+  store._makeLocalGettersCache = Object.create(null);
+  var wrappedGetters = store._wrappedGetters;
+  var computed = {};
+  forEachValue(wrappedGetters, function (fn, key) {
+    // use computed to leverage its lazy-caching mechanism
+    // direct inline function use will lead to closure preserving oldVm.
+    // using partial to return function with only arguments preserved in closure environment.
+    computed[key] = partial(fn, store);
+    Object.defineProperty(store.getters, key, {
+      get: function () { return store._vm[key]; },
+      enumerable: true // for local getters
+    });
+  });
+
+  // use a Vue instance to store the state tree
+  // suppress warnings just in case the user has added
+  // some funky global mixins
+  var silent = Vue.config.silent;
+  Vue.config.silent = true;
+  store._vm = new Vue({
+    data: {
+      $$state: state
+    },
+    computed: computed
+  });
+  Vue.config.silent = silent;
+
+  // enable strict mode for new vm
+  if (store.strict) {
+    enableStrictMode(store);
+  }
+
+  if (oldVm) {
+    if (hot) {
+      // dispatch changes in all subscribed watchers
+      // to force getter re-evaluation for hot reloading.
+      store._withCommit(function () {
+        oldVm._data.$$state = null;
+      });
+    }
+    Vue.nextTick(function () { return oldVm.$destroy(); });
+  }
+}
+
+function installModule (store, rootState, path, module, hot) {
+  var isRoot = !path.length;
+  var namespace = store._modules.getNamespace(path);
+
+  // register in namespace map
+  if (module.namespaced) {
+    if (store._modulesNamespaceMap[namespace] && ("development" !== 'production')) {
+      console.error(("[vuex] duplicate namespace " + namespace + " for the namespaced module " + (path.join('/'))));
+    }
+    store._modulesNamespaceMap[namespace] = module;
+  }
+
+  // set state
+  if (!isRoot && !hot) {
+    var parentState = getNestedState(rootState, path.slice(0, -1));
+    var moduleName = path[path.length - 1];
+    store._withCommit(function () {
+      if ((true)) {
+        if (moduleName in parentState) {
+          console.warn(
+            ("[vuex] state field \"" + moduleName + "\" was overridden by a module with the same name at \"" + (path.join('.')) + "\"")
+          );
+        }
+      }
+      Vue.set(parentState, moduleName, module.state);
+    });
+  }
+
+  var local = module.context = makeLocalContext(store, namespace, path);
+
+  module.forEachMutation(function (mutation, key) {
+    var namespacedType = namespace + key;
+    registerMutation(store, namespacedType, mutation, local);
+  });
+
+  module.forEachAction(function (action, key) {
+    var type = action.root ? key : namespace + key;
+    var handler = action.handler || action;
+    registerAction(store, type, handler, local);
+  });
+
+  module.forEachGetter(function (getter, key) {
+    var namespacedType = namespace + key;
+    registerGetter(store, namespacedType, getter, local);
+  });
+
+  module.forEachChild(function (child, key) {
+    installModule(store, rootState, path.concat(key), child, hot);
+  });
+}
+
+/**
+ * make localized dispatch, commit, getters and state
+ * if there is no namespace, just use root ones
+ */
+function makeLocalContext (store, namespace, path) {
+  var noNamespace = namespace === '';
+
+  var local = {
+    dispatch: noNamespace ? store.dispatch : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+        if (( true) && !store._actions[type]) {
+          console.error(("[vuex] unknown local action type: " + (args.type) + ", global type: " + type));
+          return
+        }
+      }
+
+      return store.dispatch(type, payload)
+    },
+
+    commit: noNamespace ? store.commit : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+        if (( true) && !store._mutations[type]) {
+          console.error(("[vuex] unknown local mutation type: " + (args.type) + ", global type: " + type));
+          return
+        }
+      }
+
+      store.commit(type, payload, options);
+    }
+  };
+
+  // getters and state object must be gotten lazily
+  // because they will be changed by vm update
+  Object.defineProperties(local, {
+    getters: {
+      get: noNamespace
+        ? function () { return store.getters; }
+        : function () { return makeLocalGetters(store, namespace); }
+    },
+    state: {
+      get: function () { return getNestedState(store.state, path); }
+    }
+  });
+
+  return local
+}
+
+function makeLocalGetters (store, namespace) {
+  if (!store._makeLocalGettersCache[namespace]) {
+    var gettersProxy = {};
+    var splitPos = namespace.length;
+    Object.keys(store.getters).forEach(function (type) {
+      // skip if the target getter is not match this namespace
+      if (type.slice(0, splitPos) !== namespace) { return }
+
+      // extract local getter type
+      var localType = type.slice(splitPos);
+
+      // Add a port to the getters proxy.
+      // Define as getter property because
+      // we do not want to evaluate the getters in this time.
+      Object.defineProperty(gettersProxy, localType, {
+        get: function () { return store.getters[type]; },
+        enumerable: true
+      });
+    });
+    store._makeLocalGettersCache[namespace] = gettersProxy;
+  }
+
+  return store._makeLocalGettersCache[namespace]
+}
+
+function registerMutation (store, type, handler, local) {
+  var entry = store._mutations[type] || (store._mutations[type] = []);
+  entry.push(function wrappedMutationHandler (payload) {
+    handler.call(store, local.state, payload);
+  });
+}
+
+function registerAction (store, type, handler, local) {
+  var entry = store._actions[type] || (store._actions[type] = []);
+  entry.push(function wrappedActionHandler (payload) {
+    var res = handler.call(store, {
+      dispatch: local.dispatch,
+      commit: local.commit,
+      getters: local.getters,
+      state: local.state,
+      rootGetters: store.getters,
+      rootState: store.state
+    }, payload);
+    if (!isPromise(res)) {
+      res = Promise.resolve(res);
+    }
+    if (store._devtoolHook) {
+      return res.catch(function (err) {
+        store._devtoolHook.emit('vuex:error', err);
+        throw err
+      })
+    } else {
+      return res
+    }
+  });
+}
+
+function registerGetter (store, type, rawGetter, local) {
+  if (store._wrappedGetters[type]) {
+    if ((true)) {
+      console.error(("[vuex] duplicate getter key: " + type));
+    }
+    return
+  }
+  store._wrappedGetters[type] = function wrappedGetter (store) {
+    return rawGetter(
+      local.state, // local state
+      local.getters, // local getters
+      store.state, // root state
+      store.getters // root getters
+    )
+  };
+}
+
+function enableStrictMode (store) {
+  store._vm.$watch(function () { return this._data.$$state }, function () {
+    if ((true)) {
+      assert(store._committing, "do not mutate vuex store state outside mutation handlers.");
+    }
+  }, { deep: true, sync: true });
+}
+
+function getNestedState (state, path) {
+  return path.reduce(function (state, key) { return state[key]; }, state)
+}
+
+function unifyObjectStyle (type, payload, options) {
+  if (isObject(type) && type.type) {
+    options = payload;
+    payload = type;
+    type = type.type;
+  }
+
+  if ((true)) {
+    assert(typeof type === 'string', ("expects string as the type, but found " + (typeof type) + "."));
+  }
+
+  return { type: type, payload: payload, options: options }
+}
+
+function install (_Vue) {
+  if (Vue && _Vue === Vue) {
+    if ((true)) {
+      console.error(
+        '[vuex] already installed. Vue.use(Vuex) should be called only once.'
+      );
+    }
+    return
+  }
+  Vue = _Vue;
+  applyMixin(Vue);
+}
+
+/**
+ * Reduce the code which written in Vue.js for getting the state.
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} states # Object's item can be a function which accept state and getters for param, you can do something for state and getters in it.
+ * @param {Object}
+ */
+var mapState = normalizeNamespace(function (namespace, states) {
+  var res = {};
+  if (( true) && !isValidMap(states)) {
+    console.error('[vuex] mapState: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(states).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedState () {
+      var state = this.$store.state;
+      var getters = this.$store.getters;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapState', namespace);
+        if (!module) {
+          return
+        }
+        state = module.context.state;
+        getters = module.context.getters;
+      }
+      return typeof val === 'function'
+        ? val.call(this, state, getters)
+        : state[val]
+    };
+    // mark vuex getter for devtools
+    res[key].vuex = true;
+  });
+  return res
+});
+
+/**
+ * Reduce the code which written in Vue.js for committing the mutation
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} mutations # Object's item can be a function which accept `commit` function as the first param, it can accept anthor params. You can commit mutation and do any other things in this function. specially, You need to pass anthor params from the mapped function.
+ * @return {Object}
+ */
+var mapMutations = normalizeNamespace(function (namespace, mutations) {
+  var res = {};
+  if (( true) && !isValidMap(mutations)) {
+    console.error('[vuex] mapMutations: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(mutations).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedMutation () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      // Get the commit method from store
+      var commit = this.$store.commit;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapMutations', namespace);
+        if (!module) {
+          return
+        }
+        commit = module.context.commit;
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [commit].concat(args))
+        : commit.apply(this.$store, [val].concat(args))
+    };
+  });
+  return res
+});
+
+/**
+ * Reduce the code which written in Vue.js for getting the getters
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} getters
+ * @return {Object}
+ */
+var mapGetters = normalizeNamespace(function (namespace, getters) {
+  var res = {};
+  if (( true) && !isValidMap(getters)) {
+    console.error('[vuex] mapGetters: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(getters).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    // The namespace has been mutated by normalizeNamespace
+    val = namespace + val;
+    res[key] = function mappedGetter () {
+      if (namespace && !getModuleByNamespace(this.$store, 'mapGetters', namespace)) {
+        return
+      }
+      if (( true) && !(val in this.$store.getters)) {
+        console.error(("[vuex] unknown getter: " + val));
+        return
+      }
+      return this.$store.getters[val]
+    };
+    // mark vuex getter for devtools
+    res[key].vuex = true;
+  });
+  return res
+});
+
+/**
+ * Reduce the code which written in Vue.js for dispatch the action
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} actions # Object's item can be a function which accept `dispatch` function as the first param, it can accept anthor params. You can dispatch action and do any other things in this function. specially, You need to pass anthor params from the mapped function.
+ * @return {Object}
+ */
+var mapActions = normalizeNamespace(function (namespace, actions) {
+  var res = {};
+  if (( true) && !isValidMap(actions)) {
+    console.error('[vuex] mapActions: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(actions).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedAction () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      // get dispatch function from store
+      var dispatch = this.$store.dispatch;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapActions', namespace);
+        if (!module) {
+          return
+        }
+        dispatch = module.context.dispatch;
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [dispatch].concat(args))
+        : dispatch.apply(this.$store, [val].concat(args))
+    };
+  });
+  return res
+});
+
+/**
+ * Rebinding namespace param for mapXXX function in special scoped, and return them by simple object
+ * @param {String} namespace
+ * @return {Object}
+ */
+var createNamespacedHelpers = function (namespace) { return ({
+  mapState: mapState.bind(null, namespace),
+  mapGetters: mapGetters.bind(null, namespace),
+  mapMutations: mapMutations.bind(null, namespace),
+  mapActions: mapActions.bind(null, namespace)
+}); };
+
+/**
+ * Normalize the map
+ * normalizeMap([1, 2, 3]) => [ { key: 1, val: 1 }, { key: 2, val: 2 }, { key: 3, val: 3 } ]
+ * normalizeMap({a: 1, b: 2, c: 3}) => [ { key: 'a', val: 1 }, { key: 'b', val: 2 }, { key: 'c', val: 3 } ]
+ * @param {Array|Object} map
+ * @return {Object}
+ */
+function normalizeMap (map) {
+  if (!isValidMap(map)) {
+    return []
+  }
+  return Array.isArray(map)
+    ? map.map(function (key) { return ({ key: key, val: key }); })
+    : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
+}
+
+/**
+ * Validate whether given map is valid or not
+ * @param {*} map
+ * @return {Boolean}
+ */
+function isValidMap (map) {
+  return Array.isArray(map) || isObject(map)
+}
+
+/**
+ * Return a function expect two param contains namespace and map. it will normalize the namespace and then the param's function will handle the new namespace and the map.
+ * @param {Function} fn
+ * @return {Function}
+ */
+function normalizeNamespace (fn) {
+  return function (namespace, map) {
+    if (typeof namespace !== 'string') {
+      map = namespace;
+      namespace = '';
+    } else if (namespace.charAt(namespace.length - 1) !== '/') {
+      namespace += '/';
+    }
+    return fn(namespace, map)
+  }
+}
+
+/**
+ * Search a special module from store by namespace. if module not exist, print error message.
+ * @param {Object} store
+ * @param {String} helper
+ * @param {String} namespace
+ * @return {Object}
+ */
+function getModuleByNamespace (store, helper, namespace) {
+  var module = store._modulesNamespaceMap[namespace];
+  if (( true) && !module) {
+    console.error(("[vuex] module namespace not found in " + helper + "(): " + namespace));
+  }
+  return module
+}
+
+var index = {
+  Store: Store,
+  install: install,
+  version: '3.4.0',
+  mapState: mapState,
+  mapMutations: mapMutations,
+  mapGetters: mapGetters,
+  mapActions: mapActions,
+  createNamespacedHelpers: createNamespacedHelpers
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (index);
+
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ 3)))
+
+/***/ }),
+
+/***/ 13:
+/*!****************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/store/state.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var state = {
+  curNavIndex: 0, //当前头部导航索引
+  phone: '', //登录号码
+  curCity: '', //当前所在的城市
+  startPlace: '出发地', //出发地
+  startFormattedPlace: '', //更具人性化的描述的出发地
+  startPosition: [], //包含startLatitude和startLongitude
+  destination: '你要去哪儿', //目的地
+  endPosition: [], //包含endLatitude和endLongitude
+  driver: {}, //司机信息 包含Cartnumber:"赣A66666"cart: "红色●路虎Q5" id: "1" name: "李师傅" stars: "5.0 2w+单"
+  cost: 0 //花费
+};var _default =
+
+
+state;exports.default = _default;
+
+/***/ }),
+
+/***/ 14:
+/*!********************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/store/mutations.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var types = _interopRequireWildcard(__webpack_require__(/*! ./mutation-types */ 15));var _mutations;function _getRequireWildcardCache() {if (typeof WeakMap !== "function") return null;var cache = new WeakMap();_getRequireWildcardCache = function _getRequireWildcardCache() {return cache;};return cache;}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;}if (obj === null || typeof obj !== "object" && typeof obj !== "function") {return { default: obj };}var cache = _getRequireWildcardCache();if (cache && cache.has(obj)) {return cache.get(obj);}var newObj = {};var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;if (desc && (desc.get || desc.set)) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}newObj.default = obj;if (cache) {cache.set(obj, newObj);}return newObj;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+
+var mutations = (_mutations = {}, _defineProperty(_mutations,
+types.SET_CUR_NAV_INDEX, function (state, index) {
+  state.curNavIndex = index;
+}), _defineProperty(_mutations,
+types.SET_PHONE, function (state, phone) {
+  state.phone = phone;
+}), _defineProperty(_mutations,
+types.SET_START_PLACE, function (state, startPlace) {
+  state.startPlace = startPlace;
+}), _defineProperty(_mutations,
+types.SET_FORMATTED_START_PLACE, function (state, startFormattedPlace) {
+  state.startFormattedPlace = startFormattedPlace;
+}), _defineProperty(_mutations,
+types.SET_DESTINATION, function (state, destination) {
+  state.destination = destination;
+}), _defineProperty(_mutations,
+types.SET_START_POSITION, function (state, startPosition) {
+  state.startPosition = startPosition;
+}), _defineProperty(_mutations,
+types.SET_END_POSITION, function (state, endPosition) {
+  state.endPosition = endPosition;
+}), _defineProperty(_mutations,
+types.SET_CUR_CITY, function (state, curCity) {
+  state.curCity = curCity;
+}), _defineProperty(_mutations,
+types.SET_DRIVER, function (state, driver) {
+  state.driver = driver;
+}), _defineProperty(_mutations,
+types.SET_COST, function (state, cost) {
+  state.cost = cost;
+}), _mutations);var _default =
+
+
+mutations;exports.default = _default;
+
+/***/ }),
+
+/***/ 15:
+/*!*************************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/store/mutation-types.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.SET_COST = exports.SET_DRIVER = exports.SET_CUR_CITY = exports.SET_END_POSITION = exports.SET_START_POSITION = exports.SET_DESTINATION = exports.SET_FORMATTED_START_PLACE = exports.SET_START_PLACE = exports.SET_PHONE = exports.SET_CUR_NAV_INDEX = void 0;var SET_CUR_NAV_INDEX = 'SET_CUR_NAV_INDEX';exports.SET_CUR_NAV_INDEX = SET_CUR_NAV_INDEX;
+
+var SET_PHONE = 'SET_PHONE';exports.SET_PHONE = SET_PHONE;
+
+var SET_START_PLACE = 'SET_START_PLACE';exports.SET_START_PLACE = SET_START_PLACE;
+
+var SET_FORMATTED_START_PLACE = 'SET_FORMATTED_START_PLACE';exports.SET_FORMATTED_START_PLACE = SET_FORMATTED_START_PLACE;
+
+var SET_DESTINATION = 'SET_DESTINATION';exports.SET_DESTINATION = SET_DESTINATION;
+
+var SET_START_POSITION = 'SET_START_POSITION';exports.SET_START_POSITION = SET_START_POSITION;
+
+var SET_END_POSITION = 'SET_END_POSITION';exports.SET_END_POSITION = SET_END_POSITION;
+
+var SET_CUR_CITY = 'SET_CUR_CITY';exports.SET_CUR_CITY = SET_CUR_CITY;
+
+var SET_DRIVER = 'SET_DRIVER';exports.SET_DRIVER = SET_DRIVER;
+
+var SET_COST = 'SET_COST';exports.SET_COST = SET_COST;
+
+/***/ }),
+
+/***/ 16:
+/*!******************************************!*\
+  !*** ./node_modules/vuex/dist/logger.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*!
+ * vuex v3.4.0
+ * (c) 2020 Evan You
+ * @license MIT
+ */
+(function (global, factory) {
+   true ? module.exports = factory() :
+  undefined;
+}(this, (function () { 'use strict';
+
+  /**
+   * Get the first item that pass the test
+   * by second argument function
+   *
+   * @param {Array} list
+   * @param {Function} f
+   * @return {*}
+   */
+  function find (list, f) {
+    return list.filter(f)[0]
+  }
+
+  /**
+   * Deep copy the given object considering circular structure.
+   * This function caches all nested objects and its copies.
+   * If it detects circular structure, use cached copy to avoid infinite loop.
+   *
+   * @param {*} obj
+   * @param {Array<Object>} cache
+   * @return {*}
+   */
+  function deepCopy (obj, cache) {
+    if ( cache === void 0 ) cache = [];
+
+    // just return if obj is immutable value
+    if (obj === null || typeof obj !== 'object') {
+      return obj
+    }
+
+    // if obj is hit, it is in circular structure
+    var hit = find(cache, function (c) { return c.original === obj; });
+    if (hit) {
+      return hit.copy
+    }
+
+    var copy = Array.isArray(obj) ? [] : {};
+    // put the copy into cache at first
+    // because we want to refer it in recursive deepCopy
+    cache.push({
+      original: obj,
+      copy: copy
+    });
+
+    Object.keys(obj).forEach(function (key) {
+      copy[key] = deepCopy(obj[key], cache);
+    });
+
+    return copy
+  }
+
+  // Credits: borrowed code from fcomb/redux-logger
+
+  function createLogger (ref) {
+    if ( ref === void 0 ) ref = {};
+    var collapsed = ref.collapsed; if ( collapsed === void 0 ) collapsed = true;
+    var filter = ref.filter; if ( filter === void 0 ) filter = function (mutation, stateBefore, stateAfter) { return true; };
+    var transformer = ref.transformer; if ( transformer === void 0 ) transformer = function (state) { return state; };
+    var mutationTransformer = ref.mutationTransformer; if ( mutationTransformer === void 0 ) mutationTransformer = function (mut) { return mut; };
+    var actionFilter = ref.actionFilter; if ( actionFilter === void 0 ) actionFilter = function (action, state) { return true; };
+    var actionTransformer = ref.actionTransformer; if ( actionTransformer === void 0 ) actionTransformer = function (act) { return act; };
+    var logMutations = ref.logMutations; if ( logMutations === void 0 ) logMutations = true;
+    var logActions = ref.logActions; if ( logActions === void 0 ) logActions = true;
+    var logger = ref.logger; if ( logger === void 0 ) logger = console;
+
+    return function (store) {
+      var prevState = deepCopy(store.state);
+
+      if (typeof logger === 'undefined') {
+        return
+      }
+
+      if (logMutations) {
+        store.subscribe(function (mutation, state) {
+          var nextState = deepCopy(state);
+
+          if (filter(mutation, prevState, nextState)) {
+            var formattedTime = getFormattedTime();
+            var formattedMutation = mutationTransformer(mutation);
+            var message = "mutation " + (mutation.type) + formattedTime;
+
+            startMessage(logger, message, collapsed);
+            logger.log('%c prev state', 'color: #9E9E9E; font-weight: bold', transformer(prevState));
+            logger.log('%c mutation', 'color: #03A9F4; font-weight: bold', formattedMutation);
+            logger.log('%c next state', 'color: #4CAF50; font-weight: bold', transformer(nextState));
+            endMessage(logger);
+          }
+
+          prevState = nextState;
+        });
+      }
+
+      if (logActions) {
+        store.subscribeAction(function (action, state) {
+          if (actionFilter(action, state)) {
+            var formattedTime = getFormattedTime();
+            var formattedAction = actionTransformer(action);
+            var message = "action " + (action.type) + formattedTime;
+
+            startMessage(logger, message, collapsed);
+            logger.log('%c action', 'color: #03A9F4; font-weight: bold', formattedAction);
+            endMessage(logger);
+          }
+        });
+      }
+    }
+  }
+
+  function startMessage (logger, message, collapsed) {
+    var startMessage = collapsed
+      ? logger.groupCollapsed
+      : logger.group;
+
+    // render
+    try {
+      startMessage.call(logger, message);
+    } catch (e) {
+      logger.log(message);
+    }
+  }
+
+  function endMessage (logger) {
+    try {
+      logger.groupEnd();
+    } catch (e) {
+      logger.log('—— log end ——');
+    }
+  }
+
+  function getFormattedTime () {
+    var time = new Date();
+    return (" @ " + (pad(time.getHours(), 2)) + ":" + (pad(time.getMinutes(), 2)) + ":" + (pad(time.getSeconds(), 2)) + "." + (pad(time.getMilliseconds(), 3)))
+  }
+
+  function repeat (str, times) {
+    return (new Array(times + 1)).join(str)
+  }
+
+  function pad (num, maxLength) {
+    return repeat('0', maxLength - num.toString().length) + num
+  }
+
+  return createLogger;
+
+})));
+
+
+/***/ }),
+
+/***/ 192:
+/*!**********************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/common/utils/http.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.http = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 27));var _index = _interopRequireDefault(__webpack_require__(/*! @/common/lib/request/index.js */ 193));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+var getTokenStorage = function getTokenStorage() {
+  var token = '';
+  try {
+    token = uni.getStorageSync('token');
+  } catch (e) {}
+  return token;
+};
+var http = new _index.default();exports.http = http;
+http.setConfig(function (config) {
+  /* 设置全局配置 */
+  config.baseURL = 'https://www.fastmock.site/mock/26243bdf9062eeae2848fc67603bda2d/luchrequest'; /* 根域名不同 */
+  config.header = _objectSpread({},
+  config.header);
+
+  return config;
+});
+http.interceptors.request.use(function (config) {
+  /* 请求之前拦截器。可以使用async await 做异步操作 */
+  config.header = _objectSpread(_objectSpread({},
+  config.header), {}, {
+    source: 2,
+    token: getTokenStorage() });
+
+  /*
+                                 if (!token) { // 如果token不存在，return Promise.reject(config) 会取消本次请求
+                                   return Promise.reject(config)
+                                 }
+                                 */
+  return config;
+}, function (config) {
+  return Promise.reject(config);
+});
+http.interceptors.response.use( /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(response) {var e;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+            /* 请求之后拦截器。可以使用async await 做异步操作  */
+            // if (response.data.code !== 200) { // 服务端返回的状态码不等于200，则reject()
+            //   return Promise.reject(response)
+            // }
+            console.info("-----", response.data);
+            e = response.data;if (!(
+            e.errorCode == 500)) {_context.next = 7;break;}
+            alert("系统繁忙，请稍后再试！");return _context.abrupt("return",
+            Promise.reject(response));case 7:if (
+            e.success) {_context.next = 10;break;}
+            alert(e.message);return _context.abrupt("return",
+            Promise.reject(response));case 10:return _context.abrupt("return",
+
+            response);case 11:case "end":return _context.stop();}}}, _callee);}));return function (_x) {return _ref.apply(this, arguments);};}(),
+function (response) {// 请求错误做点什么。可以使用async await 做异步操作
+  return Promise.reject(response);
+});
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 193:
+/*!*****************************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/common/lib/request/index.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _Request = _interopRequireDefault(__webpack_require__(/*! ./core/Request */ 194));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+_Request.default;exports.default = _default;
+
+/***/ }),
+
+/***/ 194:
+/*!************************************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/common/lib/request/core/Request.js ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _dispatchRequest = _interopRequireDefault(__webpack_require__(/*! ./dispatchRequest */ 195));
+var _InterceptorManager = _interopRequireDefault(__webpack_require__(/*! ./InterceptorManager */ 203));
+var _mergeConfig = _interopRequireDefault(__webpack_require__(/*! ./mergeConfig */ 204));
+var _defaults = _interopRequireDefault(__webpack_require__(/*! ./defaults */ 205));
+var _utils = __webpack_require__(/*! ../utils */ 198);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var
+
+Request = /*#__PURE__*/function () {
+  /**
+                                     * @param {Object} arg - 全局配置
+                                     * @param {String} arg.baseURL - 全局根路径
+                                     * @param {Object} arg.header - 全局header
+                                     * @param {String} arg.method = [GET|POST|PUT|DELETE|CONNECT|HEAD|OPTIONS|TRACE] - 全局默认请求方式
+                                     * @param {String} arg.dataType = [json] - 全局默认的dataType
+                                     * @param {String} arg.responseType = [text|arraybuffer] - 全局默认的responseType。App和支付宝小程序不支持
+                                     * @param {Object} arg.custom - 全局默认的自定义参数
+                                     * @param {Number} arg.timeout - 全局默认的超时时间，单位 ms。默认60000。H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
+                                     * @param {Boolean} arg.sslVerify - 全局默认的是否验证 ssl 证书。默认true.仅App安卓端支持（HBuilderX 2.3.3+）
+                                     * @param {Boolean} arg.withCredentials - 全局默认的跨域请求时是否携带凭证（cookies）。默认false。仅H5支持（HBuilderX 2.6.15+）
+                                     * @param {Boolean} arg.firstIpv4 - 全DNS解析时优先使用ipv4。默认false。仅 App-Android 支持 (HBuilderX 2.8.0+)
+                                     * @param {Function(statusCode):Boolean} arg.validateStatus - 全局默认的自定义验证器。默认statusCode >= 200 && statusCode < 300
+                                     */
+  function Request() {var arg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};_classCallCheck(this, Request);
+    if (!(0, _utils.isPlainObject)(arg)) {
+      arg = {};
+      console.warn('设置全局参数必须接收一个Object');
+    }
+    this.config = _objectSpread(_objectSpread({}, _defaults.default), arg);
+    this.interceptors = {
+      request: new _InterceptorManager.default(),
+      response: new _InterceptorManager.default() };
+
+  }
+
+  /**
+     * @Function
+     * @param {Request~setConfigCallback} f - 设置全局默认配置
+     */_createClass(Request, [{ key: "setConfig", value: function setConfig(
+    f) {
+      this.config = f(this.config);
+    } }, { key: "middleware", value: function middleware(
+
+    config) {
+      config = (0, _mergeConfig.default)(this.config, config);
+      var chain = [_dispatchRequest.default, undefined];
+      var promise = Promise.resolve(config);
+
+      this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+        chain.unshift(interceptor.fulfilled, interceptor.rejected);
+      });
+
+      this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+        chain.push(interceptor.fulfilled, interceptor.rejected);
+      });
+
+      while (chain.length) {
+        promise = promise.then(chain.shift(), chain.shift());
+      }
+
+      return promise;
+    }
+
+    /**
+       * @Function
+       * @param {Object} config - 请求配置项
+       * @prop {String} options.url - 请求路径
+       * @prop {Object} options.data - 请求参数
+       * @prop {Object} [options.responseType = config.responseType] [text|arraybuffer] - 响应的数据类型
+       * @prop {Object} [options.dataType = config.dataType] - 如果设为 json，会尝试对返回的数据做一次 JSON.parse
+       * @prop {Object} [options.header = config.header] - 请求header
+       * @prop {Object} [options.method = config.method] - 请求方法
+       * @returns {Promise<unknown>}
+       */ }, { key: "request", value: function request()
+    {var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      return this.middleware(config);
+    } }, { key: "get", value: function get(
+
+    url) {var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        method: 'GET' },
+      options));
+
+    } }, { key: "post", value: function post(
+
+    url, data) {var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        data: data,
+        method: 'POST' },
+      options));
+
+    } }, { key: "put", value: function put(
+
+
+    url, data) {var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        data: data,
+        method: 'PUT' },
+      options));
+
+    } }, { key: "delete", value: function _delete(
+
+
+
+
+    url, data) {var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        data: data,
+        method: 'DELETE' },
+      options));
+
+    } }, { key: "connect", value: function connect(
+
+
+
+
+    url, data) {var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        data: data,
+        method: 'CONNECT' },
+      options));
+
+    } }, { key: "head", value: function head(
+
+
+
+
+    url, data) {var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        data: data,
+        method: 'HEAD' },
+      options));
+
+    } }, { key: "options", value: function options(
+
+
+
+
+    url, data) {var _options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        data: data,
+        method: 'OPTIONS' },
+      _options));
+
+    } }, { key: "trace", value: function trace(
+
+
+
+
+    url, data) {var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        data: data,
+        method: 'TRACE' },
+      options));
+
+    } }, { key: "upload", value: function upload(
+
+
+
+    url) {var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      config.url = url;
+      config.method = 'UPLOAD';
+      return this.middleware(config);
+    } }, { key: "download", value: function download(
+
+    url) {var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      config.url = url;
+      config.method = 'DOWNLOAD';
+      return this.middleware(config);
+    } }]);return Request;}();
+
+
+
+/**
+                               * setConfig回调
+                               * @return {Object} - 返回操作后的config
+                               * @callback Request~setConfigCallback
+                               * @param {Object} config - 全局默认config
+                               */exports.default = Request;
+
+/***/ }),
+
+/***/ 195:
+/*!********************************************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/common/lib/request/core/dispatchRequest.js ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _index = _interopRequireDefault(__webpack_require__(/*! ../adapters/index */ 196));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+
+
+function _default(config) {
+  return (0, _index.default)(config);
+};exports.default = _default;
+
+/***/ }),
+
+/***/ 196:
+/*!**************************************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/common/lib/request/adapters/index.js ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _buildURL = _interopRequireDefault(__webpack_require__(/*! ../helpers/buildURL */ 197));
+var _buildFullPath = _interopRequireDefault(__webpack_require__(/*! ../core/buildFullPath */ 199));
+var _settle = _interopRequireDefault(__webpack_require__(/*! ../core/settle */ 202));
+var _utils = __webpack_require__(/*! ../utils */ 198);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+
+/**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           * 返回可选值存在的配置
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           * @param {Array} keys - 可选值数组
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           * @param {Object} config2 - 配置
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           * @return {{}} - 存在的配置项
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           */
+var mergeKeys = function mergeKeys(keys, config2) {
+  var config = {};
+  keys.forEach(function (prop) {
+    if (!(0, _utils.isUndefined)(config2[prop])) {
+      config[prop] = config2[prop];
+    }
+  });
+  return config;
+};var _default =
+function _default(config) {
+  return new Promise(function (resolve, reject) {
+    var fullPath = (0, _buildURL.default)((0, _buildFullPath.default)(config.baseURL, config.url), config.params);
+    var _config = {
+      url: fullPath,
+      header: config.header,
+      complete: function complete(response) {
+        config.fullPath = fullPath;
+        response.config = config;
+        try {
+          // 对可能字符串不是json 的情况容错
+          if (typeof response.data === 'string') {
+            response.data = JSON.parse(response.data);
+          }
+          // eslint-disable-next-line no-empty
+        } catch (e) {
+        }
+        (0, _settle.default)(resolve, reject, response);
+      } };
+
+    var requestTask;
+    if (config.method === 'UPLOAD') {
+      delete _config.header['content-type'];
+      delete _config.header['Content-Type'];
+      var otherConfig = {
+
+
+
+        filePath: config.filePath,
+        name: config.name };
+
+      var optionalKeys = [
+
+
+
+
+
+
+
+
+
+      'formData'];
+
+      requestTask = uni.uploadFile(_objectSpread(_objectSpread(_objectSpread({}, _config), otherConfig), mergeKeys(optionalKeys, config)));
+    } else if (config.method === 'DOWNLOAD') {
+
+
+
+
+
+      requestTask = uni.downloadFile(_config);
+    } else {
+      var _optionalKeys = [
+      'data',
+      'method',
+
+      'timeout',
+
+      'dataType',
+
+      'responseType'];
+
+
+
+
+
+
+
+
+
+
+
+      requestTask = uni.request(_objectSpread(_objectSpread({}, _config), mergeKeys(_optionalKeys, config)));
+    }
+    if (config.getTask) {
+      config.getTask(requestTask, config);
+    }
+  });
+};exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 197:
+/*!****************************************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/common/lib/request/helpers/buildURL.js ***!
+  \****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = buildURL;
+
+var utils = _interopRequireWildcard(__webpack_require__(/*! ./../utils */ 198));function _getRequireWildcardCache() {if (typeof WeakMap !== "function") return null;var cache = new WeakMap();_getRequireWildcardCache = function _getRequireWildcardCache() {return cache;};return cache;}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;}if (obj === null || typeof obj !== "object" && typeof obj !== "function") {return { default: obj };}var cache = _getRequireWildcardCache();if (cache && cache.has(obj)) {return cache.get(obj);}var newObj = {};var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;if (desc && (desc.get || desc.set)) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}newObj.default = obj;if (cache) {cache.set(obj, newObj);}return newObj;}
+
+function encode(val) {
+  return encodeURIComponent(val).
+  replace(/%40/gi, '@').
+  replace(/%3A/gi, ':').
+  replace(/%24/g, '$').
+  replace(/%2C/gi, ',').
+  replace(/%20/g, '+').
+  replace(/%5B/gi, '[').
+  replace(/%5D/gi, ']');
+}
+
+/**
+   * Build a URL by appending params to the end
+   *
+   * @param {string} url The base of the url (e.g., http://www.google.com)
+   * @param {object} [params] The params to be appended
+   * @returns {string} The formatted url
+   */
+function buildURL(url, params) {
+  /*eslint no-param-reassign:0*/
+  if (!params) {
+    return url;
+  }
+
+  var serializedParams;
+  if (utils.isURLSearchParams(params)) {
+    serializedParams = params.toString();
+  } else {
+    var parts = [];
+
+    utils.forEach(params, function serialize(val, key) {
+      if (val === null || typeof val === 'undefined') {
+        return;
+      }
+
+      if (utils.isArray(val)) {
+        key = key + '[]';
+      } else {
+        val = [val];
+      }
+
+      utils.forEach(val, function parseValue(v) {
+        if (utils.isDate(v)) {
+          v = v.toISOString();
+        } else if (utils.isObject(v)) {
+          v = JSON.stringify(v);
+        }
+        parts.push(encode(key) + '=' + encode(v));
+      });
+    });
+
+    serializedParams = parts.join('&');
+  }
+
+  if (serializedParams) {
+    var hashmarkIndex = url.indexOf('#');
+    if (hashmarkIndex !== -1) {
+      url = url.slice(0, hashmarkIndex);
+    }
+
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+  }
+
+  return url;
+}
+
+/***/ }),
+
+/***/ 198:
+/*!*****************************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/common/lib/request/utils.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// utils is a library of generic helper functions non-specific to axios
+Object.defineProperty(exports, "__esModule", { value: true });exports.isArray = isArray;exports.isObject = isObject;exports.isDate = isDate;exports.isURLSearchParams = isURLSearchParams;exports.forEach = forEach;exports.isBoolean = isBoolean;exports.isPlainObject = isPlainObject;exports.deepMerge = deepMerge;exports.isUndefined = isUndefined;
+var toString = Object.prototype.toString;
+
+/**
+                                           * Determine if a value is an Array
+                                           *
+                                           * @param {Object} val The value to test
+                                           * @returns {boolean} True if value is an Array, otherwise false
+                                           */
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
+}
+
+
+/**
+   * Determine if a value is an Object
+   *
+   * @param {Object} val The value to test
+   * @returns {boolean} True if value is an Object, otherwise false
+   */
+function isObject(val) {
+  return val !== null && typeof val === 'object';
+}
+
+/**
+   * Determine if a value is a Date
+   *
+   * @param {Object} val The value to test
+   * @returns {boolean} True if value is a Date, otherwise false
+   */
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+   * Determine if a value is a URLSearchParams object
+   *
+   * @param {Object} val The value to test
+   * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+   */
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+
+
+/**
+   * Iterate over an Array or an Object invoking a function for each item.
+   *
+   * If `obj` is an Array callback will be called passing
+   * the value, index, and complete array for each item.
+   *
+   * If 'obj' is an Object callback will be called passing
+   * the value, key, and complete object for each property.
+   *
+   * @param {Object|Array} obj The object to iterate
+   * @param {Function} fn The callback to invoke for each item
+   */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object') {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+   * 是否为boolean 值
+   * @param val
+   * @returns {boolean}
+   */
+function isBoolean(val) {
+  return typeof val === 'boolean';
+}
+
+/**
+   * 是否为真正的对象{} new Object
+   * @param {any} obj - 检测的对象
+   * @returns {boolean}
+   */
+function isPlainObject(obj) {
+  return Object.prototype.toString.call(obj) === '[object Object]';
+}
+
+
+
+/**
+   * Function equal to merge with the difference being that no reference
+   * to original objects is kept.
+   *
+   * @see merge
+   * @param {Object} obj1 Object to merge
+   * @returns {Object} Result of all merge properties
+   */
+function deepMerge() /* obj1, obj2, obj3, ... */{
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = deepMerge(result[key], val);
+    } else if (typeof val === 'object') {
+      result[key] = deepMerge({}, val);
+    } else {
+      result[key] = val;
+    }
+  }
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/***/ }),
+
+/***/ 199:
+/*!******************************************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/common/lib/request/core/buildFullPath.js ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = buildFullPath;
+
+var _isAbsoluteURL = _interopRequireDefault(__webpack_require__(/*! ../helpers/isAbsoluteURL */ 200));
+var _combineURLs = _interopRequireDefault(__webpack_require__(/*! ../helpers/combineURLs */ 201));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+/**
+                                                                                                                                                                            * Creates a new URL by combining the baseURL with the requestedURL,
+                                                                                                                                                                            * only when the requestedURL is not already an absolute URL.
+                                                                                                                                                                            * If the requestURL is absolute, this function returns the requestedURL untouched.
+                                                                                                                                                                            *
+                                                                                                                                                                            * @param {string} baseURL The base URL
+                                                                                                                                                                            * @param {string} requestedURL Absolute or relative URL to combine
+                                                                                                                                                                            * @returns {string} The combined full path
+                                                                                                                                                                            */
+function buildFullPath(baseURL, requestedURL) {
+  if (baseURL && !(0, _isAbsoluteURL.default)(requestedURL)) {
+    return (0, _combineURLs.default)(baseURL, requestedURL);
+  }
+  return requestedURL;
+}
+
+/***/ }),
+
+/***/ 2:
 /*!******************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js ***!
   \******************************************************************************************/
@@ -7844,1585 +10052,301 @@ internalMixin(Vue);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../webpack/buildin/global.js */ 3)))
 
 /***/ }),
-/* 3 */
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 4 */
-/*!************************************************************!*\
-  !*** /Users/liu/Documents/HBuilderProjects/uMa/pages.json ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */
-/*!**********************************************************************************************************!*\
-  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \**********************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode, /* vue-cli only */
-  components, // fixed by xxxxxx auto components
-  renderjs // fixed by xxxxxx renderjs
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // fixed by xxxxxx auto components
-  if (components) {
-    if (!options.components) {
-      options.components = {}
-    }
-    var hasOwn = Object.prototype.hasOwnProperty
-    for (var name in components) {
-      if (hasOwn.call(components, name) && !hasOwn.call(options.components, name)) {
-        options.components[name] = components[name]
-      }
-    }
-  }
-  // fixed by xxxxxx renderjs
-  if (renderjs) {
-    (renderjs.beforeCreate || (renderjs.beforeCreate = [])).unshift(function() {
-      this[renderjs.__module] = this
-    });
-    (options.mixins || (options.mixins = [])).push(renderjs)
-  }
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-/* 11 */
-/*!****************************************************************!*\
-  !*** /Users/liu/Documents/HBuilderProjects/uMa/store/index.js ***!
-  \****************************************************************/
+/***/ 200:
+/*!*********************************************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/common/lib/request/helpers/isAbsoluteURL.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 12));
-var _state = _interopRequireDefault(__webpack_require__(/*! ./state */ 13));
-var _mutations = _interopRequireDefault(__webpack_require__(/*! ./mutations */ 14));
-var _logger = _interopRequireDefault(__webpack_require__(/*! vuex/dist/logger */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
-_vue.default.use(_vuex.default);
 
-var debug = "development" !== 'production';var _default =
-
-new _vuex.default.Store({
-  state: _state.default,
-  mutations: _mutations.default,
-  strict: debug,
-  plugins: debug ? [(0, _logger.default)()] : [] });exports.default = _default;
+/**
+               * Determines whether the specified URL is absolute
+               *
+               * @param {string} url The URL to test
+               * @returns {boolean} True if the specified URL is absolute, otherwise false
+               */Object.defineProperty(exports, "__esModule", { value: true });exports.default = isAbsoluteURL;
+function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url);
+}
 
 /***/ }),
-/* 12 */
-/*!********************************************!*\
-  !*** ./node_modules/vuex/dist/vuex.esm.js ***!
-  \********************************************/
-/*! exports provided: default, Store, createNamespacedHelpers, install, mapActions, mapGetters, mapMutations, mapState */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+/***/ 201:
+/*!*******************************************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/common/lib/request/helpers/combineURLs.js ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "install", function() { return install; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapGetters", function() { return mapGetters; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapMutations", function() { return mapMutations; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapState", function() { return mapState; });
-/*!
- * vuex v3.4.0
- * (c) 2020 Evan You
- * @license MIT
- */
-function applyMixin (Vue) {
-  var version = Number(Vue.version.split('.')[0]);
 
-  if (version >= 2) {
-    Vue.mixin({ beforeCreate: vuexInit });
+
+/**
+               * Creates a new URL by combining the specified URLs
+               *
+               * @param {string} baseURL The base URL
+               * @param {string} relativeURL The relative URL
+               * @returns {string} The combined URL
+               */Object.defineProperty(exports, "__esModule", { value: true });exports.default = combineURLs;
+function combineURLs(baseURL, relativeURL) {
+  return relativeURL ?
+  baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') :
+  baseURL;
+}
+
+/***/ }),
+
+/***/ 202:
+/*!***********************************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/common/lib/request/core/settle.js ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = settle; /**
+                                                                                                      * Resolve or reject a Promise based on response status.
+                                                                                                      *
+                                                                                                      * @param {Function} resolve A function that resolves the promise.
+                                                                                                      * @param {Function} reject A function that rejects the promise.
+                                                                                                      * @param {object} response The response.
+                                                                                                      */
+function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  var status = response.statusCode;
+  if (status && (!validateStatus || validateStatus(status))) {
+    resolve(response);
   } else {
-    // override init and inject vuex init procedure
-    // for 1.x backwards compatibility.
-    var _init = Vue.prototype._init;
-    Vue.prototype._init = function (options) {
-      if ( options === void 0 ) options = {};
-
-      options.init = options.init
-        ? [vuexInit].concat(options.init)
-        : vuexInit;
-      _init.call(this, options);
-    };
+    reject(response);
   }
+}
 
-  /**
-   * Vuex init hook, injected into each instances init hooks list.
+/***/ }),
+
+/***/ 203:
+/*!***********************************************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/common/lib/request/core/InterceptorManager.js ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+function InterceptorManager() {
+  this.handlers = [];
+}
+
+/**
+   * Add a new interceptor to the stack
+   *
+   * @param {Function} fulfilled The function to handle `then` for a `Promise`
+   * @param {Function} rejected The function to handle `reject` for a `Promise`
+   *
+   * @return {Number} An ID used to remove interceptor later
    */
+InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected });
 
-  function vuexInit () {
-    var options = this.$options;
-    // store injection
-    if (options.store) {
-      this.$store = typeof options.store === 'function'
-        ? options.store()
-        : options.store;
-    } else if (options.parent && options.parent.$store) {
-      this.$store = options.parent.$store;
-    }
-  }
-}
-
-var target = typeof window !== 'undefined'
-  ? window
-  : typeof global !== 'undefined'
-    ? global
-    : {};
-var devtoolHook = target.__VUE_DEVTOOLS_GLOBAL_HOOK__;
-
-function devtoolPlugin (store) {
-  if (!devtoolHook) { return }
-
-  store._devtoolHook = devtoolHook;
-
-  devtoolHook.emit('vuex:init', store);
-
-  devtoolHook.on('vuex:travel-to-state', function (targetState) {
-    store.replaceState(targetState);
-  });
-
-  store.subscribe(function (mutation, state) {
-    devtoolHook.emit('vuex:mutation', mutation, state);
-  }, { prepend: true });
-
-  store.subscribeAction(function (action, state) {
-    devtoolHook.emit('vuex:action', action, state);
-  }, { prepend: true });
-}
+  return this.handlers.length - 1;
+};
 
 /**
- * Get the first item that pass the test
- * by second argument function
- *
- * @param {Array} list
- * @param {Function} f
- * @return {*}
- */
+    * Remove an interceptor from the stack
+    *
+    * @param {Number} id The ID that was returned by `use`
+    */
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
 
 /**
- * forEach for object
- */
-function forEachValue (obj, fn) {
-  Object.keys(obj).forEach(function (key) { return fn(obj[key], key); });
-}
-
-function isObject (obj) {
-  return obj !== null && typeof obj === 'object'
-}
-
-function isPromise (val) {
-  return val && typeof val.then === 'function'
-}
-
-function assert (condition, msg) {
-  if (!condition) { throw new Error(("[vuex] " + msg)) }
-}
-
-function partial (fn, arg) {
-  return function () {
-    return fn(arg)
-  }
-}
-
-// Base data struct for store's module, package with some attribute and method
-var Module = function Module (rawModule, runtime) {
-  this.runtime = runtime;
-  // Store some children item
-  this._children = Object.create(null);
-  // Store the origin module object which passed by programmer
-  this._rawModule = rawModule;
-  var rawState = rawModule.state;
-
-  // Store the origin module's state
-  this.state = (typeof rawState === 'function' ? rawState() : rawState) || {};
-};
-
-var prototypeAccessors = { namespaced: { configurable: true } };
-
-prototypeAccessors.namespaced.get = function () {
-  return !!this._rawModule.namespaced
-};
-
-Module.prototype.addChild = function addChild (key, module) {
-  this._children[key] = module;
-};
-
-Module.prototype.removeChild = function removeChild (key) {
-  delete this._children[key];
-};
-
-Module.prototype.getChild = function getChild (key) {
-  return this._children[key]
-};
-
-Module.prototype.hasChild = function hasChild (key) {
-  return key in this._children
-};
-
-Module.prototype.update = function update (rawModule) {
-  this._rawModule.namespaced = rawModule.namespaced;
-  if (rawModule.actions) {
-    this._rawModule.actions = rawModule.actions;
-  }
-  if (rawModule.mutations) {
-    this._rawModule.mutations = rawModule.mutations;
-  }
-  if (rawModule.getters) {
-    this._rawModule.getters = rawModule.getters;
-  }
-};
-
-Module.prototype.forEachChild = function forEachChild (fn) {
-  forEachValue(this._children, fn);
-};
-
-Module.prototype.forEachGetter = function forEachGetter (fn) {
-  if (this._rawModule.getters) {
-    forEachValue(this._rawModule.getters, fn);
-  }
-};
-
-Module.prototype.forEachAction = function forEachAction (fn) {
-  if (this._rawModule.actions) {
-    forEachValue(this._rawModule.actions, fn);
-  }
-};
-
-Module.prototype.forEachMutation = function forEachMutation (fn) {
-  if (this._rawModule.mutations) {
-    forEachValue(this._rawModule.mutations, fn);
-  }
-};
-
-Object.defineProperties( Module.prototype, prototypeAccessors );
-
-var ModuleCollection = function ModuleCollection (rawRootModule) {
-  // register root module (Vuex.Store options)
-  this.register([], rawRootModule, false);
-};
-
-ModuleCollection.prototype.get = function get (path) {
-  return path.reduce(function (module, key) {
-    return module.getChild(key)
-  }, this.root)
-};
-
-ModuleCollection.prototype.getNamespace = function getNamespace (path) {
-  var module = this.root;
-  return path.reduce(function (namespace, key) {
-    module = module.getChild(key);
-    return namespace + (module.namespaced ? key + '/' : '')
-  }, '')
-};
-
-ModuleCollection.prototype.update = function update$1 (rawRootModule) {
-  update([], this.root, rawRootModule);
-};
-
-ModuleCollection.prototype.register = function register (path, rawModule, runtime) {
-    var this$1 = this;
-    if ( runtime === void 0 ) runtime = true;
-
-  if ((true)) {
-    assertRawModule(path, rawModule);
-  }
-
-  var newModule = new Module(rawModule, runtime);
-  if (path.length === 0) {
-    this.root = newModule;
-  } else {
-    var parent = this.get(path.slice(0, -1));
-    parent.addChild(path[path.length - 1], newModule);
-  }
-
-  // register nested modules
-  if (rawModule.modules) {
-    forEachValue(rawModule.modules, function (rawChildModule, key) {
-      this$1.register(path.concat(key), rawChildModule, runtime);
-    });
-  }
-};
-
-ModuleCollection.prototype.unregister = function unregister (path) {
-  var parent = this.get(path.slice(0, -1));
-  var key = path[path.length - 1];
-  if (!parent.getChild(key).runtime) { return }
-
-  parent.removeChild(key);
-};
-
-ModuleCollection.prototype.isRegistered = function isRegistered (path) {
-  var parent = this.get(path.slice(0, -1));
-  var key = path[path.length - 1];
-
-  return parent.hasChild(key)
-};
-
-function update (path, targetModule, newModule) {
-  if ((true)) {
-    assertRawModule(path, newModule);
-  }
-
-  // update target module
-  targetModule.update(newModule);
-
-  // update nested modules
-  if (newModule.modules) {
-    for (var key in newModule.modules) {
-      if (!targetModule.getChild(key)) {
-        if ((true)) {
-          console.warn(
-            "[vuex] trying to add a new module '" + key + "' on hot reloading, " +
-            'manual reload is needed'
-          );
-        }
-        return
-      }
-      update(
-        path.concat(key),
-        targetModule.getChild(key),
-        newModule.modules[key]
-      );
-    }
-  }
-}
-
-var functionAssert = {
-  assert: function (value) { return typeof value === 'function'; },
-  expected: 'function'
-};
-
-var objectAssert = {
-  assert: function (value) { return typeof value === 'function' ||
-    (typeof value === 'object' && typeof value.handler === 'function'); },
-  expected: 'function or object with "handler" function'
-};
-
-var assertTypes = {
-  getters: functionAssert,
-  mutations: functionAssert,
-  actions: objectAssert
-};
-
-function assertRawModule (path, rawModule) {
-  Object.keys(assertTypes).forEach(function (key) {
-    if (!rawModule[key]) { return }
-
-    var assertOptions = assertTypes[key];
-
-    forEachValue(rawModule[key], function (value, type) {
-      assert(
-        assertOptions.assert(value),
-        makeAssertionMessage(path, key, type, value, assertOptions.expected)
-      );
-    });
-  });
-}
-
-function makeAssertionMessage (path, key, type, value, expected) {
-  var buf = key + " should be " + expected + " but \"" + key + "." + type + "\"";
-  if (path.length > 0) {
-    buf += " in module \"" + (path.join('.')) + "\"";
-  }
-  buf += " is " + (JSON.stringify(value)) + ".";
-  return buf
-}
-
-var Vue; // bind on install
-
-var Store = function Store (options) {
-  var this$1 = this;
-  if ( options === void 0 ) options = {};
-
-  // Auto install if it is not done yet and `window` has `Vue`.
-  // To allow users to avoid auto-installation in some cases,
-  // this code should be placed here. See #731
-  if (!Vue && typeof window !== 'undefined' && window.Vue) {
-    install(window.Vue);
-  }
-
-  if ((true)) {
-    assert(Vue, "must call Vue.use(Vuex) before creating a store instance.");
-    assert(typeof Promise !== 'undefined', "vuex requires a Promise polyfill in this browser.");
-    assert(this instanceof Store, "store must be called with the new operator.");
-  }
-
-  var plugins = options.plugins; if ( plugins === void 0 ) plugins = [];
-  var strict = options.strict; if ( strict === void 0 ) strict = false;
-
-  // store internal state
-  this._committing = false;
-  this._actions = Object.create(null);
-  this._actionSubscribers = [];
-  this._mutations = Object.create(null);
-  this._wrappedGetters = Object.create(null);
-  this._modules = new ModuleCollection(options);
-  this._modulesNamespaceMap = Object.create(null);
-  this._subscribers = [];
-  this._watcherVM = new Vue();
-  this._makeLocalGettersCache = Object.create(null);
-
-  // bind commit and dispatch to self
-  var store = this;
-  var ref = this;
-  var dispatch = ref.dispatch;
-  var commit = ref.commit;
-  this.dispatch = function boundDispatch (type, payload) {
-    return dispatch.call(store, type, payload)
-  };
-  this.commit = function boundCommit (type, payload, options) {
-    return commit.call(store, type, payload, options)
-  };
-
-  // strict mode
-  this.strict = strict;
-
-  var state = this._modules.root.state;
-
-  // init root module.
-  // this also recursively registers all sub-modules
-  // and collects all module getters inside this._wrappedGetters
-  installModule(this, state, [], this._modules.root);
-
-  // initialize the store vm, which is responsible for the reactivity
-  // (also registers _wrappedGetters as computed properties)
-  resetStoreVM(this, state);
-
-  // apply plugins
-  plugins.forEach(function (plugin) { return plugin(this$1); });
-
-  var useDevtools = options.devtools !== undefined ? options.devtools : Vue.config.devtools;
-  if (useDevtools) {
-    devtoolPlugin(this);
-  }
-};
-
-var prototypeAccessors$1 = { state: { configurable: true } };
-
-prototypeAccessors$1.state.get = function () {
-  return this._vm._data.$$state
-};
-
-prototypeAccessors$1.state.set = function (v) {
-  if ((true)) {
-    assert(false, "use store.replaceState() to explicit replace store state.");
-  }
-};
-
-Store.prototype.commit = function commit (_type, _payload, _options) {
-    var this$1 = this;
-
-  // check object-style commit
-  var ref = unifyObjectStyle(_type, _payload, _options);
-    var type = ref.type;
-    var payload = ref.payload;
-    var options = ref.options;
-
-  var mutation = { type: type, payload: payload };
-  var entry = this._mutations[type];
-  if (!entry) {
-    if ((true)) {
-      console.error(("[vuex] unknown mutation type: " + type));
-    }
-    return
-  }
-  this._withCommit(function () {
-    entry.forEach(function commitIterator (handler) {
-      handler(payload);
-    });
-  });
-
-  this._subscribers
-    .slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
-    .forEach(function (sub) { return sub(mutation, this$1.state); });
-
-  if (
-    ( true) &&
-    options && options.silent
-  ) {
-    console.warn(
-      "[vuex] mutation type: " + type + ". Silent option has been removed. " +
-      'Use the filter functionality in the vue-devtools'
-    );
-  }
-};
-
-Store.prototype.dispatch = function dispatch (_type, _payload) {
-    var this$1 = this;
-
-  // check object-style dispatch
-  var ref = unifyObjectStyle(_type, _payload);
-    var type = ref.type;
-    var payload = ref.payload;
-
-  var action = { type: type, payload: payload };
-  var entry = this._actions[type];
-  if (!entry) {
-    if ((true)) {
-      console.error(("[vuex] unknown action type: " + type));
-    }
-    return
-  }
-
-  try {
-    this._actionSubscribers
-      .slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
-      .filter(function (sub) { return sub.before; })
-      .forEach(function (sub) { return sub.before(action, this$1.state); });
-  } catch (e) {
-    if ((true)) {
-      console.warn("[vuex] error in before action subscribers: ");
-      console.error(e);
-    }
-  }
-
-  var result = entry.length > 1
-    ? Promise.all(entry.map(function (handler) { return handler(payload); }))
-    : entry[0](payload);
-
-  return new Promise(function (resolve, reject) {
-    result.then(function (res) {
-      try {
-        this$1._actionSubscribers
-          .filter(function (sub) { return sub.after; })
-          .forEach(function (sub) { return sub.after(action, this$1.state); });
-      } catch (e) {
-        if ((true)) {
-          console.warn("[vuex] error in after action subscribers: ");
-          console.error(e);
-        }
-      }
-      resolve(res);
-    }, function (error) {
-      try {
-        this$1._actionSubscribers
-          .filter(function (sub) { return sub.error; })
-          .forEach(function (sub) { return sub.error(action, this$1.state, error); });
-      } catch (e) {
-        if ((true)) {
-          console.warn("[vuex] error in error action subscribers: ");
-          console.error(e);
-        }
-      }
-      reject(error);
-    });
-  })
-};
-
-Store.prototype.subscribe = function subscribe (fn, options) {
-  return genericSubscribe(fn, this._subscribers, options)
-};
-
-Store.prototype.subscribeAction = function subscribeAction (fn, options) {
-  var subs = typeof fn === 'function' ? { before: fn } : fn;
-  return genericSubscribe(subs, this._actionSubscribers, options)
-};
-
-Store.prototype.watch = function watch (getter, cb, options) {
-    var this$1 = this;
-
-  if ((true)) {
-    assert(typeof getter === 'function', "store.watch only accepts a function.");
-  }
-  return this._watcherVM.$watch(function () { return getter(this$1.state, this$1.getters); }, cb, options)
-};
-
-Store.prototype.replaceState = function replaceState (state) {
-    var this$1 = this;
-
-  this._withCommit(function () {
-    this$1._vm._data.$$state = state;
-  });
-};
-
-Store.prototype.registerModule = function registerModule (path, rawModule, options) {
-    if ( options === void 0 ) options = {};
-
-  if (typeof path === 'string') { path = [path]; }
-
-  if ((true)) {
-    assert(Array.isArray(path), "module path must be a string or an Array.");
-    assert(path.length > 0, 'cannot register the root module by using registerModule.');
-  }
-
-  this._modules.register(path, rawModule);
-  installModule(this, this.state, path, this._modules.get(path), options.preserveState);
-  // reset store to update getters...
-  resetStoreVM(this, this.state);
-};
-
-Store.prototype.unregisterModule = function unregisterModule (path) {
-    var this$1 = this;
-
-  if (typeof path === 'string') { path = [path]; }
-
-  if ((true)) {
-    assert(Array.isArray(path), "module path must be a string or an Array.");
-  }
-
-  this._modules.unregister(path);
-  this._withCommit(function () {
-    var parentState = getNestedState(this$1.state, path.slice(0, -1));
-    Vue.delete(parentState, path[path.length - 1]);
-  });
-  resetStore(this);
-};
-
-Store.prototype.hasModule = function hasModule (path) {
-  if (typeof path === 'string') { path = [path]; }
-
-  if ((true)) {
-    assert(Array.isArray(path), "module path must be a string or an Array.");
-  }
-
-  return this._modules.isRegistered(path)
-};
-
-Store.prototype.hotUpdate = function hotUpdate (newOptions) {
-  this._modules.update(newOptions);
-  resetStore(this, true);
-};
-
-Store.prototype._withCommit = function _withCommit (fn) {
-  var committing = this._committing;
-  this._committing = true;
-  fn();
-  this._committing = committing;
-};
-
-Object.defineProperties( Store.prototype, prototypeAccessors$1 );
-
-function genericSubscribe (fn, subs, options) {
-  if (subs.indexOf(fn) < 0) {
-    options && options.prepend
-      ? subs.unshift(fn)
-      : subs.push(fn);
-  }
-  return function () {
-    var i = subs.indexOf(fn);
-    if (i > -1) {
-      subs.splice(i, 1);
-    }
-  }
-}
-
-function resetStore (store, hot) {
-  store._actions = Object.create(null);
-  store._mutations = Object.create(null);
-  store._wrappedGetters = Object.create(null);
-  store._modulesNamespaceMap = Object.create(null);
-  var state = store.state;
-  // init all modules
-  installModule(store, state, [], store._modules.root, true);
-  // reset vm
-  resetStoreVM(store, state, hot);
-}
-
-function resetStoreVM (store, state, hot) {
-  var oldVm = store._vm;
-
-  // bind store public getters
-  store.getters = {};
-  // reset local getters cache
-  store._makeLocalGettersCache = Object.create(null);
-  var wrappedGetters = store._wrappedGetters;
-  var computed = {};
-  forEachValue(wrappedGetters, function (fn, key) {
-    // use computed to leverage its lazy-caching mechanism
-    // direct inline function use will lead to closure preserving oldVm.
-    // using partial to return function with only arguments preserved in closure environment.
-    computed[key] = partial(fn, store);
-    Object.defineProperty(store.getters, key, {
-      get: function () { return store._vm[key]; },
-      enumerable: true // for local getters
-    });
-  });
-
-  // use a Vue instance to store the state tree
-  // suppress warnings just in case the user has added
-  // some funky global mixins
-  var silent = Vue.config.silent;
-  Vue.config.silent = true;
-  store._vm = new Vue({
-    data: {
-      $$state: state
-    },
-    computed: computed
-  });
-  Vue.config.silent = silent;
-
-  // enable strict mode for new vm
-  if (store.strict) {
-    enableStrictMode(store);
-  }
-
-  if (oldVm) {
-    if (hot) {
-      // dispatch changes in all subscribed watchers
-      // to force getter re-evaluation for hot reloading.
-      store._withCommit(function () {
-        oldVm._data.$$state = null;
-      });
-    }
-    Vue.nextTick(function () { return oldVm.$destroy(); });
-  }
-}
-
-function installModule (store, rootState, path, module, hot) {
-  var isRoot = !path.length;
-  var namespace = store._modules.getNamespace(path);
-
-  // register in namespace map
-  if (module.namespaced) {
-    if (store._modulesNamespaceMap[namespace] && ("development" !== 'production')) {
-      console.error(("[vuex] duplicate namespace " + namespace + " for the namespaced module " + (path.join('/'))));
-    }
-    store._modulesNamespaceMap[namespace] = module;
-  }
-
-  // set state
-  if (!isRoot && !hot) {
-    var parentState = getNestedState(rootState, path.slice(0, -1));
-    var moduleName = path[path.length - 1];
-    store._withCommit(function () {
-      if ((true)) {
-        if (moduleName in parentState) {
-          console.warn(
-            ("[vuex] state field \"" + moduleName + "\" was overridden by a module with the same name at \"" + (path.join('.')) + "\"")
-          );
-        }
-      }
-      Vue.set(parentState, moduleName, module.state);
-    });
-  }
-
-  var local = module.context = makeLocalContext(store, namespace, path);
-
-  module.forEachMutation(function (mutation, key) {
-    var namespacedType = namespace + key;
-    registerMutation(store, namespacedType, mutation, local);
-  });
-
-  module.forEachAction(function (action, key) {
-    var type = action.root ? key : namespace + key;
-    var handler = action.handler || action;
-    registerAction(store, type, handler, local);
-  });
-
-  module.forEachGetter(function (getter, key) {
-    var namespacedType = namespace + key;
-    registerGetter(store, namespacedType, getter, local);
-  });
-
-  module.forEachChild(function (child, key) {
-    installModule(store, rootState, path.concat(key), child, hot);
-  });
-}
-
-/**
- * make localized dispatch, commit, getters and state
- * if there is no namespace, just use root ones
- */
-function makeLocalContext (store, namespace, path) {
-  var noNamespace = namespace === '';
-
-  var local = {
-    dispatch: noNamespace ? store.dispatch : function (_type, _payload, _options) {
-      var args = unifyObjectStyle(_type, _payload, _options);
-      var payload = args.payload;
-      var options = args.options;
-      var type = args.type;
-
-      if (!options || !options.root) {
-        type = namespace + type;
-        if (( true) && !store._actions[type]) {
-          console.error(("[vuex] unknown local action type: " + (args.type) + ", global type: " + type));
-          return
-        }
-      }
-
-      return store.dispatch(type, payload)
-    },
-
-    commit: noNamespace ? store.commit : function (_type, _payload, _options) {
-      var args = unifyObjectStyle(_type, _payload, _options);
-      var payload = args.payload;
-      var options = args.options;
-      var type = args.type;
-
-      if (!options || !options.root) {
-        type = namespace + type;
-        if (( true) && !store._mutations[type]) {
-          console.error(("[vuex] unknown local mutation type: " + (args.type) + ", global type: " + type));
-          return
-        }
-      }
-
-      store.commit(type, payload, options);
-    }
-  };
-
-  // getters and state object must be gotten lazily
-  // because they will be changed by vm update
-  Object.defineProperties(local, {
-    getters: {
-      get: noNamespace
-        ? function () { return store.getters; }
-        : function () { return makeLocalGetters(store, namespace); }
-    },
-    state: {
-      get: function () { return getNestedState(store.state, path); }
+    * Iterate over all the registered interceptors
+    *
+    * This method is particularly useful for skipping over any
+    * interceptors that may have become `null` calling `eject`.
+    *
+    * @param {Function} fn The function to call for each interceptor
+    */
+InterceptorManager.prototype.forEach = function forEach(fn) {
+  this.handlers.forEach(function (h) {
+    if (h !== null) {
+      fn(h);
     }
   });
-
-  return local
-}
-
-function makeLocalGetters (store, namespace) {
-  if (!store._makeLocalGettersCache[namespace]) {
-    var gettersProxy = {};
-    var splitPos = namespace.length;
-    Object.keys(store.getters).forEach(function (type) {
-      // skip if the target getter is not match this namespace
-      if (type.slice(0, splitPos) !== namespace) { return }
-
-      // extract local getter type
-      var localType = type.slice(splitPos);
-
-      // Add a port to the getters proxy.
-      // Define as getter property because
-      // we do not want to evaluate the getters in this time.
-      Object.defineProperty(gettersProxy, localType, {
-        get: function () { return store.getters[type]; },
-        enumerable: true
-      });
-    });
-    store._makeLocalGettersCache[namespace] = gettersProxy;
-  }
-
-  return store._makeLocalGettersCache[namespace]
-}
-
-function registerMutation (store, type, handler, local) {
-  var entry = store._mutations[type] || (store._mutations[type] = []);
-  entry.push(function wrappedMutationHandler (payload) {
-    handler.call(store, local.state, payload);
-  });
-}
-
-function registerAction (store, type, handler, local) {
-  var entry = store._actions[type] || (store._actions[type] = []);
-  entry.push(function wrappedActionHandler (payload) {
-    var res = handler.call(store, {
-      dispatch: local.dispatch,
-      commit: local.commit,
-      getters: local.getters,
-      state: local.state,
-      rootGetters: store.getters,
-      rootState: store.state
-    }, payload);
-    if (!isPromise(res)) {
-      res = Promise.resolve(res);
-    }
-    if (store._devtoolHook) {
-      return res.catch(function (err) {
-        store._devtoolHook.emit('vuex:error', err);
-        throw err
-      })
-    } else {
-      return res
-    }
-  });
-}
-
-function registerGetter (store, type, rawGetter, local) {
-  if (store._wrappedGetters[type]) {
-    if ((true)) {
-      console.error(("[vuex] duplicate getter key: " + type));
-    }
-    return
-  }
-  store._wrappedGetters[type] = function wrappedGetter (store) {
-    return rawGetter(
-      local.state, // local state
-      local.getters, // local getters
-      store.state, // root state
-      store.getters // root getters
-    )
-  };
-}
-
-function enableStrictMode (store) {
-  store._vm.$watch(function () { return this._data.$$state }, function () {
-    if ((true)) {
-      assert(store._committing, "do not mutate vuex store state outside mutation handlers.");
-    }
-  }, { deep: true, sync: true });
-}
-
-function getNestedState (state, path) {
-  return path.reduce(function (state, key) { return state[key]; }, state)
-}
-
-function unifyObjectStyle (type, payload, options) {
-  if (isObject(type) && type.type) {
-    options = payload;
-    payload = type;
-    type = type.type;
-  }
-
-  if ((true)) {
-    assert(typeof type === 'string', ("expects string as the type, but found " + (typeof type) + "."));
-  }
-
-  return { type: type, payload: payload, options: options }
-}
-
-function install (_Vue) {
-  if (Vue && _Vue === Vue) {
-    if ((true)) {
-      console.error(
-        '[vuex] already installed. Vue.use(Vuex) should be called only once.'
-      );
-    }
-    return
-  }
-  Vue = _Vue;
-  applyMixin(Vue);
-}
-
-/**
- * Reduce the code which written in Vue.js for getting the state.
- * @param {String} [namespace] - Module's namespace
- * @param {Object|Array} states # Object's item can be a function which accept state and getters for param, you can do something for state and getters in it.
- * @param {Object}
- */
-var mapState = normalizeNamespace(function (namespace, states) {
-  var res = {};
-  if (( true) && !isValidMap(states)) {
-    console.error('[vuex] mapState: mapper parameter must be either an Array or an Object');
-  }
-  normalizeMap(states).forEach(function (ref) {
-    var key = ref.key;
-    var val = ref.val;
-
-    res[key] = function mappedState () {
-      var state = this.$store.state;
-      var getters = this.$store.getters;
-      if (namespace) {
-        var module = getModuleByNamespace(this.$store, 'mapState', namespace);
-        if (!module) {
-          return
-        }
-        state = module.context.state;
-        getters = module.context.getters;
-      }
-      return typeof val === 'function'
-        ? val.call(this, state, getters)
-        : state[val]
-    };
-    // mark vuex getter for devtools
-    res[key].vuex = true;
-  });
-  return res
-});
-
-/**
- * Reduce the code which written in Vue.js for committing the mutation
- * @param {String} [namespace] - Module's namespace
- * @param {Object|Array} mutations # Object's item can be a function which accept `commit` function as the first param, it can accept anthor params. You can commit mutation and do any other things in this function. specially, You need to pass anthor params from the mapped function.
- * @return {Object}
- */
-var mapMutations = normalizeNamespace(function (namespace, mutations) {
-  var res = {};
-  if (( true) && !isValidMap(mutations)) {
-    console.error('[vuex] mapMutations: mapper parameter must be either an Array or an Object');
-  }
-  normalizeMap(mutations).forEach(function (ref) {
-    var key = ref.key;
-    var val = ref.val;
-
-    res[key] = function mappedMutation () {
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-
-      // Get the commit method from store
-      var commit = this.$store.commit;
-      if (namespace) {
-        var module = getModuleByNamespace(this.$store, 'mapMutations', namespace);
-        if (!module) {
-          return
-        }
-        commit = module.context.commit;
-      }
-      return typeof val === 'function'
-        ? val.apply(this, [commit].concat(args))
-        : commit.apply(this.$store, [val].concat(args))
-    };
-  });
-  return res
-});
-
-/**
- * Reduce the code which written in Vue.js for getting the getters
- * @param {String} [namespace] - Module's namespace
- * @param {Object|Array} getters
- * @return {Object}
- */
-var mapGetters = normalizeNamespace(function (namespace, getters) {
-  var res = {};
-  if (( true) && !isValidMap(getters)) {
-    console.error('[vuex] mapGetters: mapper parameter must be either an Array or an Object');
-  }
-  normalizeMap(getters).forEach(function (ref) {
-    var key = ref.key;
-    var val = ref.val;
-
-    // The namespace has been mutated by normalizeNamespace
-    val = namespace + val;
-    res[key] = function mappedGetter () {
-      if (namespace && !getModuleByNamespace(this.$store, 'mapGetters', namespace)) {
-        return
-      }
-      if (( true) && !(val in this.$store.getters)) {
-        console.error(("[vuex] unknown getter: " + val));
-        return
-      }
-      return this.$store.getters[val]
-    };
-    // mark vuex getter for devtools
-    res[key].vuex = true;
-  });
-  return res
-});
-
-/**
- * Reduce the code which written in Vue.js for dispatch the action
- * @param {String} [namespace] - Module's namespace
- * @param {Object|Array} actions # Object's item can be a function which accept `dispatch` function as the first param, it can accept anthor params. You can dispatch action and do any other things in this function. specially, You need to pass anthor params from the mapped function.
- * @return {Object}
- */
-var mapActions = normalizeNamespace(function (namespace, actions) {
-  var res = {};
-  if (( true) && !isValidMap(actions)) {
-    console.error('[vuex] mapActions: mapper parameter must be either an Array or an Object');
-  }
-  normalizeMap(actions).forEach(function (ref) {
-    var key = ref.key;
-    var val = ref.val;
-
-    res[key] = function mappedAction () {
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-
-      // get dispatch function from store
-      var dispatch = this.$store.dispatch;
-      if (namespace) {
-        var module = getModuleByNamespace(this.$store, 'mapActions', namespace);
-        if (!module) {
-          return
-        }
-        dispatch = module.context.dispatch;
-      }
-      return typeof val === 'function'
-        ? val.apply(this, [dispatch].concat(args))
-        : dispatch.apply(this.$store, [val].concat(args))
-    };
-  });
-  return res
-});
-
-/**
- * Rebinding namespace param for mapXXX function in special scoped, and return them by simple object
- * @param {String} namespace
- * @return {Object}
- */
-var createNamespacedHelpers = function (namespace) { return ({
-  mapState: mapState.bind(null, namespace),
-  mapGetters: mapGetters.bind(null, namespace),
-  mapMutations: mapMutations.bind(null, namespace),
-  mapActions: mapActions.bind(null, namespace)
-}); };
-
-/**
- * Normalize the map
- * normalizeMap([1, 2, 3]) => [ { key: 1, val: 1 }, { key: 2, val: 2 }, { key: 3, val: 3 } ]
- * normalizeMap({a: 1, b: 2, c: 3}) => [ { key: 'a', val: 1 }, { key: 'b', val: 2 }, { key: 'c', val: 3 } ]
- * @param {Array|Object} map
- * @return {Object}
- */
-function normalizeMap (map) {
-  if (!isValidMap(map)) {
-    return []
-  }
-  return Array.isArray(map)
-    ? map.map(function (key) { return ({ key: key, val: key }); })
-    : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
-}
-
-/**
- * Validate whether given map is valid or not
- * @param {*} map
- * @return {Boolean}
- */
-function isValidMap (map) {
-  return Array.isArray(map) || isObject(map)
-}
-
-/**
- * Return a function expect two param contains namespace and map. it will normalize the namespace and then the param's function will handle the new namespace and the map.
- * @param {Function} fn
- * @return {Function}
- */
-function normalizeNamespace (fn) {
-  return function (namespace, map) {
-    if (typeof namespace !== 'string') {
-      map = namespace;
-      namespace = '';
-    } else if (namespace.charAt(namespace.length - 1) !== '/') {
-      namespace += '/';
-    }
-    return fn(namespace, map)
-  }
-}
-
-/**
- * Search a special module from store by namespace. if module not exist, print error message.
- * @param {Object} store
- * @param {String} helper
- * @param {String} namespace
- * @return {Object}
- */
-function getModuleByNamespace (store, helper, namespace) {
-  var module = store._modulesNamespaceMap[namespace];
-  if (( true) && !module) {
-    console.error(("[vuex] module namespace not found in " + helper + "(): " + namespace));
-  }
-  return module
-}
-
-var index = {
-  Store: Store,
-  install: install,
-  version: '3.4.0',
-  mapState: mapState,
-  mapMutations: mapMutations,
-  mapGetters: mapGetters,
-  mapActions: mapActions,
-  createNamespacedHelpers: createNamespacedHelpers
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (index);
-
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ 3)))
-
-/***/ }),
-/* 13 */
-/*!****************************************************************!*\
-  !*** /Users/liu/Documents/HBuilderProjects/uMa/store/state.js ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var state = {
-  curNavIndex: 0, //当前头部导航索引
-  phone: '', //登录号码
-  curCity: '', //当前所在的城市
-  startPlace: '出发地', //出发地
-  startFormattedPlace: '', //更具人性化的描述的出发地
-  startPosition: [], //包含startLatitude和startLongitude
-  destination: '你要去哪儿', //目的地
-  endPosition: [], //包含endLatitude和endLongitude
-  driver: {}, //司机信息 包含Cartnumber:"赣A66666"cart: "红色●路虎Q5" id: "1" name: "李师傅" stars: "5.0 2w+单"
-  cost: 0 //花费
 };var _default =
 
-
-state;exports.default = _default;
+InterceptorManager;exports.default = _default;
 
 /***/ }),
-/* 14 */
-/*!********************************************************************!*\
-  !*** /Users/liu/Documents/HBuilderProjects/uMa/store/mutations.js ***!
-  \********************************************************************/
+
+/***/ 204:
+/*!****************************************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/common/lib/request/core/mergeConfig.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var types = _interopRequireWildcard(__webpack_require__(/*! ./mutation-types */ 15));var _mutations;function _getRequireWildcardCache() {if (typeof WeakMap !== "function") return null;var cache = new WeakMap();_getRequireWildcardCache = function _getRequireWildcardCache() {return cache;};return cache;}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;}if (obj === null || typeof obj !== "object" && typeof obj !== "function") {return { default: obj };}var cache = _getRequireWildcardCache();if (cache && cache.has(obj)) {return cache.get(obj);}var newObj = {};var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;if (desc && (desc.get || desc.set)) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}newObj.default = obj;if (cache) {cache.set(obj, newObj);}return newObj;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _utils = __webpack_require__(/*! ../utils */ 198);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
-var mutations = (_mutations = {}, _defineProperty(_mutations,
-types.SET_CUR_NAV_INDEX, function (state, index) {
-  state.curNavIndex = index;
-}), _defineProperty(_mutations,
-types.SET_PHONE, function (state, phone) {
-  state.phone = phone;
-}), _defineProperty(_mutations,
-types.SET_START_PLACE, function (state, startPlace) {
-  state.startPlace = startPlace;
-}), _defineProperty(_mutations,
-types.SET_FORMATTED_START_PLACE, function (state, startFormattedPlace) {
-  state.startFormattedPlace = startFormattedPlace;
-}), _defineProperty(_mutations,
-types.SET_DESTINATION, function (state, destination) {
-  state.destination = destination;
-}), _defineProperty(_mutations,
-types.SET_START_POSITION, function (state, startPosition) {
-  state.startPosition = startPosition;
-}), _defineProperty(_mutations,
-types.SET_END_POSITION, function (state, endPosition) {
-  state.endPosition = endPosition;
-}), _defineProperty(_mutations,
-types.SET_CUR_CITY, function (state, curCity) {
-  state.curCity = curCity;
-}), _defineProperty(_mutations,
-types.SET_DRIVER, function (state, driver) {
-  state.driver = driver;
-}), _defineProperty(_mutations,
-types.SET_COST, function (state, cost) {
-  state.cost = cost;
-}), _mutations);var _default =
+/**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  * 合并局部配置优先的配置，如果局部有该配置项则用局部，如果全局有该配置项则用全局
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  * @param {Array} keys - 配置项
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  * @param {Object} globalsConfig - 当前的全局配置
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  * @param {Object} config2 - 局部配置
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  * @return {{}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  */
+var mergeKeys = function mergeKeys(keys, globalsConfig, config2) {
+  var config = {};
+  keys.forEach(function (prop) {
+    if (!(0, _utils.isUndefined)(config2[prop])) {
+      config[prop] = config2[prop];
+    } else if (!(0, _utils.isUndefined)(globalsConfig[prop])) {
+      config[prop] = globalsConfig[prop];
+    }
+  });
+  return config;
+};
+/**
+    *
+    * @param globalsConfig - 当前实例的全局配置
+    * @param config2 - 当前的局部配置
+    * @return - 合并后的配置
+    */var _default =
+function _default(globalsConfig) {var config2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var method = config2.method || globalsConfig.method || 'GET';
+  var config = {
+    baseURL: globalsConfig.baseURL || '',
+    method: method,
+    url: config2.url || '',
+    params: config2.params || {},
+    custom: _objectSpread(_objectSpread({}, globalsConfig.custom || {}), config2.custom || {}),
+    header: (0, _utils.deepMerge)(globalsConfig.header || {}, config2.header || {}) };
+
+  var defaultToConfig2Keys = ['getTask', 'validateStatus'];
+  config = _objectSpread(_objectSpread({}, config), mergeKeys(defaultToConfig2Keys, globalsConfig, config2));
+
+  // eslint-disable-next-line no-empty
+  if (method === 'DOWNLOAD') {
 
 
-mutations;exports.default = _default;
+
+
+
+
+
+  } else if (method === 'UPLOAD') {
+    delete config.header['content-type'];
+    delete config.header['Content-Type'];
+    var uploadKeys = [
+
+
+
+
+
+
+
+
+
+    'filePath',
+    'name',
+
+
+
+    'formData'];
+
+    uploadKeys.forEach(function (prop) {
+      if (!(0, _utils.isUndefined)(config2[prop])) {
+        config[prop] = config2[prop];
+      }
+    });
+
+
+
+
+
+  } else {
+    var defaultsKeys = [
+    'data',
+
+    'timeout',
+
+    'dataType',
+
+    'responseType'];
+
+
+
+
+
+
+
+
+
+
+
+    config = _objectSpread(_objectSpread({}, config), mergeKeys(defaultsKeys, globalsConfig, config2));
+  }
+
+  return config;
+};exports.default = _default;
 
 /***/ }),
-/* 15 */
-/*!*************************************************************************!*\
-  !*** /Users/liu/Documents/HBuilderProjects/uMa/store/mutation-types.js ***!
-  \*************************************************************************/
+
+/***/ 205:
+/*!*************************************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/common/lib/request/core/defaults.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.SET_COST = exports.SET_DRIVER = exports.SET_CUR_CITY = exports.SET_END_POSITION = exports.SET_START_POSITION = exports.SET_DESTINATION = exports.SET_FORMATTED_START_PLACE = exports.SET_START_PLACE = exports.SET_PHONE = exports.SET_CUR_NAV_INDEX = void 0;var SET_CUR_NAV_INDEX = 'SET_CUR_NAV_INDEX';exports.SET_CUR_NAV_INDEX = SET_CUR_NAV_INDEX;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /**
+                                                                                                      * 默认的全局配置
+                                                                                                      */var _default =
 
-var SET_PHONE = 'SET_PHONE';exports.SET_PHONE = SET_PHONE;
 
-var SET_START_PLACE = 'SET_START_PLACE';exports.SET_START_PLACE = SET_START_PLACE;
+{
+  baseURL: '',
+  header: {},
+  method: 'GET',
+  dataType: 'json',
 
-var SET_FORMATTED_START_PLACE = 'SET_FORMATTED_START_PLACE';exports.SET_FORMATTED_START_PLACE = SET_FORMATTED_START_PLACE;
+  responseType: 'text',
 
-var SET_DESTINATION = 'SET_DESTINATION';exports.SET_DESTINATION = SET_DESTINATION;
+  custom: {},
 
-var SET_START_POSITION = 'SET_START_POSITION';exports.SET_START_POSITION = SET_START_POSITION;
+  timeout: 60000,
 
-var SET_END_POSITION = 'SET_END_POSITION';exports.SET_END_POSITION = SET_END_POSITION;
 
-var SET_CUR_CITY = 'SET_CUR_CITY';exports.SET_CUR_CITY = SET_CUR_CITY;
 
-var SET_DRIVER = 'SET_DRIVER';exports.SET_DRIVER = SET_DRIVER;
 
-var SET_COST = 'SET_COST';exports.SET_COST = SET_COST;
 
-/***/ }),
-/* 16 */
-/*!******************************************!*\
-  !*** ./node_modules/vuex/dist/logger.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
 
-/*!
- * vuex v3.4.0
- * (c) 2020 Evan You
- * @license MIT
- */
-(function (global, factory) {
-   true ? module.exports = factory() :
-  undefined;
-}(this, (function () { 'use strict';
 
-  /**
-   * Get the first item that pass the test
-   * by second argument function
-   *
-   * @param {Array} list
-   * @param {Function} f
-   * @return {*}
-   */
-  function find (list, f) {
-    return list.filter(f)[0]
-  }
 
-  /**
-   * Deep copy the given object considering circular structure.
-   * This function caches all nested objects and its copies.
-   * If it detects circular structure, use cached copy to avoid infinite loop.
-   *
-   * @param {*} obj
-   * @param {Array<Object>} cache
-   * @return {*}
-   */
-  function deepCopy (obj, cache) {
-    if ( cache === void 0 ) cache = [];
 
-    // just return if obj is immutable value
-    if (obj === null || typeof obj !== 'object') {
-      return obj
-    }
 
-    // if obj is hit, it is in circular structure
-    var hit = find(cache, function (c) { return c.original === obj; });
-    if (hit) {
-      return hit.copy
-    }
-
-    var copy = Array.isArray(obj) ? [] : {};
-    // put the copy into cache at first
-    // because we want to refer it in recursive deepCopy
-    cache.push({
-      original: obj,
-      copy: copy
-    });
-
-    Object.keys(obj).forEach(function (key) {
-      copy[key] = deepCopy(obj[key], cache);
-    });
-
-    return copy
-  }
-
-  // Credits: borrowed code from fcomb/redux-logger
-
-  function createLogger (ref) {
-    if ( ref === void 0 ) ref = {};
-    var collapsed = ref.collapsed; if ( collapsed === void 0 ) collapsed = true;
-    var filter = ref.filter; if ( filter === void 0 ) filter = function (mutation, stateBefore, stateAfter) { return true; };
-    var transformer = ref.transformer; if ( transformer === void 0 ) transformer = function (state) { return state; };
-    var mutationTransformer = ref.mutationTransformer; if ( mutationTransformer === void 0 ) mutationTransformer = function (mut) { return mut; };
-    var actionFilter = ref.actionFilter; if ( actionFilter === void 0 ) actionFilter = function (action, state) { return true; };
-    var actionTransformer = ref.actionTransformer; if ( actionTransformer === void 0 ) actionTransformer = function (act) { return act; };
-    var logMutations = ref.logMutations; if ( logMutations === void 0 ) logMutations = true;
-    var logActions = ref.logActions; if ( logActions === void 0 ) logActions = true;
-    var logger = ref.logger; if ( logger === void 0 ) logger = console;
-
-    return function (store) {
-      var prevState = deepCopy(store.state);
-
-      if (typeof logger === 'undefined') {
-        return
-      }
-
-      if (logMutations) {
-        store.subscribe(function (mutation, state) {
-          var nextState = deepCopy(state);
-
-          if (filter(mutation, prevState, nextState)) {
-            var formattedTime = getFormattedTime();
-            var formattedMutation = mutationTransformer(mutation);
-            var message = "mutation " + (mutation.type) + formattedTime;
-
-            startMessage(logger, message, collapsed);
-            logger.log('%c prev state', 'color: #9E9E9E; font-weight: bold', transformer(prevState));
-            logger.log('%c mutation', 'color: #03A9F4; font-weight: bold', formattedMutation);
-            logger.log('%c next state', 'color: #4CAF50; font-weight: bold', transformer(nextState));
-            endMessage(logger);
-          }
-
-          prevState = nextState;
-        });
-      }
-
-      if (logActions) {
-        store.subscribeAction(function (action, state) {
-          if (actionFilter(action, state)) {
-            var formattedTime = getFormattedTime();
-            var formattedAction = actionTransformer(action);
-            var message = "action " + (action.type) + formattedTime;
-
-            startMessage(logger, message, collapsed);
-            logger.log('%c action', 'color: #03A9F4; font-weight: bold', formattedAction);
-            endMessage(logger);
-          }
-        });
-      }
-    }
-  }
-
-  function startMessage (logger, message, collapsed) {
-    var startMessage = collapsed
-      ? logger.groupCollapsed
-      : logger.group;
-
-    // render
-    try {
-      startMessage.call(logger, message);
-    } catch (e) {
-      logger.log(message);
-    }
-  }
-
-  function endMessage (logger) {
-    try {
-      logger.groupEnd();
-    } catch (e) {
-      logger.log('—— log end ——');
-    }
-  }
-
-  function getFormattedTime () {
-    var time = new Date();
-    return (" @ " + (pad(time.getHours(), 2)) + ":" + (pad(time.getMinutes(), 2)) + ":" + (pad(time.getSeconds(), 2)) + "." + (pad(time.getMilliseconds(), 3)))
-  }
-
-  function repeat (str, times) {
-    return (new Array(times + 1)).join(str)
-  }
-
-  function pad (num, maxLength) {
-    return repeat('0', maxLength - num.toString().length) + num
-  }
-
-  return createLogger;
-
-})));
-
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  } };exports.default = _default;
 
 /***/ }),
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */
+
+/***/ 21:
 /*!***********************************************************************!*\
   !*** /Users/liu/Documents/HBuilderProjects/uMa/static/img/nav-me.png ***!
   \***********************************************************************/
@@ -9432,7 +10356,8 @@ var SET_COST = 'SET_COST';exports.SET_COST = SET_COST;
 module.exports = "data:image/png;base64,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"
 
 /***/ }),
-/* 22 */
+
+/***/ 22:
 /*!************************************************************************!*\
   !*** /Users/liu/Documents/HBuilderProjects/uMa/static/img/nav-all.png ***!
   \************************************************************************/
@@ -9442,7 +10367,8 @@ module.exports = "data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QDKRXhpZgAA
 module.exports = "data:image/png;base64,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"
 
 /***/ }),
-/* 23 */
+
+/***/ 23:
 /*!************************************************************************!*\
   !*** /Users/liu/Documents/HBuilderProjects/uMa/static/img/members.png ***!
   \************************************************************************/
@@ -9452,7 +10378,8 @@ module.exports = "data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QDKRXhpZgAA
 module.exports = "data:image/png;base64,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"
 
 /***/ }),
-/* 24 */
+
+/***/ 24:
 /*!************************************************************************!*\
   !*** /Users/liu/Documents/HBuilderProjects/uMa/static/img/package.png ***!
   \************************************************************************/
@@ -9462,9 +10389,8 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAABpCAIAAABU
 module.exports = "data:image/png;base64,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"
 
 /***/ }),
-/* 25 */,
-/* 26 */,
-/* 27 */
+
+/***/ 27:
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
@@ -9474,7 +10400,8 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHIAAABqCAIAAADv
 module.exports = __webpack_require__(/*! regenerator-runtime */ 28);
 
 /***/ }),
-/* 28 */
+
+/***/ 28:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -9521,7 +10448,8 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 29 */
+
+/***/ 29:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -10252,7 +11180,39 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 30 */
+
+/***/ 3:
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ 30:
 /*!****************************************************************!*\
   !*** /Users/liu/Documents/HBuilderProjects/uMa/api/request.js ***!
   \****************************************************************/
@@ -10292,7 +11252,8 @@ function request(url) {var method = arguments.length > 1 && arguments[1] !== und
 }
 
 /***/ }),
-/* 31 */
+
+/***/ 31:
 /*!***************************************************************!*\
   !*** /Users/liu/Documents/HBuilderProjects/uMa/api/config.js ***!
   \***************************************************************/
@@ -10303,7 +11264,8 @@ function request(url) {var method = arguments.length > 1 && arguments[1] !== und
 Object.defineProperty(exports, "__esModule", { value: true });exports.baseUrl = void 0;var baseUrl = 'http://localhost:8080/static/mock/didi';exports.baseUrl = baseUrl;
 
 /***/ }),
-/* 32 */
+
+/***/ 32:
 /*!****************************************************************!*\
   !*** /Users/liu/Documents/HBuilderProjects/uMa/utils/index.js ***!
   \****************************************************************/
@@ -10396,7 +11358,8 @@ function isDecimalNum(num) {
 }
 
 /***/ }),
-/* 33 */
+
+/***/ 33:
 /*!*****************************************************************************!*\
   !*** /Users/liu/Documents/HBuilderProjects/uMa/common/constant/constant.js ***!
   \*****************************************************************************/
@@ -10494,7 +11457,8 @@ var moreResons = [
   checked: false }];exports.moreResons = moreResons;
 
 /***/ }),
-/* 34 */
+
+/***/ 34:
 /*!******************************************************************************!*\
   !*** /Users/liu/Documents/HBuilderProjects/uMa/common/lib/qqmap-wx-jssdk.js ***!
   \******************************************************************************/
@@ -11012,6 +11976,18 @@ QQMapWX = /*#__PURE__*/function () {
 
 QQMapWX;exports.default = _default;
 
+/***/ }),
+
+/***/ 4:
+/*!************************************************************!*\
+  !*** /Users/liu/Documents/HBuilderProjects/uMa/pages.json ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
 /***/ })
-]]);
+
+}]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map
