@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "driver-header": "/components/driver-header",
-    "star": "/components/star",
-    "common-footer": "/components/common-footer"
-  }
-}

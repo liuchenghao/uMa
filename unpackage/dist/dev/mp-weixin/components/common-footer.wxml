@@ -1,1 +1,0 @@
-<view class="{{['common-footer _div data-v-63fa3fdc',(noShadow)?'noShadow':'']}}"><label data-event-opts="{{[['tap',[['clickLeft',['$event']]]]]}}" class="need-help _span data-v-63fa3fdc" catchtap="__e">{{leftText}}</label><label data-event-opts="{{[['tap',[['clickRight',['$event']]]]]}}" class="end-trip _span data-v-63fa3fdc" catchtap="__e">{{rightText}}</label></view>

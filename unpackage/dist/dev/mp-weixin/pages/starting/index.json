@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "search-bar": "/components/search-bar",
-    "address-list": "/components/addressList"
-  }
-}

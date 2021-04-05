@@ -1,1 +1,0 @@
-<view class="star _div data-v-626069e6"><block wx:for="{{stars}}" wx:for-item="itemClass" wx:for-index="index" wx:key="*this"><label data-event-opts="{{[['tap',[['chooseStar',[index]]]]]}}" class="{{['star-item _span data-v-626069e6',itemClass]}}" catchtap="__e"></label></block></view>
