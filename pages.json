@@ -17,10 +17,10 @@
 		"path": "pages/order/index",
 		"style": {}
 	}, {
-		"path": "pages/sysm/login",
+		"path": "pages/passenger/start",
 		"style": {}
 	}, {
-		"path": "pages/sysm/logs",
+		"path": "pages/passenger/wait",
 		"style": {}
 	}, {
 		"path": "pages/order/cancel",
@@ -35,10 +35,10 @@
 		"path": "pages/order/why",
 		"style": {}
 	}, {
-		"path": "pages/passenger/start",
+		"path": "pages/sysm/login",
 		"style": {}
 	}, {
-		"path": "pages/passenger/wait",
+		"path": "pages/sysm/logs",
 		"style": {}
 	}],
 	"globalStyle": {
