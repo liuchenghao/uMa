@@ -1,44 +1,44 @@
 {
 	"pages": [{
-		"path": "pages/index/index",
+		"path": "pages/passenger/index",
 		"style": {
 			"navigationBarTitleText": "uMa出行"
 		}
 	}, {
-		"path": "pages/cars/index",
+		"path": "pages/passenger/cars",
 		"style": {}
 	}, {
-		"path": "pages/cityChoose/index",
+		"path": "pages/passenger/city",
 		"style": {}
 	}, {
-		"path": "pages/destination/index",
+		"path": "pages/passenger/dist",
 		"style": {}
 	}, {
-		"path": "pages/evaluation/index",
+		"path": "pages/order/index",
 		"style": {}
 	}, {
-		"path": "pages/login/index",
+		"path": "pages/sysm/login",
 		"style": {}
 	}, {
-		"path": "pages/logs/index",
+		"path": "pages/sysm/logs",
 		"style": {}
 	}, {
-		"path": "pages/orderCancel/index",
+		"path": "pages/order/cancel",
 		"style": {}
 	}, {
-		"path": "pages/orderClose/index",
+		"path": "pages/order/close",
 		"style": {}
 	}, {
-		"path": "pages/orderService/index",
+		"path": "pages/order/service",
 		"style": {}
 	}, {
-		"path": "pages/orderWhy/index",
+		"path": "pages/order/why",
 		"style": {}
 	}, {
-		"path": "pages/starting/index",
+		"path": "pages/passenger/start",
 		"style": {}
 	}, {
-		"path": "pages/wait/index",
+		"path": "pages/passenger/wait",
 		"style": {}
 	}],
 	"globalStyle": {

@@ -28,7 +28,7 @@
           success: function (res) {
             if (res.confirm) {
               wx.redirectTo({
-                url: "/pages/orderWhy/index",
+                url: "/pages/order/why",
               })
             } else if (res.cancel) {
               wx.navigateBack()

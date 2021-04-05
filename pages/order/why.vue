@@ -7,8 +7,8 @@
       </div>
       <div class="questionList weui-cells weui-cells_after-title">
         <checkbox-group @change="checkboxChange">
-          <label class="weui-cell weui-check__label" v-for="item in reasons" :key="item.value">
-            <checkbox class="weui-check" :value="item.value" :checked="item.checked"></checkbox>
+          <label class="weui-cell weui-check__label" v-for="(item, index) in reasons" :key="index">
+            <checkbox class="weui-check" value="item.value" checked="item.checked"></checkbox>
             <div class="text weui-cell__bd">
               {{item.name}}
             </div>
@@ -37,6 +37,9 @@
         isShowMore: true
       }
     },
+	created(){
+	  console.info(this.reasons)
+	},
     onUnload(){
       this.clearData()
     },
@@ -68,7 +71,7 @@
           icon: 'success',
           success: () => {
             wx.redirectTo({
-              url: "/pages/orderClose/index"
+              url: "/pages/order/close"
             })
           }
         })

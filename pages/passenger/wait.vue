@@ -77,7 +77,7 @@
             this.progressTxt = '匹配成功'
             clearInterval(countTimer);
             wx.redirectTo({
-              url: "/pages/orderService/index",
+              url: "/pages/order/service",
             });
           }
         }, 1000)
@@ -95,7 +95,7 @@
       },
       cancel(){
         wx.navigateTo({
-          url: "/pages/orderCancel/index",
+          url: "/pages/order/cancel",
         })
         this.clearData()
       },

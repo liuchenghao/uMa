@@ -135,7 +135,7 @@
       },
       cancel(){
         wx.navigateTo({
-          url: "/pages/orderCancel/index",
+          url: "/pages/order/cancel",
           success: () => {
             clearInterval(animationTimer)
           }
@@ -143,7 +143,7 @@
       },
       endTrip(){
         wx.redirectTo({
-          url: "/pages/evaluation/index",
+          url: "/pages/order/index",
         })
       },
       ...mapMutations({

@@ -192,7 +192,7 @@
 				//如果没有用户信息就跳转到登陆页
 				if (!this.$store.state.phone) {
 					wx.navigateTo({
-						url: '/pages/login/index'
+						url: '/pages/sysm/login'
 					})
 				} else {
 					wx.showToast({
@@ -203,17 +203,17 @@
 			},
 			navigateToCars() {
 				wx.navigateTo({
-					url: '/pages/cars/index'
+					url: '/pages/passenger/cars'
 				})
 			},
 			navigateToStarting() {
 				wx.navigateTo({
-					url: '/pages/starting/index'
+					url: '/pages/passenger/start'
 				})
 			},
 			navigateToDestination() {
 				wx.navigateTo({
-					url: '/pages/destination/index'
+					url: '/pages/passenger/dist'
 				})
 			},
 			showCost() {
@@ -232,7 +232,7 @@
 			confirmCost() {
 				this.saveCost(this.carCostArr[this.curCostIndex].cost)
 				wx.navigateTo({
-					url: "/pages/wait/index",
+					url: "/pages/passenger/wait",
 					success: () => {
 						this.isShowCost = false
 					}

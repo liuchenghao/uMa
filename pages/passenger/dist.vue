@@ -49,7 +49,7 @@
       },
       chooseCity(){
         wx.navigateTo({
-          url: '/pages/cityChoose/index',
+          url: '/pages/passenger/city',
           success: () => {
             this.clearData()
           }

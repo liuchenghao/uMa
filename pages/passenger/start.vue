@@ -96,7 +96,7 @@
       },
       chooseCity(){
         wx.navigateTo({
-          url: '/pages/cityChoose/index'
+          url: '/pages/passenger/city'
         })
       },
       search(value){
