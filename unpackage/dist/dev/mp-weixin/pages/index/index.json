@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "uMa出行",
+  "usingComponents": {
+    "loading-sprinner": "/components/loading-sprinner"
+  }
+}

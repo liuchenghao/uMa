@@ -1,0 +1,1 @@
+<view class="_div"><view class="container log-list _ul"><block wx:for="{{logs}}" wx:for-item="log" wx:for-index="index" wx:key="index"><view class="{{['log-item _li',(aa)?'red':'']}}"></view></block></view></view>

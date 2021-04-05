@@ -1,0 +1,22 @@
+.destination-page.data-v-76b4e3e8 {
+  width: 100%;
+  height: 100vh;
+}
+.destination-page .search-bar-wrapper.data-v-76b4e3e8 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  width: 100%;
+  z-index: 999;
+}
+.destination-page .addressList-wrapper.data-v-76b4e3e8 {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  overflow: hidden;
+}
+

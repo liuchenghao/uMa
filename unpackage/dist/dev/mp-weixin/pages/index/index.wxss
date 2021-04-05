@@ -1,0 +1,309 @@
+.home-page.data-v-57280228 {
+  padding: 0 12px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: #f4f6f8;
+}
+.home-page .nav-wrapper.data-v-57280228 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 54px;
+  width: 100%;
+  background: #ffffff;
+}
+.home-page .nav-wrapper .nav-me.data-v-57280228,
+.home-page .nav-wrapper .nav-all.data-v-57280228 {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 48px;
+          flex: 0 0 48px;
+  width: 48px;
+  height: 36px;
+}
+.home-page .nav-wrapper .nav-me ._img.data-v-57280228,
+.home-page .nav-wrapper .nav-all ._img.data-v-57280228 {
+  width: 48px;
+  height: 36px;
+}
+.home-page .nav-wrapper .nav-me.data-v-57280228 {
+  border-right: 1px solid #f5f5f5;
+}
+.home-page .nav-wrapper .nav.data-v-57280228 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  margin: 0 5px;
+  height: 54px;
+  line-height: 54px;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 0;
+}
+.home-page .nav-wrapper .nav .nav-item.data-v-57280228 {
+  margin: 0 10px;
+  display: inline-block;
+  font-size: 16px;
+}
+.home-page .nav-wrapper .nav .nav-item.data-v-57280228:first-child {
+  margin-left: 0;
+}
+.home-page .nav-wrapper .nav .nav-item.data-v-57280228:last-child {
+  margin-right: 0;
+}
+.home-page .nav-wrapper .nav .nav-item.active.data-v-57280228 {
+  color: #fc975c;
+}
+.home-page .card.data-v-57280228 {
+  position: relative;
+  margin-top: 74px;
+  padding: 5px 16px 0 16px;
+  background-color: #fff;
+  -webkit-border-radius: 5px;
+          border-radius: 5px;
+}
+.home-page .card.noWhite.data-v-57280228 {
+  background-color: #f4f6f8;
+}
+.home-page .card .loading-wrapper.data-v-57280228 {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 21px;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+.home-page .card .card-time.data-v-57280228 {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.7);
+}
+.home-page .card .card-start.data-v-57280228,
+.home-page .card .card-destination.data-v-57280228 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  height: 60px;
+  width: 100%;
+}
+.home-page .card .card-start .circle-green.data-v-57280228,
+.home-page .card .card-destination .circle-green.data-v-57280228 {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 10px;
+          flex: 0 0 10px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  background: #3cbca3;
+}
+.home-page .card .card-start .circle-orange.data-v-57280228,
+.home-page .card .card-destination .circle-orange.data-v-57280228 {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 10px;
+          flex: 0 0 10px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  background: #fc9153;
+}
+.home-page .card .card-start .card-address.data-v-57280228,
+.home-page .card .card-destination .card-address.data-v-57280228,
+.home-page .card .card-start .card-input-destination.data-v-57280228,
+.home-page .card .card-destination .card-input-destination.data-v-57280228 {
+  padding-right: 8px;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  display: inline-block;
+  margin-left: 20px;
+  height: 60px;
+  width: 100%;
+  line-height: 60px;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+.home-page .card .card-start .card-address.data-v-57280228::after,
+.home-page .card .card-destination .card-address.data-v-57280228::after,
+.home-page .card .card-start .card-input-destination.data-v-57280228::after,
+.home-page .card .card-destination .card-input-destination.data-v-57280228::after {
+  position: absolute;
+  top: calc((100% - 8px) / 2);
+  right: 0;
+  content: '';
+  display: inline-block;
+  height: 6px;
+  width: 6px;
+  border-width: 2px 2px 0 0;
+  border-color: #ccc;
+  border-style: solid;
+  -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+          transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+}
+.home-page .card .card-start .card-address.data-v-57280228,
+.home-page .card .card-destination .card-address.data-v-57280228 {
+  position: relative;
+}
+.home-page .card .card-start .card-address.data-v-57280228::before,
+.home-page .card .card-destination .card-address.data-v-57280228::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+.home-page .btn-call-car.data-v-57280228,
+.home-page .btn-confirm.data-v-57280228 {
+  margin-top: 20px;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  color: #fff;
+  background-color: #4a4c5b;
+  font-size: 18px;
+}
+.home-page .cost.data-v-57280228 {
+  width: 100%;
+  background: #fff;
+  -webkit-border-radius: 5px;
+          border-radius: 5px;
+}
+.home-page .cost .cost-header.data-v-57280228,
+.home-page .cost .cost-footer.data-v-57280228 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  width: 100%;
+}
+.home-page .cost .cost-header.data-v-57280228 {
+  height: 60px;
+  color: #666666;
+  border-bottom: 1px solid #f5f5f5;
+}
+.home-page .cost .cost-header .header-item.data-v-57280228 {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 auto;
+          flex: 0 0 auto;
+  height: 60px;
+  line-height: 60px;
+  font-size: 0;
+}
+.home-page .cost .cost-header .header-item ._img.data-v-57280228 {
+  vertical-align: middle;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+}
+.home-page .cost .cost-header .header-item ._span.data-v-57280228 {
+  margin-left: 5px;
+  vertical-align: middle;
+  display: inline-block;
+  font-size: 14px;
+}
+.home-page .cost .cost-footer.data-v-57280228 {
+  height: 130px;
+}
+.home-page .cost .cost-footer .carpooling.data-v-57280228 {
+  opacity: 0.6;
+  -webkit-transform: scale(0.7);
+          transform: scale(0.7);
+  font-size: 0;
+}
+.home-page .cost .cost-footer .carpooling.active.data-v-57280228 {
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.home-page .cost .cost-footer .carpooling .carpooling-name.data-v-57280228,
+.home-page .cost .cost-footer .carpooling .carpooling-cost.data-v-57280228 {
+  display: block;
+  text-align: center;
+}
+.home-page .cost .cost-footer .carpooling .carpooling-name.data-v-57280228 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+.home-page .cost .cost-footer .carpooling .carpooling-cost.data-v-57280228 {
+  font-size: 14px;
+  margin-top: 6px;
+}
+.home-page .cost .cost-footer .carpooling ._img.data-v-57280228 {
+  display: block;
+  width: 75px;
+  height: 35px;
+}
+.home-page .swiper-tab.data-v-57280228 {
+  margin-top: 24px;
+  width: 100%;
+  height: 100px;
+}
+.home-page .swiper-tab .swiper-item.data-v-57280228 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+}
+.home-page .swiper-tab .swiper-item .item-content ._img.data-v-57280228 {
+  height: 50px;
+  width: 50px;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+}
+.home-page .swiper-tab .swiper-item .item-content .img-no-round.data-v-57280228 {
+  height: 50px;
+  width: 74px;
+  -webkit-border-radius: 50% 0 0 50%;
+          border-radius: 50% 0 0 50%;
+}
+.home-page .swiper-tab .swiper-item .item-content .item-text.data-v-57280228 {
+  display: block;
+  font-size: 12px;
+  text-align: center;
+}
+.home-page .swiper-ad.data-v-57280228 {
+  margin-top: 30px;
+  height: 72px;
+  width: 100%;
+}
+.home-page .swiper-ad .swiper-item ._img.data-v-57280228 {
+  width: 100%;
+  height: 100%;
+}
+
