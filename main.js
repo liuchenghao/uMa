@@ -6,7 +6,8 @@ Vue.config.productionTip = false
 
 Vue.prototype.$http = http
 Vue.prototype.$store = store
-
+// import store from '@/vuex/store'
+// Vue.prototype.$store = store
 App.mpType = 'app'
 const app = new Vue({
 	store,
