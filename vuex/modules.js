@@ -29,7 +29,6 @@ let readyCreateModules = function(keys = []) {
   return keyContext;
 }
 let keyObjects = readyCreateModules(keys);
-console.info(keyObjects)
 let createModules = function(keyObjects = {}, modules = {}) {
   let isArray = Array.isArray(keyObjects);
   for (let key in keyObjects) {
@@ -41,7 +40,6 @@ let createModules = function(keyObjects = {}, modules = {}) {
           let _key = _path.replace(/[^\/]*[\/]+/g, '');
           modules[_key] = modulesContext(paths).default
         } else {
-          console.info(isArray, key)
           let keyModule = modules[key] = modules[key] || {};
           keyModule.namespaced = true;
           keyModule = keyModule["modules"] = keyModule["modules"] || {};
@@ -54,60 +52,5 @@ let createModules = function(keyObjects = {}, modules = {}) {
     }
   }
   return modules;
-  // function createModule(paths, modules) {
-  //   paths.map(function(path) {
-  //     let isArray = Array.isArray(path);
-  //     if (isArray) {
-  //       let _path = path.replace(/(^\.\/)|(\.js$)/g, '');
-  //       let _key = _path.replace(/[^\/]*[\/]+/g, '');
-  //       modules[_key] = modulesContext(path).default
-  //     } else {
-
-  //     }
-  //   });
-  // }
-  // keyObjects.map(function(key) {
-  //   let _path = key.replace(/(^\.\/)|(\.js$)/g, '');
-  //   let path = _path.replace(/[\/]?modules\/store\/.*/, '');
-  //   let paths = path.split(/\//);
-  //   if (paths.length > 1) {
-  //     createSubContext(paths, key, keyContext);
-  //   } else {
-  //     // root
-  //     let keyArray = keyContext[path] = keyContext[path] || [];
-  //     keyArray.push(key);
-  //   }
-  // });
-  // let subKeys = [];
-  // let modules = {};
-  // let len = keys.length;
-  // for (var i = len - 1; i >= 0; i--) {
-  //   let key = keys[i];
-  //   let _path = key.replace(/(^\.\/)|(\.js$)/g, '');
-  //   let path = _path.replace(/modules\/store\/.*/, '');
-  //   if (path) {
-  //     // let
-  //     //   subKeys.push(key);
-  //   } else {
-  //     let _key = _path.replace(/[^\/]*[\/]+/g, '');
-  //     modules[_key] = modulesContext(key).default;
-  //   }
-
-  // }
-  // let subKeysLen = subKeys.length;
-  // if (subKeysLen) {
-  //   modules["modules"] = createModules(subKeys);
-  // }
-  // return keys.reduce((modules, key) => {
-
-  //   return modules
-  // }, {})
 }
-console.info(keys, "=============", createModules(keyObjects))
 export default createModules(keyObjects);
-/* export default modulesContext.keys().reduce((modules, key) => {
-  let _key = key.replace(/[^\/]*[\/]+/g, '')
-  _key = _key.replace(/(^\.\/)|(\.js$)/g, '')
-  modules[_key] = modulesContext(key).default
-  return modules
-}, {}) */

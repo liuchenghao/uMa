@@ -36,7 +36,6 @@ http.interceptors.response.use(async (response) => {
 	// if (response.data.code !== 200) { // 服务端返回的状态码不等于200，则reject()
 	//   return Promise.reject(response)
 	// }
-	console.info("-----", response.data)
 	let e = response.data;
 	if (e.errorCode == 500) {
 		alert("系统繁忙，请稍后再试！");
