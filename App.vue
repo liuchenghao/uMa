@@ -1,8 +1,24 @@
 <script>
+  import { createNamespacedHelpers } from 'vuex'
+  
+  const { mapState, mapActions } = createNamespacedHelpers('passenger/test1/test2/index')
+  
 	export default {
+    computed:{
+      ...mapState({
+        categories: state => {
+          console.info(arguments, "========" ,state.categories)
+          return state.categories
+        }
+      })
+    },
 		onLaunch: function() {
 			console.warn('当前组件仅支持 uni_modules 目录结构 ，请升级 HBuilderX 到 3.1.0 版本以上！')
 			console.log('App Launch')
+      // let aa = mapState({
+      //   categories: state => state.categories
+      // })
+      console.info(this.categories, "=========")
 			let id = Math.random() > 0.5 ? Date.now() : undefined;
 			this.$http
 				.post(
@@ -40,6 +56,7 @@
 		},
 		onShow: function() {
 			console.log('App Show')
+			console.log(this.$store, "=======")
 		},
 		onHide: function() {
 			console.log('App Hide')

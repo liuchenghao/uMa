@@ -1,24 +1,25 @@
 /* eslint-disable-next-line no-param-reassign */
 import {
   SET_CUR_NAV_INDEX
-} from '@/vuex/types';
+} from '../types';
 
+// state
 const state = {
   categories: [],
 };
 
-const actions = {
-  setCategories(context, payload) {
-    context.commit(SET_CUR_NAV_INDEX, payload);
-  },
-};
-
+// mutations
 const mutations = {
   [SET_CUR_NAV_INDEX](state, payload) {
     if (payload) state.categories = payload;
   },
 };
-
+// actions
+const actions = {
+  setCategories(context, payload) {
+    context.commit(SET_CUR_NAV_INDEX, payload);
+  },
+};
 const getters = {
   get: state => {
     return data => {
