@@ -1,28 +1,15 @@
 <template>
   <div class="starting-page">
     <div class="search-bar-wrapper">
-      <search-bar ref="searchBar"
-                  :curCity="curCity"
-                  @chooseCity="chooseCity"
-                  @cancel="cancel"></search-bar>
+      <search-bar ref="searchBar" :curCity="curCity" @chooseCity="chooseCity" @cancel="cancel"></search-bar>
     </div>
     <!--<div class="address-list-wrapper" v-if="addresses.length">-->
     <!--<address-list :data="addresses" @choose="chooseItem"></address-list>-->
     <!--</div>-->
-    <map class="map-didi"
-         id="map-didi"
-         :latitude="latitude"
-         :longitude="longitude"
-         :markers="markers"
-         @regionchange="regionChange"
-         @begin="begin"
-         @end="end"
-         show-location
-    >
+    <map class="map-didi" id="map-didi" :latitude="latitude" :longitude="longitude" :markers="markers"
+      @regionchange="regionChange" @begin="begin" @end="end" show-location>
 
-      <cover-image class="location-marker"
-                   src="/static/img/location.png"
-                   @click.stop="onclickLocation">
+      <cover-image class="location-marker" src="/static/img/location.png" @click.stop="onclickLocation">
       </cover-image>
 
       <cover-view class="center-marker">
@@ -47,10 +34,18 @@
 <script type="text/ecmascript-6">
   import AddressList from '../../components/addressList.vue'
   import SearchBar from '../../components/search-bar.vue'
-  import {QQ_MAP_key} from '../../common/constant/constant'
+  import {
+    QQ_MAP_key
+  } from '../../common/constant/constant'
   import QQMapWX from '../../common/lib/qqmap-wx-jssdk.js'
-  import {reverseGeocoder, getRandomNum} from '../../utils/index'
-  import {mapMutations, mapState} from 'vuex'
+  import {
+    reverseGeocoder,
+    getRandomNum
+  } from '../../utils/index'
+  import {
+    mapMutations,
+    mapState
+  } from 'vuex'
 
   const qqmapsdk = new QQMapWX({
     key: QQ_MAP_key
@@ -58,8 +53,8 @@
 
   let touchTimeStamp = 0
 
-  export default{
-    data(){
+  export default {
+    data() {
       return {
         latitude: 0,
         longitude: 0,
@@ -69,18 +64,18 @@
         minutes: getRandomNum(3, 12)
       }
     },
-    onShow(){
-//     保证后面可以拿到经纬度
-      this.initLocation()
-      this.mapCtx = wx.createMapContext("map-didi"); // 地图组件的id
-      console.log('this.curNavIndex', this.curNavIndex)
-      this.updateCars()
+    onShow() {
+      //     保证后面可以拿到经纬度
+      // this.initLocation()
+      // this.mapCtx = wx.createMapContext("map-didi"); // 地图组件的id
+      // console.log('this.curNavIndex', this.curNavIndex)
+      // this.updateCars()
     },
-    onUnload(){
+    onUnload() {
       this.clearData()
     },
     methods: {
-      initLocation(){
+      initLocation() {
         if (this.startPosition.length) {
           this.latitude = this.startPosition[0]
           this.longitude = this.startPosition[1]
@@ -94,12 +89,12 @@
           })
         }
       },
-      chooseCity(){
+      chooseCity() {
         wx.navigateTo({
           url: '/pages/passenger/city'
         })
       },
-      search(value){
+      search(value) {
         if (value.length === 0) {
           this.addresses = []
           return
@@ -112,7 +107,7 @@
           }
         })
       },
-      chooseItem(item){
+      chooseItem(item) {
         console.log(item)
         this.latitude = item.location.lat
         this.longitude = item.location.lng
@@ -122,28 +117,32 @@
         this.goBack()
         this.$refs.searchBar.clear()
       },
-      cancel(){
+      cancel() {
         wx.navigateBack()
         this.clearData()
       },
-      clearData(){
+      clearData() {
         this.addresses = []
         this.$refs.searchBar.clear()
       },
-      onclickLocation(e){
+      onclickLocation(e) {
         this.mapCtx.moveToLocation()
       },
-      regionChange(){
+      regionChange() {
         console.log('regionChange', e)
 
       },
-      begin({timeStamp}){
+      begin({
+        timeStamp
+      }) {
         touchTimeStamp = timeStamp
       },
-      end({timeStamp}){
+      end({
+        timeStamp
+      }) {
         console.log('end')
-//       加入时间判断
-//       解决修改data内数据导致地图在拖动开始时闪回原位的bug
+        //       加入时间判断
+        //       解决修改data内数据导致地图在拖动开始时闪回原位的bug
         if (timeStamp - touchTimeStamp > 50) {
           this.mapCtx.getCenterLocation({
             success: (res) => {
@@ -167,7 +166,7 @@
           })
         }
       },
-      updateCars(){
+      updateCars() {
         this.markers = []
         const carNum = getRandomNum(3, 8)
         for (let i = 1; i <= carNum; i++) {
@@ -192,7 +191,7 @@
           this.markers.push(car)
         }
       },
-      setStartPlace(){
+      setStartPlace() {
         //这里只需要再保存位置就好了
         this.saveStartPosition([this.latitude, this.longitude])
         wx.redirectTo({
@@ -229,11 +228,13 @@
     width: 100%;
     height: 100vh;
     overflow: hidden;
+
     .search-bar-wrapper {
       width: 100%;
       height: 44px;
       .card-shadow(#e0e0e0)
     }
+
     /*.address-list-wrapper {*/
     /*position: fixed;*/
     /*top: 45px;*/
@@ -247,6 +248,7 @@
     .map-didi {
       width: 100%;
       height: calc(100% - 44px);
+
       .location-marker {
         position: fixed;
         left: 12px;
@@ -254,6 +256,7 @@
         width: 32px;
         height: 32px;
       }
+
       .center-marker {
         position: fixed;
         left: 50%;
@@ -262,6 +265,7 @@
         width: 110px;
         height: 70px;
         text-align: center;
+
         .text-center {
           padding: 0 4px;
           position: relative;
@@ -273,6 +277,7 @@
           border-radius: 12px;
           box-sizing: border-box;
         }
+
         .inverted-triangle {
           position: absolute;
           left: 45px;
@@ -280,6 +285,7 @@
           width: 20px;
           height: 20px;
         }
+
         .img-center {
           display: inline-block;
           margin-top: 8px;
@@ -287,6 +293,7 @@
           height: 40px;
         }
       }
+
       .address {
         display: flex;
         align-items: center;
@@ -298,21 +305,25 @@
         box-sizing: border-box;
         overflow: hidden;
         background-color: #fff;
+
         .img-address {
           padding-left: 4px;
           flex: 0 0 40px;
           width: 40px;
           height: 40px;
         }
+
         .address-desc {
           margin-left: 5px;
           flex: 1;
           height: 40px;
+
           .blur {
             font-size: 14px;
             color: #333333;
             .no-wrap();
           }
+
           .detail {
             padding-top: 6px;
             .no-wrap();
@@ -320,6 +331,7 @@
             color: #c7c7c7;
           }
         }
+
         .btn-address {
           padding: 20px;
           letter-spacing: 4px;

@@ -1,7 +1,7 @@
 <script>
   import { createNamespacedHelpers } from 'vuex'
   
-  const { mapState, mapActions } = createNamespacedHelpers('passenger/test1/test2/index')
+  const { mapState, mapActions } = createNamespacedHelpers('passenger/index')
   
 	export default {
     computed:{

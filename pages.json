@@ -1,57 +1,60 @@
 {
-	"pages": [{
-		"path": "pages/passenger/index",
-		"style": {
-			"navigationBarTitleText": "uMa出行"
-		}
-	}, {
-		"path": "pages/passenger/cars",
-		"style": {}
-	}, {
-		"path": "pages/passenger/city",
-		"style": {}
-	}, {
-		"path": "pages/passenger/dist",
-		"style": {}
-	}, {
-		"path": "pages/order/index",
-		"style": {}
-	}, {
-		"path": "pages/passenger/start",
-		"style": {}
-	}, {
-		"path": "pages/passenger/wait",
-		"style": {}
-	}, {
-		"path": "pages/order/cancel",
-		"style": {}
-	}, {
-		"path": "pages/order/close",
-		"style": {}
-	}, {
-		"path": "pages/order/service",
-		"style": {}
-	}, {
-		"path": "pages/order/why",
-		"style": {}
-	}, {
-		"path": "pages/sysm/login",
-		"style": {}
-	}, {
-		"path": "pages/sysm/logs",
-		"style": {}
-	}],
-	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uMa出行",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8",
-		"app-plus": {
-			"background": "#efeff4"
-		},
-		"h5": {
-		  // h5 不显示顶部导航栏
-		  "titleNView": false
-		}
-	}
+  "pages": [{
+    "path": "pages/passenger/index",
+    "style": {
+      "navigationBarTitleText": "uMa出行"
+    }
+  }, {
+    "path": "pages/passenger/cars",
+    "style": {}
+  }, {
+    "path": "pages/passenger/map",
+    "style": {}
+  }, {
+    "path": "pages/passenger/city",
+    "style": {}
+  }, {
+    "path": "pages/passenger/dist",
+    "style": {}
+  }, {
+    "path": "pages/order/index",
+    "style": {}
+  }, {
+    "path": "pages/passenger/start",
+    "style": {}
+  }, {
+    "path": "pages/passenger/wait",
+    "style": {}
+  }, {
+    "path": "pages/order/cancel",
+    "style": {}
+  }, {
+    "path": "pages/order/close",
+    "style": {}
+  }, {
+    "path": "pages/order/service",
+    "style": {}
+  }, {
+    "path": "pages/order/why",
+    "style": {}
+  }, {
+    "path": "pages/sysm/login",
+    "style": {}
+  }, {
+    "path": "pages/sysm/logs",
+    "style": {}
+  }],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uMa出行",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8",
+    "app-plus": {
+      "background": "#efeff4"
+    },
+    "h5": {
+      // h5 不显示顶部导航栏
+      "titleNView": false
+    }
+  }
 }
