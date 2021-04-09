@@ -39,7 +39,7 @@
   import {QQ_MAP_key} from '../../common/constant/constant'
   import QQMapWX from '../../common/lib/qqmap-wx-jssdk.js'
   import {reverseGeocoder} from '../../utils/index'
-  import {mapState, mapMutations} from 'vuex'
+  import {mapState, mapMutations, mapActions} from 'vuex'
 
 
   const qqmapsdk = new QQMapWX({
@@ -73,8 +73,8 @@
     },
     methods: {
       chooseCity(city){
-        console.log(city)
         this.saveCurCity(city)
+        console.log(this.curCity)
         qqmapsdk.geocoder({
           address: city,
           success: (res) => {
@@ -91,7 +91,7 @@
           }
         })
       },
-      ...mapMutations({
+      ...mapActions("passenger/index", {
         saveCurCity: 'SET_CUR_CITY',
         saveStartPosition: 'SET_START_POSITION',
         saveStartPlace: 'SET_START_PLACE',
@@ -99,7 +99,7 @@
       })
     },
     computed: {
-      ...mapState([
+      ...mapState("passenger/index", [
         'curCity',
         'startFormattedPlace'
       ])

@@ -48,6 +48,7 @@
   import SearchBar from '@/components/search-bar.vue';
   import {
     mapMutations,
+    mapActions,
     mapState
   } from 'vuex';
   export default {
@@ -82,7 +83,14 @@
         this.clearData()
       },
       clearData() {},
-      ...mapMutations({
+      setStartPlace() {
+        //这里只需要再保存位置就好了
+        this.saveStartPosition([this.latitude, this.longitude])
+        uni.redirectTo({
+          url: "/pages/index/index",
+        })
+      },
+      ...mapActions("passenger/index", {
         saveStartPlace: 'SET_START_PLACE',
         saveFormattedStartPlace: 'SET_FORMATTED_START_PLACE',
         saveCurCity: 'SET_CUR_CITY',
@@ -90,7 +98,7 @@
       })
     },
     computed: {
-      ...mapState([
+      ...mapState("passenger/index", [
         'curNavIndex',
         'curCity',
         'startPlace',
