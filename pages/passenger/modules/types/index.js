@@ -18,5 +18,10 @@ export const SET_DRIVER = 'SET_DRIVER'
 
 export const SET_COST = 'SET_COST'
 
+export const GET_INDEX_INFO = 'GET_INDEX_INFO'
+
+export const SET_INDEX_INFO = 'SET_INDEX_INFO'
+
+
 
 

@@ -36,13 +36,13 @@
 						header: {
 							custom: 66
 						},
-						getTask: (task, options) => {
+						/* getTask: (task, options) => {
 							setTimeout(() => {
 								task.abort();
 							}, 1000);
 							console.log(task);
 							console.log(options);
-						}
+						} */
 					}
 				)
 				.then(res => {

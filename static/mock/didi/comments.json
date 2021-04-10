@@ -1,4 +1,6 @@
 {
+  "errorCode": 200,
+  "success": true,
   "data": {
     "waitingTimes": [
       "最快3分钟接驾",
@@ -64,12 +66,12 @@
       },
       {
         "id": "1",
-        "name": "火车",
+        "name": "飞机",
         "url": "/static/img/car/cart2.png"
       },
       {
         "id": "2",
-        "name": "飞机",
+        "name": "火车",
         "url": "/static/img/car/cart3.png"
       }
     ],

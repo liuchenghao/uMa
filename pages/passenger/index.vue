@@ -159,7 +159,8 @@
     },
     methods: {
       async getInitData() {
-        const res = await request('/comments')
+        
+        const res = await this.getIndexInfo();//request('/comments')
         //        console.log('res', res)
         this.imgUrls = res.data.imgUrls
         this.navData = res.data.navData
@@ -246,7 +247,8 @@
         saveFormattedStartPlace: 'SET_FORMATTED_START_PLACE',
         saveCurCity: 'SET_CUR_CITY',
         saveStartPosition: 'SET_START_POSITION',
-        saveCost: 'SET_COST'
+        saveCost: 'SET_COST',
+        getIndexInfo: 'GET_INDEX_INFO'
       })
     },
     computed: {
