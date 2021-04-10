@@ -104,7 +104,8 @@
   import LoadingSprinner from '../../components/loading-sprinner.vue'
   import {
     mapState,
-    mapMutations
+    mapMutations,
+    mapActions
   } from 'vuex'
   import {
     QQ_MAP_key,
@@ -183,7 +184,8 @@
         })
       },
       switchNav(index) {
-        this.saveCurNavIndex(index)
+        this.saveCurNavIndex(index);
+        console.info(this.curNavIndex, index)
       },
       switchTab(e) {
         this.saveCurNavIndex(e.mp.detail.current)
@@ -202,23 +204,23 @@
         }
       },
       navigateToCars() {
-        wx.navigateTo({
+        uni.navigateTo({
           url: '/pages/passenger/cars'
         })
       },
       navigateToStarting() {
-        wx.navigateTo({
+        uni.navigateTo({
           url: '/pages/passenger/map'
         })
       },
       navigateToDestination() {
-        wx.navigateTo({
+        uni.navigateTo({
           url: '/pages/passenger/dist'
         })
       },
       showCost() {
         if (this.destination == INIT_DESTINATION || this.destination == null) {
-          wx.showToast({
+          uni.showToast({
             title: '请先选择目的地!',
             icon: 'none'
           })
@@ -238,7 +240,7 @@
           }
         })
       },
-      ...mapMutations({
+      ...mapActions("passenger/index", {
         saveCurNavIndex: 'SET_CUR_NAV_INDEX',
         saveStartPlace: 'SET_START_PLACE',
         saveFormattedStartPlace: 'SET_FORMATTED_START_PLACE',
@@ -248,7 +250,7 @@
       })
     },
     computed: {
-      ...mapState([
+      ...mapState("passenger/index", [
         'startFormattedPlace',
         'destination',
         'curNavIndex'

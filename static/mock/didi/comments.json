@@ -59,43 +59,18 @@
     "navData": [
       {
         "id": "0",
-        "name": "快车",
+        "name": "预约",
         "url": "/static/img/car/cart1.png"
       },
       {
         "id": "1",
-        "name": "专车",
+        "name": "火车",
         "url": "/static/img/car/cart2.png"
       },
       {
         "id": "2",
-        "name": "出租车",
+        "name": "飞机",
         "url": "/static/img/car/cart3.png"
-      },
-      {
-        "id": "3",
-        "name": "顺风车",
-        "url": "/static/img/car/cart4.png"
-      },
-      {
-        "id": "4",
-        "name": "公交",
-        "url": "/static/img/car/cart5.png"
-      },
-      {
-        "id": "5",
-        "name": "代驾",
-        "url": "/static/img/car/cart6.png"
-      },
-      {
-        "id": "6",
-        "name": "自驾租车",
-        "url": "/static/img/car/cart7.png"
-      },
-      {
-        "id": "7",
-        "name": "二手车",
-        "url": "/static/img/car/cart8.png"
       }
     ],
     "imgUrls": ["/static/img/swiper/swiper-1.png","/static/img/swiper/swiper-2.png","/static/img/swiper/swiper-3.png"

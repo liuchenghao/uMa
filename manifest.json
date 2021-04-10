@@ -55,7 +55,8 @@
         "setting" : {
             "urlCheck" : false
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "permission" : {}
     },
     "h5" : {
         "devServer" : {
@@ -65,6 +66,16 @@
                     "pathRewrite" : {
                         "^/prefix" : ""
                     }
+                }
+            }
+        },
+        "router" : {
+            "mode" : "history"
+        },
+        "sdkConfigs" : {
+            "maps" : {
+                "qqmap" : {
+                    "key" : "CD5BZ-ECWCX-LPF4D-TLHMR-P4STT-LUFYU"
                 }
             }
         }

@@ -23,7 +23,7 @@
     <map class="map-didi" id="map-didi" :latitude="latitude" :longitude="longitude" :markers="markers"
       @regionchange="regionChange" @begin="begin" @end="end" show-location>
 
-      <cover-image class="location-marker" src="/static/img/location.png" @click.stop="onclickLocation">
+      <cover-image class="location-marker" src="/static/img/location.png" @click.stop="onClickLocation">
       </cover-image>
 
       <cover-view class="center-marker">
@@ -46,21 +46,29 @@
 </template>
 <script>
   import SearchBar from '@/components/search-bar.vue';
+  // import mapSearch from '@weex/mapSearch';
   import {
     mapMutations,
     mapActions,
     mapState
   } from 'vuex';
   export default {
+    onShow() {
+      //     保证后面可以拿到经纬度
+      this.initLocation()
+      this.mapCtx = uni.createMapContext("map-didi"); // 地图组件的id
+      // this.updateCars()
+    },
     components: {
       SearchBar,
     },
     data() {
       return {
-        id: 0, // 使用 marker点击事件 需要填写id
-        title: 'map',
         latitude: 39.909,
         longitude: 116.39742,
+        scale: 16,
+        markers: [],
+        minutes: this.getRandomNum(),
         covers: [{
           latitude: 39.909,
           longitude: 116.39742,
@@ -72,7 +80,37 @@
         }]
       }
     },
+    computed: {
+      ...mapState("passenger/index", [
+        'curNavIndex',
+        'curCity',
+        'startPlace',
+        'startFormattedPlace',
+        'startPosition'
+      ])
+    },
     methods: {
+      ...mapActions("passenger/index", {
+        saveStartPlace: 'SET_START_PLACE',
+        saveFormattedStartPlace: 'SET_FORMATTED_START_PLACE',
+        saveCurCity: 'SET_CUR_CITY',
+        saveStartPosition: 'SET_START_POSITION'
+      }),
+      initLocation() {
+        if (this.startPosition.length) {
+          this.latitude = this.startPosition[0]
+          this.longitude = this.startPosition[1]
+        } else {
+          uni.getLocation({
+            type: "gcj02",
+            success: (res) => {
+              this.longitude = res.longitude
+              this.latitude = res.latitude
+            },
+            fail: (e) => {}
+          });
+        }
+      },
       chooseCity() {
         uni.navigateTo({
           url: '/pages/passenger/city'
@@ -82,29 +120,107 @@
         uni.navigateBack()
         this.clearData()
       },
+      onClickLocation(e) {
+        let latitude = this.latitude;
+        let longitude = this.longitude
+        this.mapCtx.moveToLocation({
+          latitude,
+          longitude
+        });
+      },
       clearData() {},
       setStartPlace() {
         //这里只需要再保存位置就好了
         this.saveStartPosition([this.latitude, this.longitude])
         uni.redirectTo({
-          url: "/pages/index/index",
+          url: "/pages/passenger/index",
         })
       },
-      ...mapActions("passenger/index", {
-        saveStartPlace: 'SET_START_PLACE',
-        saveFormattedStartPlace: 'SET_FORMATTED_START_PLACE',
-        saveCurCity: 'SET_CUR_CITY',
-        saveStartPosition: 'SET_START_POSITION'
-      })
-    },
-    computed: {
-      ...mapState("passenger/index", [
-        'curNavIndex',
-        'curCity',
-        'startPlace',
-        'startFormattedPlace',
-        'startPosition'
-      ])
+      getRandomNum() {
+        return parseInt(Math.random() * 20);
+      },
+      regionChange(data) {
+        // console.log('regionChange', e)
+        let {
+          type
+        } = data;
+        if (type == "end") {
+          let _this = this;
+          this.mapCtx.getCenterLocation({
+            success: (res) => {
+              let {
+                latitude,
+                longitude
+              } = res;
+              /* console.info("mapSearch", mapSearch)
+              _this.mapCtx.reverseGeocode({
+                latitude,
+                longitude
+              }, (res) => {
+                console.info(res, "===========")
+              }); */
+              uni.chooseLocation({
+                latitude,
+                longitude,
+                success: (res) => {
+                  // console.info(res, "===__000--=")
+                  // console.log('位置名称：' + res.name);
+                  // console.log('详细地址：' + res.address);
+                  // console.log('纬度：' + res.latitude);
+                  // console.log('经度：' + res.longitude);
+                  let {
+                    name,
+                    address,
+                    latitude,
+                    longitude
+                  } = res
+                  _this.saveStartPlace(address);
+                  _this.saveFormattedStartPlace(name)
+                  const lon_distance = longitude - _this.longitude
+                  const lat_distance = latitude - _this.latitude
+                  // 更新当前位置坐标
+                  _this.longitude = longitude
+                  _this.latitude = latitude
+                  //判断屏幕移动的距离，如果超过阀值
+                  if (Math.abs(lon_distance) >= 0.0022 || Math.abs(lat_distance) >= 0.0022) {
+                    //刷新附近的车
+                    _this.updateCars()
+                    //刷新等待时间
+                    _this.minutes = _this.getRandomNum(3, 12)
+                  }
+                }
+              });
+            }
+          });
+        }
+      },
+ 
+      updateCars() {
+        this.markers = []
+        const carNum = this.getRandomNum(3, 8)
+        for (let i = 1; i <= carNum; i++) {
+          // 定义一个车对象
+          let car = {
+            id: 0,
+            iconPath: "/static/img/car/cart1.png",
+            latitude: 0,
+            longitude: 0,
+            width: 35,
+            height: 15
+          }
+
+          //随机值
+          const lon_dis = (Math.ceil(Math.random() * 99)) * 0.00012;
+          const lat_dis = (Math.ceil(Math.random() * 99)) * 0.00012;
+
+          car.id = 2 + i
+          car.latitude = this.latitude + lat_dis
+          car.longitude = this.longitude + lon_dis
+          car.iconPath = `/static/img/car/cart${this.curNavIndex + 1}.png`
+          this.markers.push(car)
+        }
+      }
+
     },
   }
 </script>
