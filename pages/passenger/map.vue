@@ -55,7 +55,7 @@
   export default {
     onShow() {
       //     保证后面可以拿到经纬度
-      this.initLocation()
+      this.initLocation();
       this.mapCtx = uni.createMapContext("map-didi"); // 地图组件的id
       // this.updateCars()
     },
@@ -78,7 +78,7 @@
           longitude: 116.39,
           // iconPath: '../../../static/location.png'
         }]
-      }
+      };
     },
     computed: {
       ...mapState("passenger/index", [
@@ -98,14 +98,14 @@
       }),
       initLocation() {
         if (this.startPosition.length) {
-          this.latitude = this.startPosition[0]
-          this.longitude = this.startPosition[1]
+          this.latitude = this.startPosition[0];
+          this.longitude = this.startPosition[1];
         } else {
           uni.getLocation({
             type: "gcj02",
             success: (res) => {
-              this.longitude = res.longitude
-              this.latitude = res.latitude
+              this.longitude = res.longitude;
+              this.latitude = res.latitude;
             },
             fail: (e) => {}
           });
@@ -114,15 +114,15 @@
       chooseCity() {
         uni.navigateTo({
           url: '/pages/passenger/city'
-        })
+        });
       },
       chooseCancel() {
-        uni.navigateBack()
-        this.clearData()
+        uni.navigateBack();
+        this.clearData();
       },
       onClickLocation(e) {
         let latitude = this.latitude;
-        let longitude = this.longitude
+        let longitude = this.longitude;
         this.mapCtx.moveToLocation({
           latitude,
           longitude
@@ -131,10 +131,10 @@
       clearData() {},
       setStartPlace() {
         //这里只需要再保存位置就好了
-        this.saveStartPosition([this.latitude, this.longitude])
+        this.saveStartPosition([this.latitude, this.longitude]);
         uni.redirectTo({
           url: "/pages/passenger/index",
-        })
+        });
       },
       getRandomNum() {
         return parseInt(Math.random() * 20);
@@ -150,7 +150,7 @@
             success: (res) => {
               let {
                 latitude,
-                longitude
+                longitude,
               } = res;
               /* console.info("mapSearch", mapSearch)
               _this.mapCtx.reverseGeocode({
@@ -173,20 +173,20 @@
                     address,
                     latitude,
                     longitude
-                  } = res
+                  } = res;
                   _this.saveStartPlace(address);
-                  _this.saveFormattedStartPlace(name)
-                  const lon_distance = longitude - _this.longitude
-                  const lat_distance = latitude - _this.latitude
+                  _this.saveFormattedStartPlace(name);
+                  const lon_distance = longitude - _this.longitude;
+                  const lat_distance = latitude - _this.latitude;
                   // 更新当前位置坐标
-                  _this.longitude = longitude
-                  _this.latitude = latitude
+                  _this.longitude = longitude;
+                  _this.latitude = latitude;
                   //判断屏幕移动的距离，如果超过阀值
                   if (Math.abs(lon_distance) >= 0.0022 || Math.abs(lat_distance) >= 0.0022) {
                     //刷新附近的车
-                    _this.updateCars()
+                    _this.updateCars();
                     //刷新等待时间
-                    _this.minutes = _this.getRandomNum(3, 12)
+                    _this.minutes = _this.getRandomNum(3, 12);
                   }
                 }
               });
@@ -194,10 +194,10 @@
           });
         }
       },
- 
+
       updateCars() {
-        this.markers = []
-        const carNum = this.getRandomNum(3, 8)
+        this.markers = [];
+        const carNum = this.getRandomNum(3, 8);
         for (let i = 1; i <= carNum; i++) {
           // 定义一个车对象
           let car = {
@@ -207,22 +207,22 @@
             longitude: 0,
             width: 35,
             height: 15
-          }
+          };
 
           //随机值
           const lon_dis = (Math.ceil(Math.random() * 99)) * 0.00012;
           const lat_dis = (Math.ceil(Math.random() * 99)) * 0.00012;
 
-          car.id = 2 + i
-          car.latitude = this.latitude + lat_dis
-          car.longitude = this.longitude + lon_dis
-          car.iconPath = `/static/img/car/cart${this.curNavIndex + 1}.png`
-          this.markers.push(car)
+          car.id = 2 + i;
+          car.latitude = this.latitude + lat_dis;
+          car.longitude = this.longitude + lon_dis;
+          car.iconPath = `/static/img/car/cart${this.curNavIndex + 1}.png`;
+          this.markers.push(car);
         }
       }
 
     },
-  }
+  };
 </script>
 
 <style>
