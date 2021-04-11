@@ -144,6 +144,7 @@
       }
     },
     created() {
+      console.info(this.$map, 'map--------')
       this.getInitData()
       //    维护一个nav各项navScrollLeft的长度数组
       this.navOffsetArr = [
