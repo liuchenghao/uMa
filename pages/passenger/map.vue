@@ -21,7 +21,7 @@
       <search-bar ref="searchBar" :curCity="curCity" @chooseCity="chooseCity" @cancel="chooseCancel"></search-bar>
     </div>
     <map class="map-didi" id="map-didi" :latitude="latitude" :longitude="longitude" :markers="markers"
-      @regionchange="regionChange" @begin="begin" @end="end" show-location>
+      @regionchange="regionChange" show-location>
 
       <cover-image class="location-marker" src="/static/img/location.png" @click.stop="onClickLocation">
       </cover-image>
@@ -97,6 +97,7 @@
         saveStartPosition: 'SET_START_POSITION'
       }),
       initLocation() {
+        console.info("=+=+====+============");
         if (this.startPosition.length) {
           this.latitude = this.startPosition[0];
           this.longitude = this.startPosition[1];

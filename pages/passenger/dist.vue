@@ -11,19 +11,19 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import AddressList from '../../components/addressList.vue'
-  import SearchBar from '../../components/search-bar.vue'
+  import AddressList from '../../components/addressList.vue';
+  import SearchBar from '../../components/search-bar.vue';
   import {
     request
-  } from '../../api/request'
-  import QQMapWX from '../../common/lib/qqmap-wx-jssdk.js'
+  } from '../../api/request';
+  import QQMapWX from '../../common/lib/qqmap-wx-jssdk.js';
   import {
     QQ_MAP_key
-  } from '../../common/constant/constant'
+  } from '../../common/constant/constant';
   import {
     mapMutations,
     mapState
-  } from 'vuex'
+  } from 'vuex';
 
   const qqmapsdk = new QQMapWX({
     key: QQ_MAP_key
@@ -33,61 +33,62 @@
     data() {
       return {
         addresses: []
-      }
+      };
     },
     onShow() {
-      this.getSuggestion('a')
+      this.getSuggestion('a');
     },
     onUnload() {
-      this.clearData()
+      this.clearData();
     },
     methods: {
       search(value) {
         if (value.length === 0) {
-          this.addresses = []
-          return
+          this.addresses = [];
+          return;
         }
-        this.getSuggestion(value)
+        this.getSuggestion(value);
       },
       chooseCity() {
         wx.navigateTo({
           url: '/pages/passenger/city',
           success: () => {
-            this.clearData()
+            this.clearData();
           }
-        })
+        });
       },
       getSuggestion(value) {
-        qqmapsdk.getSuggestion({
+        this.$map.getSuggestion({
           keyword: value,
           region: this.curCity,
           success: (res) => {
-            this.addresses = res.data
+            console.info(res , "+_+_+_+_+");
+            this.addresses = res.data;
           }
-        })
+        });
       },
       goBack() {
-        wx.navigateBack()
+        wx.navigateBack();
       },
       choosePlace(item) {
         //item.address详细地址
         //item.title简短语义化地址
-        console.log(item)
+        console.log(item);
         qqmapsdk.geocoder({
           address: item.address,
           success: (res) => {
-            this.saveEndPosition([res.result.location.lat, res.result.location.lng])
-            this.saveDestination(item.title)
-            this.goBack()
+            this.saveEndPosition([res.result.location.lat, res.result.location.lng]);
+            this.saveDestination(item.title);
+            this.goBack();
           },
           fail: (err) => {
-            console.log(err)
+            console.log(err);
           }
-        })
+        });
       },
       clearData() {
-        this.$refs.searchBar.clear()
-        this.addresses = []
+        this.$refs.searchBar.clear();
+        this.addresses = [];
       },
       ...mapMutations("passenger/index", {
         saveDestination: 'SET_DESTINATION',
@@ -103,7 +104,7 @@
       SearchBar,
       AddressList
     }
-  }
+  };
 </script>
 
 <style lang="less" scoped rel="stylesheet/less">

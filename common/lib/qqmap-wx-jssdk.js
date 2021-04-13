@@ -124,7 +124,7 @@ var Utils = {
   checkLocation(param) {
     var location = this.getLocationParam(param.location);
     if (!location || !location.latitude || !location.longitude) {
-      var errconf = this.buildErrorConfig(ERROR_CONF.PARAM_ERR, ERROR_CONF.PARAM_ERR_MSG + ' location参数格式有误')
+      var errconf = this.buildErrorConfig(ERROR_CONF.PARAM_ERR, ERROR_CONF.PARAM_ERR_MSG + ' location参数格式有误');
       param.fail(errconf);
       param.complete(errconf);
       return false;
@@ -152,7 +152,7 @@ var Utils = {
    */
   buildWxRequestConfig(param, options) {
     var that = this;
-    options.header = {"content-type": "application/json"};
+    options.header = { "content-type": "application/json" };
     options.method = 'GET';
     options.success = function (res) {
       var data = res.data;
@@ -187,7 +187,7 @@ var Utils = {
         }
 
       }
-    }
+    };
     return options;
   },
 
@@ -212,7 +212,7 @@ var Utils = {
       locationsuccess(location);
     }
   }
-}
+};
 
 
 class QQMapWX {
@@ -273,7 +273,7 @@ class QQMapWX {
         url: URL_SEARCH,
         data: requestParam
       }));
-    }
+    };
     Utils.locationProcess(options, locationsuccess);
   }
 
@@ -327,7 +327,7 @@ class QQMapWX {
       key: that.key
     };
     if (options.poi_options) {
-      requestParam.poi_options = options.poi_options
+      requestParam.poi_options = options.poi_options;
     }
 
     var locationsuccess = function (result) {
@@ -454,7 +454,7 @@ class QQMapWX {
         url: URL_DISTANCE,
         data: requestParam
       }));
-    }
+    };
     if (options.from) {
       options.location = options.from;
     }
@@ -487,18 +487,18 @@ class QQMapWX {
       output: "json",
       key: l.key
     };
-    var mode = i.mode || 'driving'
+    var mode = i.mode || 'driving';
     var m = function m(o) {
       k.from = o.latitude + "," + o.longitude;
       wx.request(Utils.buildWxRequestConfig(i, {
         url: URL_DIRECTION + mode + "/",
         data: k
-      }))
+      }));
     };
     if (i.from) {
-      i.location = i.from
+      i.location = i.from;
     }
-    Utils.locationProcess(i, m)
+    Utils.locationProcess(i, m);
   }
 
 

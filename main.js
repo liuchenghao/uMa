@@ -4,13 +4,18 @@ import App from './App';
 import {
   http
 } from '@/common/utils/http.js';
-import QQMapWX from '@/common/lib/qqmap-wx-jssdk.js';
-// const qqMapSdk = new QQMapWX({
-//   key: __uniConfig.qqMapKey
-// });
+import QQMapWS from '@/common/lib/qqmap-ws-jssdk.js';
+const qqMapWS = new QQMapWS({
+  // key: __uniConfig.qqMapKey
+  // key: "CD5BZ-ECWCX-LPF4D-TLHMR-P4STT-LUFYU"
+  key: __uMa.qqMapKey
+});
+// import manifestJsonObj from './manifest.json';
+// const manifestJsonObj = require('@dcloudio/uni-cli-shared/lib/manifest').getManifestJson();
+console.info(process.env, "====================", __uMa);
 Vue.config.productionTip = false;
 Vue.prototype.$http = http;
-// Vue.prototype.$map = qqMapSdk; 
+Vue.prototype.$map = qqMapWS; 
 // Vue.prototype.$store = store
 import store from '@/vuex/store';
 Vue.prototype.$store = store;
