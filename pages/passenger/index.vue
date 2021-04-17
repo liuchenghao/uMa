@@ -97,24 +97,24 @@
 <script type="text/ecmascript-6">
   import {
     request
-  } from '../../api/request'
+  } from '../../api/request';
   import {
     reverseGeocoder
-  } from '../../utils/index'
-  import LoadingSprinner from '../../components/loading-sprinner.vue'
+  } from '../../utils/index';
+  import LoadingSprinner from '../../components/loading-sprinner.vue';
   import {
     mapState,
     mapMutations,
     mapActions
-  } from 'vuex'
+  } from 'vuex';
   import {
     QQ_MAP_key,
     INIT_DESTINATION
-  } from '../../common/constant/constant'
-  import QQMapWX from '../../common/lib/qqmap-wx-jssdk.js'
+  } from '../../common/constant/constant';
+  import QQMapWX from '../../common/lib/qqmap-wx-jssdk.js';
   import {
     carCostArr
-  } from '../../common/constant/constant'
+  } from '../../common/constant/constant';
 
   const qqmapsdk = new QQMapWX({
     key: QQ_MAP_key
@@ -141,11 +141,11 @@
         carCostArr: carCostArr,
         curCostIndex: 0,
         swipers: ['出租车后续完善', '顺风车后续完善', '公交后续完善', '代驾后续完善', '自驾租车后续完善', '二手车后续完善']
-      }
+      };
     },
     created() {
-      console.info(this.$map, 'map--------')
-      this.getInitData()
+      console.info(this.$map, 'map--------');
+      this.getInitData();
       //    维护一个nav各项navScrollLeft的长度数组
       this.navOffsetArr = [
         0,
@@ -156,91 +156,103 @@
         NAV_SMALL_WIDTH * 2 + NAV_BIG_WIDTH * 2,
         NAV_SMALL_WIDTH * 3 + NAV_BIG_WIDTH * 2,
         NAV_SMALL_WIDTH * 4 + NAV_BIG_WIDTH * 2
-      ]
+      ];
     },
     methods: {
       async getInitData() {
-        
-        const res = await this.getIndexInfo();//request('/comments')
+
+        const res = await this.getIndexInfo(); //request('/comments')
         //        console.log('res', res)
-        this.imgUrls = res.data.imgUrls
-        this.navData = res.data.navData
-        this.chooseArr = res.data.cost
+        this.imgUrls = res.data.imgUrls;
+        this.navData = res.data.navData;
+        this.chooseArr = res.data.cost;
         //setTimeout延时 为了看到loading的效果
         setTimeout(() => {
           const arr = res.data.waitingTimes;
-          const index = Math.floor(Math.random() * arr.length)
-          this.waitingTimes = arr[index]
-          this.isLoading = false
-        }, 800)
-        wx.getLocation({
+          const index = Math.floor(Math.random() * arr.length);
+          this.waitingTimes = arr[index];
+          this.isLoading = false;
+        }, 800);
+        uni.getLocation({
           type: 'gcj02',
           success: (res) => {
-            reverseGeocoder(qqmapsdk, res).then(res => {
-              this.saveStartPlace(res.result.address)
-              this.saveFormattedStartPlace(res.result.formatted_addresses.recommend)
-              this.saveCurCity(res.result.address_component.city)
-            })
-            this.saveStartPosition([res.latitude, res.longitude])
+            /* reverseGeocoder(qqmapsdk, res).then(res => {
+              this.saveStartPlace(res.result.address);
+              this.saveFormattedStartPlace(res.result.formatted_addresses.recommend);
+              this.saveCurCity(res.result.address_component.city);
+            }); */
+            this.$map.reverseGeocoder({
+              location: {
+                latitude: res.latitude,
+                longitude: res.longitude,
+              },
+              success: (res) => {
+                this.saveStartPlace(res.result.address);
+                this.saveFormattedStartPlace(res.result.formatted_addresses.recommend);
+                this.saveCurCity(res.result.address_component.city);
+              },
+              fail: (res) => {}
+            });
+            this.saveStartPosition([res.latitude, res.longitude]);
           }
-        })
+        });
       },
       switchNav(index) {
         this.saveCurNavIndex(index);
-        console.info(this.curNavIndex, index)
+        console.info(this.curNavIndex, index);
       },
       switchTab(e) {
-        this.saveCurNavIndex(e.mp.detail.current)
+        this.saveCurNavIndex(e.mp.detail.current);
       },
       navigateToLogin() {
         //如果没有用户信息就跳转到登陆页
         if (!this.$store.state.phone) {
           wx.navigateTo({
             url: '/pages/sysm/login'
-          })
+          });
         } else {
           wx.showToast({
             title: '已成功登录!',
             icon: 'success'
-          })
+          });
         }
       },
       navigateToCars() {
         uni.navigateTo({
           url: '/pages/passenger/cars'
-        })
+        });
       },
       navigateToStarting() {
         uni.navigateTo({
           url: '/pages/passenger/map'
-        })
+        });
       },
       navigateToDestination() {
         uni.navigateTo({
           url: '/pages/passenger/dist'
-        })
+        });
       },
       showCost() {
         if (this.destination == INIT_DESTINATION || this.destination == null) {
           uni.showToast({
             title: '请先选择目的地!',
             icon: 'none'
-          })
-          return
+          });
+          return;
         }
-        this.isShowCost = true
+        this.isShowCost = true;
       },
       chooseCost(item) {
-        this.curCostIndex = item.id
+        this.curCostIndex = item.id;
       },
       confirmCost() {
-        this.saveCost(this.carCostArr[this.curCostIndex].cost)
+        this.saveCost(this.carCostArr[this.curCostIndex].cost);
         wx.navigateTo({
           url: "/pages/passenger/wait",
           success: () => {
-            this.isShowCost = false
+            this.isShowCost = false;
           }
-        })
+        });
       },
       ...mapActions("passenger/index", {
         saveCurNavIndex: 'SET_CUR_NAV_INDEX',
@@ -262,14 +274,14 @@
     watch: {
       //利用watch 更好的模拟navScrollLeft
       curNavIndex(newIndex) {
-        this.navScrollLeft = this.navOffsetArr[newIndex]
-        this.car = this.navData[newIndex].name
+        this.navScrollLeft = this.navOffsetArr[newIndex];
+        this.car = this.navData[newIndex].name;
       }
     },
     components: {
       LoadingSprinner
     }
-  }
+  };
 </script>
 
 <style scoped lang="less" rel="stylesheet/less">

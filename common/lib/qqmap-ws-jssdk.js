@@ -3,7 +3,9 @@
  *
  * @version 1.0
  */
-import { getJSONP } from "../utils/jsonp.js";
+import {
+  getJSONP
+} from "../utils/jsonp.js";
 var ERROR_CONF = {
   KEY_ERR: 311,
   KEY_ERR_MSG: 'key格式错误',
@@ -51,7 +53,7 @@ var Utils = {
    * 使用微信接口进行定位
    */
   getWXLocation(success, fail, complete) {
-    wx.getLocation({
+    uni.getLocation({
       type: 'gcj02',
       success: success,
       fail: fail,
@@ -277,6 +279,19 @@ var Utils = {
       callback: 'callback'
     };
     getJSONP(url, jsopOption, success, fail, complete);
+  },
+  ajaxWx(options, param) {
+    options = Utils.buildWxRequestConfig(options, param);
+    uni.request(options);
+  },
+  requestData(options, param) {
+    // #ifdef H5
+    Utils.jsonpWs(options, param);
+    // #endif
+    // #ifndef H5
+    param.data.output = "json";
+    Utils.ajaxWx(options, param);
+    // #endif
   }
 };
 
@@ -373,7 +388,11 @@ class QQMapWS {
       url: URL_SUGGESTION,
       data: requestParam
     })); */
-    Utils.jsonpWs(options, {
+    /* Utils.jsonpWs(options, {
+      url: URL_SUGGESTION,
+      data: requestParam
+    }); */
+    Utils.requestData(options, {
       url: URL_SUGGESTION,
       data: requestParam
     });
@@ -394,7 +413,7 @@ class QQMapWS {
     var requestParam = {
       coord_type: options.coord_type || 5,
       get_poi: options.get_poi || 0,
-      output: 'json',
+      // output: 'json',
       key: that.key
     };
     if (options.poi_options) {
@@ -403,10 +422,14 @@ class QQMapWS {
 
     var locationsuccess = function(result) {
       requestParam.location = result.latitude + ',' + result.longitude;
-      wx.request(Utils.buildWxRequestConfig(options, {
+      /* wx.request(Utils.buildWxRequestConfig(options, {
         url: URL_GET_GEOCODER,
         data: requestParam
-      }));
+      })); */
+      Utils.requestData(options, {
+        url: URL_GET_GEOCODER,
+        data: requestParam
+      });
     };
     Utils.locationProcess(options, locationsuccess);
   }
@@ -423,21 +446,25 @@ class QQMapWS {
     var that = this;
     options = options || {};
     Utils.polyfillParam(options);
-
+    console.info("+++++++___+++++");
     if (Utils.checkParamKeyEmpty(options, 'address')) {
       return;
     }
 
     var requestParam = {
       address: options.address,
-      output: 'json',
+      // output: 'json',
       key: that.key
     };
 
-    wx.request(Utils.buildWxRequestConfig(options, {
+    /* wx.request(Utils.buildWxRequestConfig(options, {
       url: URL_GET_GEOCODER,
       data: requestParam
-    }));
+    })); */
+    Utils.requestData(options, {
+      url: URL_GET_GEOCODER,
+      data: requestParam
+    });
   }
   /**
    * 获取城市列表
@@ -452,14 +479,17 @@ class QQMapWS {
     options = options || {};
     Utils.polyfillParam(options);
     var requestParam = {
-      output: 'json',
+      // output: 'json',
       key: that.key
     };
-
-    wx.request(Utils.buildWxRequestConfig(options, {
+    /* wx.request(Utils.buildWxRequestConfig(options, {
       url: URL_CITY_LIST,
       data: requestParam
-    }));
+    })); */
+    Utils.requestData(options, {
+      url: URL_CITY_LIST,
+      data: requestParam
+    });
   }
 }
 export default QQMapWS;

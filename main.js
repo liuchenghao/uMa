@@ -10,9 +10,6 @@ const qqMapWS = new QQMapWS({
   // key: "CD5BZ-ECWCX-LPF4D-TLHMR-P4STT-LUFYU"
   key: __uMa.qqMapKey
 });
-// import manifestJsonObj from './manifest.json';
-// const manifestJsonObj = require('@dcloudio/uni-cli-shared/lib/manifest').getManifestJson();
-console.info(process.env, "====================", __uMa);
 Vue.config.productionTip = false;
 Vue.prototype.$http = http;
 Vue.prototype.$map = qqMapWS; 
