@@ -247,11 +247,6 @@
   };
 </script>
 
-<style>
-  .page-contain {
-    background: url(@/static/img/bkg_1.png);
-  }
-</style>
 <style lang="less" scoped rel="stylesheet/less">
   @import '../../common/less/mixin1';
 

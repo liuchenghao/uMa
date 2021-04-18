@@ -33,7 +33,7 @@
         console.log(this.$store.state.curNavIndex)
         wx.navigateBack()
       },
-      ...mapMutations({
+      ...mapMutations("passenger/index", {
         setNavIndex: 'SET_CUR_NAV_INDEX'
       })
     }

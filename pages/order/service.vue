@@ -1,18 +1,12 @@
 <template>
   <div class="order-service-page">
-    <map class="didiMap"
-         id="didiMap"
-         :latitude="startPosition[0]"
-         :longitude="startPosition[1]"
-         :polyline="polyline"
-         :markers="markers"
-         show-location>
+    <map class="didiMap" id="didiMap" :latitude="startPosition[0]" :longitude="startPosition[1]" :polyline="polyline"
+      :markers="markers" show-location>
 
       <cover-view class="driver" v-if="driver.name">
         <driver-header :driver="driver"></driver-header>
         <cover-view class="driver-body">
-          <cover-image class="img-looking"
-                       src="/static/img/looking.png"></cover-image>
+          <cover-image class="img-looking" src="/static/img/looking.png"></cover-image>
           <cover-view class="text-looking">寻找拼友</cover-view>
         </cover-view>
         <cover-view class="driver-footer">
@@ -20,13 +14,10 @@
         </cover-view>
       </cover-view>
 
-      <cover-image class="marker location-marker"
-                   src="/static/img/location.png"
-                   @click.stop="onClickMark"></cover-image>
+      <cover-image class="marker location-marker" src="/static/img/location.png" @click.stop="onClickMark">
+      </cover-image>
 
-      <cover-image class="marker walk-marker"
-                   src="/static/img/walk.png"
-                   @click.stop="onClickMark"></cover-image>
+      <cover-image class="marker walk-marker" src="/static/img/walk.png" @click.stop="onClickMark"></cover-image>
 
       <cover-image class="car-marker" src="/static/img/mapCart.png"></cover-image>
 
@@ -44,114 +35,116 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import DriverHeader from '../../components/driver-header.vue'
-  import {request} from '../../api/request'
-  import {mapState, mapMutations} from 'vuex'
+  import DriverHeader from '../../components/driver-header.vue';
+  import {
+    request
+  } from '../../api/request';
+  import {
+    mapState,
+    mapMutations
+  } from 'vuex';
 
-  const START_ID = 0, END_ID = 1
+  const START_ID = 0,
+    END_ID = 1;
 
-  let animationTimer, num = 1
+  let animationTimer, num = 1;
 
-  export default{
-    data(){
+  export default {
+    data() {
       return {
         isShowLoading: true,
         driver: {},
         markers: [],
         polyline: [],
-      }
+      };
     },
-    onLoad(){
-      this.getInitData()
+    onLoad() {
+      this.getInitData();
       this.mapCtx = wx.createMapContext("didiMap");
     },
-    onShow(){
+    onShow() {
       this.mapCtx.moveToLocation();
-      this.requestDriver()
+      this.requestDriver();
     },
-    onUnload(){
-      clearInterval(animationTimer)
+    onUnload() {
+      clearInterval(animationTimer);
     },
     methods: {
-      getInitData(){
-        this.markers = [
-          {
-            iconPath: '/static/img/str.png',
-            id: START_ID,
-            latitude: this.startPosition[0],
-            longitude: this.startPosition[1],
-            width: 30,
-            height: 30
-          }, {
-            iconPath: '/static/img/end.png',
-            id: END_ID,
-            latitude: this.endPosition[0],
-            longitude: this.endPosition[1],
-            width: 30,
-            height: 30
-          }
-        ]
+      getInitData() {
+        this.markers = [{
+          iconPath: '/static/img/str.png',
+          id: START_ID,
+          latitude: this.startPosition[0],
+          longitude: this.startPosition[1],
+          width: 30,
+          height: 30
+        }, {
+          iconPath: '/static/img/end.png',
+          id: END_ID,
+          latitude: this.endPosition[0],
+          longitude: this.endPosition[1],
+          width: 30,
+          height: 30
+        }];
         this.polyline = [{
-          points: [
-            {
+          points: [{
+            latitude: this.startPosition[0],
+            longitude: this.startPosition[1]
+          }, {
+            latitude: this.endPosition[0],
+            longitude: this.endPosition[1]
+          }],
+          color: "#f44336",
+          width: 4,
+          dottedLine: true,
+        }];
+      },
+      setMapView() {
+        if (this.startPosition.length && this.endPosition.length) {
+          console.log('includePoints');
+          this.mapCtx.includePoints({
+            points: [{
               latitude: this.startPosition[0],
               longitude: this.startPosition[1]
             }, {
               latitude: this.endPosition[0],
               longitude: this.endPosition[1]
-            }
-          ],
-          color: "#f44336",
-          width: 4,
-          dottedLine: true,
-        }]
-      },
-      setMapView(){
-        if (this.startPosition.length && this.endPosition.length) {
-          console.log('includePoints')
-          this.mapCtx.includePoints({
-            points: [
-              {
-                latitude: this.startPosition[0], longitude: this.startPosition[1]
-              }, {
-                latitude: this.endPosition[0], longitude: this.endPosition[1]
-              }
-            ]
-          })
+            }]
+          });
         }
       },
-      requestDriver(){
+      requestDriver() {
         //为了看到loading效果 设置延时
         setTimeout(async () => {
-          const res = await request('/comments')
-          const drivers = res.data.drivers
+          const res = await request('/comments');
+          const drivers = res.data.drivers;
           this.driver = drivers[Math.floor(Math.random() * drivers.length)];
-          this.isShowLoading = false
-          this.saveDriver(this.driver)
-        }, 800)
+          this.isShowLoading = false;
+          this.saveDriver(this.driver);
+        }, 800);
       },
-      onClickMark(){
+      onClickMark() {
         this.mapCtx.moveToLocation();
       },
-      cancel(){
+      cancel() {
         wx.navigateTo({
           url: "/pages/order/cancel",
           success: () => {
-            clearInterval(animationTimer)
+            clearInterval(animationTimer);
           }
-        })
+        });
       },
-      endTrip(){
+      endTrip() {
         wx.redirectTo({
           url: "/pages/order/index",
-        })
+        });
       },
-      ...mapMutations({
+      ...mapMutations("passenger/index", {
         saveDriver: 'SET_DRIVER'
       })
     },
     computed: {
-      ...mapState([
+      ...mapState("passenger/index",[
         'startPosition',
         'endPosition'
       ])
@@ -159,7 +152,7 @@
     components: {
       DriverHeader
     }
-  }
+  };
 </script>
 
 <style lang="less" scoped rel="stylesheet/less">
@@ -169,33 +162,40 @@
   .order-service-page {
     width: 100%;
     height: 100vh;
+
     .didiMap {
       width: 100%;
       height: 100%;
+
       .driver {
         position: absolute;
         top: 10px;
         left: 12px;
         right: 12px;
-        border: ~"1rpx" solid @border-color-light;
+        border: ~"1rpx"solid @border-color-light;
         .card-shadow();
         background: #fff;
+
         .driver-body {
           text-align: center;
           height: 44px;
           width: 100%;
           font-size: 0;
-          border-top: ~"1rpx" solid @border-color-light;
-          border-bottom: ~"1rpx" solid @border-color-light;
-          .img-looking, .text-looking {
+          border-top: ~"1rpx"solid @border-color-light;
+          border-bottom: ~"1rpx"solid @border-color-light;
+
+          .img-looking,
+          .text-looking {
             vertical-align: middle;
             display: inline-block;
           }
+
           .img-looking {
             width: 15px;
             height: 15px;
             /*animation: looking 1s linear infinite;*/
           }
+
           .text-looking {
             height: 44px;
             line-height: 44px;
@@ -204,6 +204,7 @@
             opacity: .5;
           }
         }
+
         .driver-footer {
           height: 42px;
           line-height: 42px;
@@ -212,18 +213,22 @@
           text-align: center;
         }
       }
+
       .marker {
         position: fixed;
         width: 32px;
         height: 32px;
         left: 12px;
       }
+
       .location-marker {
         bottom: 80px;
       }
+
       .walk-marker {
         bottom: 125px;
       }
+
       .car-marker {
         position: fixed;
         top: 40%;
@@ -231,6 +236,7 @@
         width: 22px;
         height: 45px;
       }
+
       .footer-bar {
         padding: 0 12px;
         display: flex;
@@ -245,6 +251,7 @@
         background: #fff;
         .card-shadow(#e0e0e0);
         font-size: 0;
+
         .text {
           flex: 1 1 auto;
           display: inline-block;
@@ -253,6 +260,7 @@
           text-align: center;
           font-size: 18px;
         }
+
         .right-border {
           flex: 0 0 1px;
           height: 22px;

@@ -18,42 +18,40 @@
         </div>
       </div>
     </div>
-    <CommonFooter
-      noShadow="true"
-      leftText="取消订单"
-      rightText="不拼车"
-      @clickLeft="cancel"
-      @clickRight="back"
-    >
+    <CommonFooter noShadow="true" leftText="取消订单" rightText="不拼车" @clickLeft="cancel" @clickRight="back">
     </CommonFooter>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import CommonFooter from '../../components/common-footer.vue';
-  import {mapState} from 'vuex'
-  import {formatNumber} from '@/common/utils/tools.js'
+  import {
+    mapState
+  } from 'vuex';
+  import {
+    formatNumber
+  } from '@/common/utils/tools.js';
 
   let countTimer;
-  const MAX_WAIT_TIME = 180
+  const MAX_WAIT_TIME = 180;
 
-  export default{
-    data(){
+  export default {
+    data() {
       return {
         progressTxt: '已等待',
         time: '00:00'
-      }
+      };
     },
-    onShow(){
+    onShow() {
       this.drawProgressBg();
       this.countInterval();
     },
-    onUnload(){
-      this.clearData()
+    onUnload() {
+      this.clearData();
     },
     methods: {
-      drawProgressBg(){
-        const ctx = wx.createCanvasContext('progressBg')
+      drawProgressBg() {
+        const ctx = wx.createCanvasContext('progressBg');
         ctx.setLineWidth(4);
         ctx.setStrokeStyle("#e5e5e5");
         ctx.setLineCap("round");
@@ -62,62 +60,62 @@
         ctx.stroke();
         ctx.draw();
       },
-      countInterval(){
+      countInterval() {
         let cur = 0,
           timer = new Date(0, 0),
-          randomTime = Math.floor(20 * Math.random())
+          randomTime = Math.floor(20 * Math.random());
         countTimer = setInterval(() => {
           if (cur <= randomTime) {
-            this.time = formatNumber(timer.getMinutes()) + ':' + formatNumber(timer.getSeconds())
-            timer.setMinutes(cur / 60)
-            timer.setSeconds(cur % 60)
-            this.drawProgress(cur / MAX_WAIT_TIME)
+            this.time = formatNumber(timer.getMinutes()) + ':' + formatNumber(timer.getSeconds());
+            timer.setMinutes(cur / 60);
+            timer.setSeconds(cur % 60);
+            this.drawProgress(cur / MAX_WAIT_TIME);
             cur++;
           } else {
-            this.progressTxt = '匹配成功'
+            this.progressTxt = '匹配成功';
             clearInterval(countTimer);
             wx.redirectTo({
               url: "/pages/order/service",
             });
           }
-        }, 1000)
+        }, 1000);
       },
-      drawProgress(step){
+      drawProgress(step) {
         const context = wx.createCanvasContext('progress');
         context.setLineWidth(4);
         context.setStrokeStyle("#fbcb02");
-        context.setLineCap('round')
+        context.setLineCap('round');
         context.beginPath();
         // 参数step 为绘制的圆环周长，从0到2为一周 。 -Math.PI / 2 将起始角设在12点钟位置 ，结束角 通过改变 step 的值确定
         context.arc(110, 110, 100, -Math.PI / 2, step * 2 * Math.PI - Math.PI / 2, false);
         context.stroke();
-        context.draw()
+        context.draw();
       },
-      cancel(){
+      cancel() {
         wx.navigateTo({
           url: "/pages/order/cancel",
-        })
-        this.clearData()
+        });
+        this.clearData();
       },
-      back(){
+      back() {
         wx.redirectTo({
           url: "/pages/index/index",
-        })
+        });
       },
-      clearData(){
+      clearData() {
         clearInterval(countTimer);
-        this.time = '00:00'
+        this.time = '00:00';
       }
     },
     computed: {
-      ...mapState([
+      ...mapState("passenger/index", [
         'startFormattedPlace',
       ])
     },
     components: {
       CommonFooter
     }
-  }
+  };
 </script>
 
 <style lang="less" scoped rel="stylesheet/less">
@@ -130,6 +128,7 @@
     background-color: @page-bg-color;
     box-sizing: border-box;
     overflow: hidden;
+
     .header {
       display: flex;
       align-items: center;
@@ -138,56 +137,70 @@
       box-shadow: 0 0 5px #e3e4e5;
       background-color: #fff;
       border-radius: 3px;
+
       img {
         margin: 0 5px;
         flex: 0 0 25px;
         width: 25px;
         height: 25px;
       }
+
       .text-header {
         font-size: 14px;
         .no-wrap();
+
         .text-address {
           color: #fc9153;
         }
       }
     }
+
     .container {
       position: relative;
-      .text-desc-up, .text-desc-down {
+
+      .text-desc-up,
+      .text-desc-down {
         text-align: center;
         color: #666666;
       }
+
       .text-desc-up {
         margin-top: 30px;
         font-size: 20px;
       }
+
       .text-desc-down {
         margin-top: 10px;
         font-size: 16px;
       }
+
       .circle-progress-wrapper {
         position: relative;
         margin: 25px auto 0;
         width: 220px;
         height: 220px;
         font-size: 0;
-        .progress-bg, .progress {
+
+        .progress-bg,
+        .progress {
           position: absolute;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
         }
+
         .progress-info {
           position: relative;
           top: 75px;
+
           .text-info {
             text-align: center;
             font-size: 14px;
             color: #666666;
             letter-spacing: 1px;
           }
+
           .text-time {
             margin-top: 5px;
             text-align: center;

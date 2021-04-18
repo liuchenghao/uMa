@@ -101,7 +101,10 @@
     mapMutations,
     mapActions
   } from 'vuex';
-
+  import {
+    getRandomNum
+  } from '@/common/utils/tools.js';
+  const cost = getRandomNum(10, 25);
   //微信小程序无法进行Dom操作 所以无法动态拿到元素宽度
   //这里进行模拟宽度 两个字宽度+2*margin 也就是 32+10*2 = 52
   const NAV_SMALL_WIDTH = 52;
@@ -119,7 +122,7 @@
         waitingTimes: [],
         chooseArr: [],
         car: '快车',
-        carCostArr: carCostArr = [{
+        carCostArr: [{
             id: 0,
             name: '拼车',
             imgUrl: '/static/img/costCart.png',

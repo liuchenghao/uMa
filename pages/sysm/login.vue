@@ -25,7 +25,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {mapMutations} from 'vuex'
+  import { mapMutations } from 'vuex';
 
   export default{
     data(){
@@ -33,50 +33,50 @@
         phone: '',
         nextBtnDisabled: true,
         btnBackgroundColor: '#bcbcbc'
-      }
+      };
     },
     methods: {
       clearPhoneNum(){
-        this.phone = ''
+        this.phone = '';
       },
       changePhoneNum(e){
-        console.log(e.mp.detail.value)
-        let phoneNum = e.mp.detail.value
-        phoneNum = phoneNum.replace(/\s+|[^\d]+/g, '')
-        let result = []
+        console.log(e.mp.detail.value);
+        let phoneNum = e.mp.detail.value;
+        phoneNum = phoneNum.replace(/\s+|[^\d]+/g, '');
+        let result = [];
         for (let i = 0; i < phoneNum.length; i++) {
           if (i === 3 || i === 7) {
-            result.push(' ')
+            result.push(' ');
           }
-          result.push(phoneNum.charAt(i))
+          result.push(phoneNum.charAt(i));
         }
-        this.phone = result.join('')
+        this.phone = result.join('');
       },
       next(){
         if (!this.checkPhoneNum()) {
           wx.showToast({
             title: '请输入正确的手机号码!',
             icon: 'none',
-          })
-          this.clearPhoneNum()
-          return
+          });
+          this.clearPhoneNum();
+          return;
         }
-        this.savePhone(this.phone.replace(/\s+/g, ''))
+        this.savePhone(this.phone.replace(/\s+/g, ''));
         wx.showToast({
           title: '登录成功!',
           icon: 'success',
           success: setTimeout(() => {
             wx.redirectTo({
               url: '/pages/index/index'
-            })
-            this.clearPhoneNum()
+            });
+            this.clearPhoneNum();
           }, 500)
-        })
+        });
       },
       checkPhoneNum(){
-        return /^1[34578]\d{9}$/.test(this.phone.replace(/\s+/g, ''))
+        return /^1[34578]\d{9}$/.test(this.phone.replace(/\s+/g, ''));
       },
-      ...mapMutations({
+      ...mapMutations("passenger/index", {
         savePhone: 'SET_PHONE'
       })
     },
@@ -86,11 +86,11 @@
       },
       nextBtnDisabled(newVal){
         if (!newVal) {
-          this.btnBackgroundColor = '#4a4c5b'
+          this.btnBackgroundColor = '#4a4c5b';
         }
       }
     }
-  }
+  };
 </script>
 
 <style lang="less" scoped rel="stylesheet/less">

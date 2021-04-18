@@ -11,7 +11,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {debounce} from '../utils/index'
+  import { debounce } from '@/common/utils/tools.js';
 
   export default{
     props: {
@@ -23,27 +23,27 @@
     data(){
       return {
         search: ''
-      }
+      };
     },
     methods: {
       cancel(){
-        this.$emit('cancel')
+        this.$emit('cancel');
       },
       clear(){
-        this.search = ''
+        this.search = '';
       },
       chooseCity(){
-        this.$emit('chooseCity')
+        this.$emit('chooseCity');
       }
     },
     watch: {
       search(newVal){
         debounce(() => {
-          this.$emit('search', newVal)
-        }, 500)()
+          this.$emit('search', newVal);
+        }, 500)();
       }
     }
-  }
+  };
 </script>
 
 <style lang="less" scoped rel="stylesheet/less">

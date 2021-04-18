@@ -62,7 +62,7 @@
       }
     },
     computed: {
-      ...mapState([
+      ...mapState("passenger/index", [
         'driver',
         'cost'
       ])

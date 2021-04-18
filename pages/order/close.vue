@@ -70,7 +70,7 @@
       }
     },
     computed: {
-      ...mapState([
+      ...mapState("passenger/index", [
         'startFormattedPlace',
         'destination'
       ])
