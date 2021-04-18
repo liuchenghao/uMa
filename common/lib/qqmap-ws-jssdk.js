@@ -3,9 +3,6 @@
  *
  * @version 1.0
  */
-import {
-  getJSONP
-} from "../utils/jsonp.js";
 var ERROR_CONF = {
   KEY_ERR: 311,
   KEY_ERR_MSG: 'key格式错误',
@@ -266,6 +263,42 @@ var Utils = {
     };
     return param;
   },
+  getJSONP(url, options, success, error, complete) {
+    var js = document.createElement('script');
+    var callbackKey = options.callback || 'callback';
+    var callbackName = '__callback' + Date.now();
+    var timeout = options.timeout || 30000;
+    var timing;
+
+    function end(res) {
+      clearTimeout(timing);
+      delete window[callbackName];
+      js.remove();
+      if (typeof complete === 'function') {
+        complete(res);
+      }
+    }
+    window[callbackName] = (res) => {
+      if (typeof success === 'function') {
+        success(res);
+      }
+      end(res);
+    };
+    js.onerror = (err) => {
+      if (typeof error === 'function') {
+        error(err);
+      }
+      end(err);
+    };
+    timing = setTimeout(function() {
+      if (typeof error === 'function') {
+        error();
+      }
+      end({});
+    }, timeout);
+    js.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + callbackKey + '=' + callbackName;
+    document.body.appendChild(js);
+  },
   jsonpWs(options, param) {
     options = Utils.buildWsJsonpConfig(options, param);
     let {
@@ -278,7 +311,7 @@ var Utils = {
     let jsopOption = {
       callback: 'callback'
     };
-    getJSONP(url, jsopOption, success, fail, complete);
+    Utils.getJSONP(url, jsopOption, success, fail, complete);
   },
   ajaxWx(options, param) {
     options = Utils.buildWxRequestConfig(options, param);
@@ -333,7 +366,7 @@ class QQMapWS {
       orderby: options.orderby || '_distance',
       page_size: options.page_size || 10,
       page_index: options.page_index || 1,
-      output: 'json',
+      // output: 'json',
       key: that.key
     };
 
@@ -351,10 +384,10 @@ class QQMapWS {
     var locationsuccess = function(result) {
       requestParam.boundary = "nearby(" + result.latitude + "," + result.longitude + "," + distance + "," +
         auto_extend + ")";
-      wx.request(Utils.buildWxRequestConfig(options, {
+      Utils.requestData(options, {
         url: URL_SEARCH,
         data: requestParam
-      }));
+      });
     };
     Utils.locationProcess(options, locationsuccess);
   }
@@ -384,14 +417,6 @@ class QQMapWS {
       // output: 'json',
       key: that.key
     };
-    /* wx.request(Utils.buildWxRequestConfig(options, {
-      url: URL_SUGGESTION,
-      data: requestParam
-    })); */
-    /* Utils.jsonpWs(options, {
-      url: URL_SUGGESTION,
-      data: requestParam
-    }); */
     Utils.requestData(options, {
       url: URL_SUGGESTION,
       data: requestParam
@@ -422,10 +447,6 @@ class QQMapWS {
 
     var locationsuccess = function(result) {
       requestParam.location = result.latitude + ',' + result.longitude;
-      /* wx.request(Utils.buildWxRequestConfig(options, {
-        url: URL_GET_GEOCODER,
-        data: requestParam
-      })); */
       Utils.requestData(options, {
         url: URL_GET_GEOCODER,
         data: requestParam
@@ -446,7 +467,6 @@ class QQMapWS {
     var that = this;
     options = options || {};
     Utils.polyfillParam(options);
-    console.info("+++++++___+++++");
     if (Utils.checkParamKeyEmpty(options, 'address')) {
       return;
     }
@@ -457,10 +477,6 @@ class QQMapWS {
       key: that.key
     };
 
-    /* wx.request(Utils.buildWxRequestConfig(options, {
-      url: URL_GET_GEOCODER,
-      data: requestParam
-    })); */
     Utils.requestData(options, {
       url: URL_GET_GEOCODER,
       data: requestParam
@@ -482,10 +498,6 @@ class QQMapWS {
       // output: 'json',
       key: that.key
     };
-    /* wx.request(Utils.buildWxRequestConfig(options, {
-      url: URL_CITY_LIST,
-      data: requestParam
-    })); */
     Utils.requestData(options, {
       url: URL_CITY_LIST,
       data: requestParam
