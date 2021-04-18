@@ -25,29 +25,31 @@
         </p>
       </div>
     </div>
-    <common-footer
-      @clickLeft="clickFooterLeft"
-      @clickRight="clickFooterRight">
+    <common-footer @clickLeft="clickFooterLeft" @clickRight="clickFooterRight">
     </common-footer>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import CommonFooter from '../../components/common-footer.vue'
-  import {mapState} from 'vuex'
-  import {formatTime} from '../../utils/index'
+  import {
+    mapState
+  } from 'vuex'
+  import {
+    formatTime
+  } from '@/common/utils/tools.js'
 
-  export default{
-    data(){
+  export default {
+    data() {
       return {
         time: ''
       }
     },
-    mounted(){
+    mounted() {
       this.time = formatTime(new Date())
     },
     methods: {
-      clickFooterRight(){
+      clickFooterRight() {
         wx.showLoading({
           title: '提交中',
           success: () => {
@@ -59,7 +61,7 @@
           }
         })
       },
-      clickFooterLeft(){
+      clickFooterLeft() {
         wx.showToast({
           title: '尚未开发！',
           icon: 'none',
@@ -89,23 +91,27 @@
     height: 100vh;
     box-sizing: border-box;
     background-color: @page-bg-color;
+
     .card {
       height: 264px;
       .card-shadow(#e0e0e0);
       background: #ffffff;
-      border: ~"1rpx" solid @border-color-light;
+      border: ~"1rpx"solid @border-color-light;
+
       .card-header {
         display: flex;
         flex-direction: column;
         justify-content: center;
         height: 92px;
-        border-bottom: ~"1rpx" solid @border-color-light;
+        border-bottom: ~"1rpx"solid @border-color-light;
+
         .item {
           flex: 0 0 24px;
           height: 24px;
           line-height: 24px;
           color: #333333;
           font-size: 0;
+
           .item-text {
             margin-left: 18px;
             vertical-align: middle;
@@ -115,6 +121,7 @@
             .no-wrap();
           }
         }
+
         .time {
           img {
             vertical-align: middle;
@@ -125,6 +132,7 @@
             opacity: .3;
           }
         }
+
         .start-place {
           .circle-green {
             vertical-align: middle;
@@ -132,6 +140,7 @@
             .circle(#3cbca3)
           }
         }
+
         .end-place {
           .circle-orange {
             vertical-align: middle;
@@ -140,21 +149,25 @@
           }
         }
       }
+
       .card-content {
         padding-top: 30px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
         img {
           width: 56px;
           height: 56px;
         }
+
         .text-content {
           margin-top: 10px;
           font-size: 16px;
           color: #333333;
         }
+
         .text-rule {
           margin-top: 10px;
           padding-right: 10px;

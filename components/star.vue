@@ -11,7 +11,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {isDecimalNum} from '../utils/index'
+  import {isDecimalNum} from '@/common/utils/tools.js'
 
 
   const CLS_ON = 'on'

@@ -1,4 +1,4 @@
-import {getRandomNum} from '../../utils/index'
+import {getRandomNum} from '@/common/utils/tools.js'
 const cost = getRandomNum(10, 25);
 
 export const swipers = ['会员', '套餐', '招募', '接机', '送机', '后续完善']

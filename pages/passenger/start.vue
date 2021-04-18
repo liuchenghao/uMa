@@ -32,26 +32,13 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import AddressList from '../../components/addressList.vue'
-  import SearchBar from '../../components/search-bar.vue'
-  import {
-    QQ_MAP_key
-  } from '../../common/constant/constant'
-  import QQMapWX from '../../common/lib/qqmap-wx-jssdk.js'
-  import {
-    reverseGeocoder,
-    getRandomNum
-  } from '../../utils/index'
+  import AddressList from '../../components/addressList.vue';
+  import SearchBar from '../../components/search-bar.vue';
   import {
     mapMutations,
     mapState
-  } from 'vuex'
-
-  const qqmapsdk = new QQMapWX({
-    key: QQ_MAP_key
-  });
-
-  let touchTimeStamp = 0
+  } from 'vuex';
+  let touchTimeStamp = 0;
 
   export default {
     data() {
@@ -62,7 +49,7 @@
         markers: [],
         addresses: [],
         minutes: getRandomNum(3, 12)
-      }
+      };
     },
     onShow() {
       //     保证后面可以拿到经纬度
@@ -72,103 +59,103 @@
       // this.updateCars()
     },
     onUnload() {
-      this.clearData()
+      this.clearData();
     },
     methods: {
       initLocation() {
         if (this.startPosition.length) {
-          this.latitude = this.startPosition[0]
-          this.longitude = this.startPosition[1]
+          this.latitude = this.startPosition[0];
+          this.longitude = this.startPosition[1];
         } else {
           wx.getLocation({
             type: "gcj02",
             success: (res) => {
-              this.longitude = res.longitude
-              this.latitude = res.latitude
+              this.longitude = res.longitude;
+              this.latitude = res.latitude;
             }
-          })
+          });
         }
       },
       chooseCity() {
         wx.navigateTo({
           url: '/pages/passenger/city'
-        })
+        });
       },
       search(value) {
         if (value.length === 0) {
-          this.addresses = []
-          return
+          this.addresses = [];
+          return;
         }
-        qqmapsdk.getSuggestion({
+        this.$map.getSuggestion({
           keyword: value,
           region: this.curCity,
           success: (res) => {
-            this.addresses = res.data
+            this.addresses = res.data;
           }
-        })
+        });
       },
       chooseItem(item) {
-        console.log(item)
-        this.latitude = item.location.lat
-        this.longitude = item.location.lng
-        this.saveStartPlace(item.address)
-        this.saveFormattedStartPlace(item.title)
-        this.saveStartPosition([this.latitude, this.longitude])
-        this.goBack()
-        this.$refs.searchBar.clear()
+        console.log(item);
+        this.latitude = item.location.lat;
+        this.longitude = item.location.lng;
+        this.saveStartPlace(item.address);
+        this.saveFormattedStartPlace(item.title);
+        this.saveStartPosition([this.latitude, this.longitude]);
+        this.goBack();
+        this.$refs.searchBar.clear();
       },
       cancel() {
-        wx.navigateBack()
-        this.clearData()
+        wx.navigateBack();
+        this.clearData();
       },
       clearData() {
-        this.addresses = []
-        this.$refs.searchBar.clear()
+        this.addresses = [];
+        this.$refs.searchBar.clear();
       },
       onclickLocation(e) {
-        this.mapCtx.moveToLocation()
+        this.mapCtx.moveToLocation();
       },
       regionChange() {
-        console.log('regionChange', e)
+        console.log('regionChange', e);
 
       },
       begin({
         timeStamp
       }) {
-        touchTimeStamp = timeStamp
+        touchTimeStamp = timeStamp;
       },
       end({
         timeStamp
       }) {
-        console.log('end')
+        console.log('end');
         //       加入时间判断
         //       解决修改data内数据导致地图在拖动开始时闪回原位的bug
         if (timeStamp - touchTimeStamp > 50) {
           this.mapCtx.getCenterLocation({
             success: (res) => {
               reverseGeocoder(qqmapsdk, res).then(res => {
-                this.saveStartPlace(res.result.address)
-                this.saveFormattedStartPlace(res.result.formatted_addresses.recommend)
-              })
-              const lon_distance = res.longitude - this.longitude
-              const lat_distance = res.latitude - this.latitude
+                this.saveStartPlace(res.result.address);
+                this.saveFormattedStartPlace(res.result.formatted_addresses.recommend);
+              });
+              const lon_distance = res.longitude - this.longitude;
+              const lat_distance = res.latitude - this.latitude;
               // 更新当前位置坐标
-              this.longitude = res.longitude
-              this.latitude = res.latitude
+              this.longitude = res.longitude;
+              this.latitude = res.latitude;
               //判断屏幕移动的距离，如果超过阀值
               if (Math.abs(lon_distance) >= 0.0022 || Math.abs(lat_distance) >= 0.0022) {
                 //刷新附近的车
-                this.updateCars()
+                this.updateCars();
                 //刷新等待时间
-                this.minutes = getRandomNum(3, 12)
+                this.minutes = getRandomNum(3, 12);
               }
             }
-          })
+          });
         }
       },
       updateCars() {
-        this.markers = []
-        const carNum = getRandomNum(3, 8)
+        this.markers = [];
+        const carNum = getRandomNum(3, 8);
         for (let i = 1; i <= carNum; i++) {
           // 定义一个车对象
           let car = {
@@ -178,25 +165,25 @@
             longitude: 0,
             width: 35,
             height: 15
-          }
+          };
 
           //随机值
           const lon_dis = (Math.ceil(Math.random() * 99)) * 0.00012;
           const lat_dis = (Math.ceil(Math.random() * 99)) * 0.00012;
 
-          car.id = 2 + i
-          car.latitude = this.latitude + lat_dis
-          car.longitude = this.longitude + lon_dis
-          car.iconPath = `/static/img/car/cart${this.curNavIndex + 1}.png`
-          this.markers.push(car)
+          car.id = 2 + i;
+          car.latitude = this.latitude + lat_dis;
+          car.longitude = this.longitude + lon_dis;
+          car.iconPath = `/static/img/car/cart${this.curNavIndex + 1}.png`;
+          this.markers.push(car);
         }
       },
       setStartPlace() {
         //这里只需要再保存位置就好了
-        this.saveStartPosition([this.latitude, this.longitude])
+        this.saveStartPosition([this.latitude, this.longitude]);
         wx.redirectTo({
           url: "/pages/index/index",
-        })
+        });
       },
       ...mapMutations({
         saveStartPlace: 'SET_START_PLACE',
@@ -218,7 +205,7 @@
       SearchBar,
       AddressList
     }
-  }
+  };
 </script>
 
 <style lang="less" scoped rel="stylesheet/less">

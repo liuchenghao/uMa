@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { formatTime } from '@/utils/index'
+import { formatTime } from '@/common/utils/tools.js'
 
 export default {
   data () {

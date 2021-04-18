@@ -1,5 +1,5 @@
 import {baseUrl} from './config'
-import {showToast} from '../utils/index'
+import {showToast} from '@/common/utils/tools.js'
 
 export function request(url, method = 'GET', data, header = {}) {
   return new Promise((resolve, reject) => {

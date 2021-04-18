@@ -46,7 +46,6 @@
 </template>
 <script>
   import SearchBar from '@/components/search-bar.vue';
-  // import mapSearch from '@weex/mapSearch';
   import {
     mapMutations,
     mapActions,
@@ -97,7 +96,7 @@
         saveStartPosition: 'SET_START_POSITION'
       }),
       initLocation() {
-        console.info("=+=+====+============");
+        console.info("=+=+====+============", this.startPosition);
         if (this.startPosition.length) {
           this.latitude = this.startPosition[0];
           this.longitude = this.startPosition[1];
@@ -160,7 +159,29 @@
               }, (res) => {
                 console.info(res, "===========")
               }); */
-              uni.chooseLocation({
+              this.$map.reverseGeocoder({
+                location: {
+                  latitude,
+                  longitude
+                },
+                success: (res) => {
+                  _this.saveStartPlace(res.result.address);
+                  _this.saveFormattedStartPlace(res.result.formatted_addresses.recommend);
+                },
+              });
+              const lon_distance = longitude - _this.longitude;
+              const lat_distance = latitude - _this.latitude;
+              // 更新当前位置坐标
+              _this.longitude = longitude;
+              _this.latitude = latitude;
+              //判断屏幕移动的距离，如果超过阀值
+              if (Math.abs(lon_distance) >= 0.0022 || Math.abs(lat_distance) >= 0.0022) {
+                //刷新附近的车
+                _this.updateCars();
+                //刷新等待时间
+                _this.minutes = _this.getRandomNum(3, 12);
+              }
+              /* uni.chooseLocation({
                 latitude,
                 longitude,
                 success: (res) => {
@@ -190,7 +211,7 @@
                     _this.minutes = _this.getRandomNum(3, 12);
                   }
                 }
-              });
+              }); */
             }
           });
         }

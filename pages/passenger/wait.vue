@@ -32,7 +32,7 @@
 <script type="text/ecmascript-6">
   import CommonFooter from '../../components/common-footer.vue';
   import {mapState} from 'vuex'
-  import {formatNumber} from '../../utils/index'
+  import {formatNumber} from '@/common/utils/tools.js'
 
   let countTimer;
   const MAX_WAIT_TIME = 180

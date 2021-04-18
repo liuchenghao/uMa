@@ -14,21 +14,9 @@
   import AddressList from '../../components/addressList.vue';
   import SearchBar from '../../components/search-bar.vue';
   import {
-    request
-  } from '../../api/request';
-  import QQMapWX from '../../common/lib/qqmap-wx-jssdk.js';
-  import {
-    QQ_MAP_key
-  } from '../../common/constant/constant';
-  import {
     mapMutations,
     mapState
   } from 'vuex';
-
-  const qqmapsdk = new QQMapWX({
-    key: QQ_MAP_key
-  });
-
   export default {
     data() {
       return {
@@ -74,7 +62,7 @@
         //item.address详细地址
         //item.title简短语义化地址
         console.log(item);
-        qqmapsdk.geocoder({
+        this.$map.geocoder({
           address: item.address,
           success: (res) => {
             this.saveEndPosition([res.result.location.lat, res.result.location.lng]);

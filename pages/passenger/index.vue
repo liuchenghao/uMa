@@ -95,31 +95,12 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {
-    request
-  } from '../../api/request';
-  import {
-    reverseGeocoder
-  } from '../../utils/index';
   import LoadingSprinner from '../../components/loading-sprinner.vue';
   import {
     mapState,
     mapMutations,
     mapActions
   } from 'vuex';
-  import {
-    QQ_MAP_key,
-    INIT_DESTINATION
-  } from '../../common/constant/constant';
-  import QQMapWX from '../../common/lib/qqmap-wx-jssdk.js';
-  import {
-    carCostArr
-  } from '../../common/constant/constant';
-
-  const qqmapsdk = new QQMapWX({
-    key: QQ_MAP_key
-  });
-
 
   //微信小程序无法进行Dom操作 所以无法动态拿到元素宽度
   //这里进行模拟宽度 两个字宽度+2*margin 也就是 32+10*2 = 52
@@ -138,7 +119,25 @@
         waitingTimes: [],
         chooseArr: [],
         car: '快车',
-        carCostArr: carCostArr,
+        carCostArr: carCostArr = [{
+            id: 0,
+            name: '拼车',
+            imgUrl: '/static/img/costCart.png',
+            cost: cost
+          },
+          {
+            id: 1,
+            name: '快车',
+            imgUrl: '/static/img/costCart.png',
+            cost: parseInt(cost) + 8.8
+          },
+          {
+            id: 2,
+            name: '优享',
+            imgUrl: '/static/img/goodCart.png',
+            cost: parseInt(cost) + 5.5
+          }
+        ],
         curCostIndex: 0,
         swipers: ['出租车后续完善', '顺风车后续完善', '公交后续完善', '代驾后续完善', '自驾租车后续完善', '二手车后续完善']
       };
@@ -233,7 +232,7 @@
         });
       },
       showCost() {
-        if (this.destination == INIT_DESTINATION || this.destination == null) {
+        if (this.destination == '你要去哪儿' || this.destination == null) {
           uni.showToast({
             title: '请先选择目的地!',
             icon: 'none'
