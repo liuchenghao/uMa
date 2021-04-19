@@ -54,7 +54,7 @@
       },
       next(){
         if (!this.checkPhoneNum()) {
-          wx.showToast({
+          uni.showToast({
             title: '请输入正确的手机号码!',
             icon: 'none',
           });
@@ -62,12 +62,12 @@
           return;
         }
         this.savePhone(this.phone.replace(/\s+/g, ''));
-        wx.showToast({
+        uni.showToast({
           title: '登录成功!',
           icon: 'success',
           success: setTimeout(() => {
-            wx.redirectTo({
-              url: '/pages/index/index'
+            uni.redirectTo({
+              url: '/pages/passenger/index'
             });
             this.clearPhoneNum();
           }, 500)

@@ -3,8 +3,8 @@ import {showToast} from '@/common/utils/tools.js'
 
 export function request(url, method = 'GET', data, header = {}) {
   return new Promise((resolve, reject) => {
-    wx.showLoading({title: '玩命加载中...'})
-    wx.request({
+    uni.showLoading({title: '玩命加载中...'})
+    uni.request({
       url: baseUrl + url + ".json",
       method,
       data,
@@ -23,7 +23,7 @@ export function request(url, method = 'GET', data, header = {}) {
         showToast('获取数据失败!')
       },
       complete:function () {
-        wx.hideLoading()
+        uni.hideLoading()
       }
     })
   })

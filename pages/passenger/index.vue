@@ -209,11 +209,11 @@
       navigateToLogin() {
         //如果没有用户信息就跳转到登陆页
         if (!this.$store.state.phone) {
-          wx.navigateTo({
+          uni.navigateTo({
             url: '/pages/sysm/login'
           });
         } else {
-          wx.showToast({
+          uni.showToast({
             title: '已成功登录!',
             icon: 'success'
           });
@@ -249,7 +249,7 @@
       },
       confirmCost() {
         this.saveCost(this.carCostArr[this.curCostIndex].cost);
-        wx.navigateTo({
+        uni.navigateTo({
           url: "/pages/passenger/wait",
           success: () => {
             this.isShowCost = false;

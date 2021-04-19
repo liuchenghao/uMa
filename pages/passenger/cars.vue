@@ -31,7 +31,7 @@
       chooseCar(item){
         this.setNavIndex(item.id)
         console.log(this.$store.state.curNavIndex)
-        wx.navigateBack()
+        uni.navigateBack()
       },
       ...mapMutations("passenger/index", {
         setNavIndex: 'SET_CUR_NAV_INDEX'

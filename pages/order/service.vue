@@ -60,7 +60,7 @@
     },
     onLoad() {
       this.getInitData();
-      this.mapCtx = wx.createMapContext("didiMap");
+      this.mapCtx = uni.createMapContext("didiMap");
     },
     onShow() {
       this.mapCtx.moveToLocation();
@@ -127,7 +127,7 @@
         this.mapCtx.moveToLocation();
       },
       cancel() {
-        wx.navigateTo({
+        uni.navigateTo({
           url: "/pages/order/cancel",
           success: () => {
             clearInterval(animationTimer);
@@ -135,7 +135,7 @@
         });
       },
       endTrip() {
-        wx.redirectTo({
+        uni.redirectTo({
           url: "/pages/order/index",
         });
       },

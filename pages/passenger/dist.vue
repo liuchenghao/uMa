@@ -38,7 +38,7 @@
         this.getSuggestion(value);
       },
       chooseCity() {
-        wx.navigateTo({
+        uni.navigateTo({
           url: '/pages/passenger/city',
           success: () => {
             this.clearData();
@@ -56,7 +56,7 @@
         });
       },
       goBack() {
-        wx.navigateBack();
+        uni.navigateBack();
       },
       choosePlace(item) {
         //item.address详细地址

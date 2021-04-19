@@ -55,7 +55,7 @@
         })
       },
       showMoreReasons(){
-        wx.showLoading({
+        uni.showLoading({
           title: '加载中',
           icon: 'loading',
           duration: 800,
@@ -66,11 +66,11 @@
         })
       },
       commit(){
-        wx.showToast({
+        uni.showToast({
           title: '提交成功',
           icon: 'success',
           success: () => {
-            wx.redirectTo({
+            uni.redirectTo({
               url: "/pages/order/close"
             })
           }

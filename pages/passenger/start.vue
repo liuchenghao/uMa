@@ -67,7 +67,7 @@
           this.latitude = this.startPosition[0];
           this.longitude = this.startPosition[1];
         } else {
-          wx.getLocation({
+          uni.getLocation({
             type: "gcj02",
             success: (res) => {
               this.longitude = res.longitude;
@@ -77,7 +77,7 @@
         }
       },
       chooseCity() {
-        wx.navigateTo({
+        uni.navigateTo({
           url: '/pages/passenger/city'
         });
       },
@@ -105,7 +105,7 @@
         this.$refs.searchBar.clear();
       },
       cancel() {
-        wx.navigateBack();
+        uni.navigateBack();
         this.clearData();
       },
       clearData() {
@@ -181,7 +181,7 @@
       setStartPlace() {
         //这里只需要再保存位置就好了
         this.saveStartPosition([this.latitude, this.longitude]);
-        wx.redirectTo({
+        uni.redirectTo({
           url: "/pages/index/index",
         });
       },

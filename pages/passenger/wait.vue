@@ -81,7 +81,7 @@
         }, 1000);
       },
       drawProgress(step) {
-        const context = wx.createCanvasContext('progress');
+        const context = uni.createCanvasContext('progress');
         context.setLineWidth(4);
         context.setStrokeStyle("#fbcb02");
         context.setLineCap('round');
@@ -92,14 +92,14 @@
         context.draw();
       },
       cancel() {
-        wx.navigateTo({
+        uni.navigateTo({
           url: "/pages/order/cancel",
         });
         this.clearData();
       },
       back() {
-        wx.redirectTo({
-          url: "/pages/index/index",
+        uni.redirectTo({
+          url: "/pages/passenger/index",
         });
       },
       clearData() {

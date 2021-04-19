@@ -20,7 +20,7 @@ export function formatTime(date) {
 
 
 export function showToast(title) {
-  wx.showToast({
+  uni.showToast({
     title: title,
     icon: 'none'
   })

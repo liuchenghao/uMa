@@ -19,7 +19,7 @@
       };
     },
     created() {
-      const logs = (wx.getStorageSync('logs') || []);
+      const logs = (uni.getStorageSync('logs') || []);
       this.logs = logs.map(log => formatTime(new Date(log)));
     }
   };

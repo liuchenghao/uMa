@@ -77,7 +77,7 @@
               }
             });
             // }
-            wx.navigateBack();
+            uni.navigateBack();
           }
         });
       },

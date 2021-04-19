@@ -31,22 +31,22 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import CommonFooter from '../../components/common-footer.vue'
+  import CommonFooter from '../../components/common-footer.vue';
   import {
     mapState
-  } from 'vuex'
+  } from 'vuex';
   import {
     formatTime
-  } from '@/common/utils/tools.js'
+  } from '@/common/utils/tools.js';
 
   export default {
     data() {
       return {
         time: ''
-      }
+      };
     },
     mounted() {
-      this.time = formatTime(new Date())
+      this.time = formatTime(new Date());
     },
     methods: {
       clickFooterRight() {
@@ -56,17 +56,17 @@
             setTimeout(() => {
               wx.redirectTo({
                 url: '/pages/index/index',
-              })
-            }, 800)
+              });
+            }, 800);
           }
-        })
+        });
       },
       clickFooterLeft() {
         wx.showToast({
           title: '尚未开发！',
           icon: 'none',
           duration: 2000
-        })
+        });
       }
     },
     computed: {
@@ -78,7 +78,7 @@
     components: {
       CommonFooter
     }
-  }
+  };
 </script>
 
 <style lang="less" scoped rel="stylesheet/less">
