@@ -14,12 +14,19 @@
         <img src="../../static/img/nav-all.png" alt="">
       </div>
     </div>
+    <view class="">
+      
+    </view>
     <div class="card" :class="{'noWhite':isShowCost}">
       <div v-if="isLoading" class="loading-wrapper">
         <loading-sprinner></loading-sprinner>
       </div>
       <div class="card-time">
-        {{waitingTimes}}
+        <span class="circle-blue"></span>
+        <span class="card-time-input">
+          <uni-datetime-picker hide-second :border="false" placeHolder="请选择预约时间"></uni-datetime-picker>
+        </span>
+        <!-- {{waitingTimes}} -->
       </div>
       <div class="card-start">
         <span class="circle-green"></span>
@@ -378,21 +385,24 @@
         transform: translateX(-50%);
       }
 
-      .card-time {
+      /* .card-time {
         width: 100%;
         height: 40px;
         line-height: 40px;
         font-size: 14px;
         color: rgba(0, 0, 0, .7)
-      }
-
+      } */
+      .card-time,
       .card-start,
       .card-destination {
         display: flex;
         align-items: center;
         height: 60px;
         width: 100%;
-
+        .circle-blue {
+          flex: 0 0 10px;
+          .circle(#0800de)
+        }
         .circle-green {
           flex: 0 0 10px;
           .circle(#3cbca3)
@@ -402,7 +412,25 @@
           flex: 0 0 10px;
           .circle(#fc9153);
         }
-
+        /deep/.card-time-input{
+          padding-right: 8px;
+          // flex: 1;
+          display: flex;
+          margin-left: 20px;
+          height: 60px;
+          align-items: center;
+          width: 100%;
+          // line-height: 60px;
+          font-size: 16px;
+          .border-1px(#f5f5f5);
+          .no-wrap();
+          .uni-datetime-picker-time{
+            .uni-datetime-picker-text{
+              font-size: 16px;
+              color: #000;
+            }
+          } 
+        }
         .card-address,
         .card-input-destination {
           padding-right: 8px;
