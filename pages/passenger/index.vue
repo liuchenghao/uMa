@@ -28,7 +28,7 @@
                   <div class="card-time">
                     <span class="circle-blue"></span>
                     <span class="card-time-input">
-                      <uni-datetime-picker hide-second :border="false" placeHolder="请选择预约时间"></uni-datetime-picker>
+                      <uni-datetime-picker hide-second :border="false" placeHolder="请选择预约时间" @show="changePicker"></uni-datetime-picker>
                     </span>
                     <!-- {{waitingTimes}} -->
                   </div>
@@ -281,6 +281,10 @@
       ];
     },
     methods: {
+      changePicker(val){
+        // console.info(val, "=============");
+        this.isShowCost = val;
+      },
       async getInitData() {
 
         const res = await this.getIndexInfo(); //request('/comments')

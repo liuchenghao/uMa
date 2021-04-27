@@ -176,9 +176,13 @@
       placeHolder: {
         type: String,
         default: ''
-      }
+      },
+      show: Function
 		},
 		watch: {
+      visible(val){
+          this.$emit("show", val);
+      },
 			value: {
 				handler(newVal, oldVal) {
 					if (newVal) {

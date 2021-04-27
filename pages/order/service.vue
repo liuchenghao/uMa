@@ -17,7 +17,7 @@
       <cover-image class="marker location-marker" src="/static/img/location.png" @click.stop="onClickMark">
       </cover-image>
 
-      <cover-image class="marker walk-marker" src="/static/img/walk.png" @click.stop="onClickMark"></cover-image>
+      <!-- <cover-image class="marker walk-marker" src="/static/img/walk.png" @click.stop="onClickMark"></cover-image> -->
 
       <cover-image class="car-marker" src="/static/img/mapCart.png"></cover-image>
 

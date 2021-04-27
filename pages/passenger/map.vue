@@ -123,10 +123,12 @@
       onClickLocation(e) {
         let latitude = this.latitude;
         let longitude = this.longitude;
-        this.mapCtx.moveToLocation({
+        console.info(longitude, "=====================", latitude);
+        /* this.mapCtx.moveToLocation({
           latitude,
           longitude
-        });
+        }); */
+        this.mapCtx.moveToLocation();
       },
       clearData() {},
       setStartPlace() {
