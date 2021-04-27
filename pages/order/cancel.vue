@@ -18,29 +18,29 @@
 </template>
 
 <script type="text/ecmascript-6">
-  export default{
+  export default {
     methods: {
-      showCancelDialog(){
+      showCancelDialog() {
         wx.showModal({
           content: '确定要取消行程吗',
           cancelColor: '#cccccc',
           confirmColor: '#fc9c56',
-          success: function (res) {
+          success: function(res) {
             if (res.confirm) {
               wx.redirectTo({
                 url: "/pages/order/why",
-              })
+              });
             } else if (res.cancel) {
-              wx.navigateBack()
+              wx.navigateBack();
             }
           }
-        })
+        });
       },
-      noCancel(){
-        wx.navigateBack()
+      noCancel() {
+        wx.navigateBack();
       }
     }
-  }
+  };
 </script>
 
 <style lang="less" scoped rel="stylesheet/less">
@@ -51,32 +51,44 @@
     height: 100vh;
     box-sizing: border-box;
     overflow: hidden;
+
     .header {
       text-align: center;
+
       .text-desc {
         color: #333333;
         font-size: 20px;
       }
+
       .text-small {
         margin-top: 16px;
         font-size: 14px;
         color: #d1d1d1;
       }
     }
+
     .container {
       margin-top: 40px;
       text-align: center;
+
+      img {
+        width: 100%;
+      }
     }
+
     .btn {
       margin-top: 10px;
+
       &.btn-cancel {
         .long-btn(#000, #f5f5f5);
         border: 1px solid #4d4d4d;
       }
+
       &.btn-no-cancel {
         .long-btn(#fff, #4a4c5b);
       }
     }
+
     .footer {
       position: absolute;
       bottom: 10px;
@@ -84,12 +96,14 @@
       transform: translateX(-50%);
       height: 18px;
       font-size: 0;
+
       img {
         vertical-align: top;
         display: inline-block;
         width: 18px;
         height: 18px;
       }
+
       .text-rule {
         margin-left: 5px;
         height: 18px;
