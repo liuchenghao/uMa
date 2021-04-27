@@ -27,8 +27,8 @@
         <cover-view class="right-border"></cover-view>
         <cover-view class="text" @click.stop="endTrip">结束行程
         </cover-view>
-        <cover-view class="right-border"></cover-view>
-        <cover-view class="text">下载滴滴APP</cover-view>
+        <!-- <cover-view class="right-border"></cover-view>
+        <cover-view class="text">下载滴滴APP</cover-view> -->
       </cover-view>
     </map>
   </div>

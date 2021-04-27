@@ -1,7 +1,6 @@
 <template>
-    <uni-row class="page-container">
-      <uni-row class="page-container-header">
-        <uni-col>
+    <view class="page-container">
+      <view class="page-container-header">
           <view class="nav-wrapper">
             <view class="nav-me" @click.stop="navigateToLogin">
               <cover-image src="@/static/img/nav-me.png" alt=""></cover-image>
@@ -16,10 +15,9 @@
               <cover-image src="../../static/img/nav-all.png" alt=""></cover-image>
             </view>
           </view>
-        </uni-col>
-      </uni-row>
-      <uni-row class="page-container-bodyer">
-        <uni-row class="block1">
+      </view>
+      <view class="page-container-bodyer">
+        <view class="block1">
           <swiper class="swiper-bodyer" :current="curNavIndex" @change="switchTab">
             <swiper-item class="swiper-item">
               <uni-card>
@@ -155,10 +153,10 @@
               </uni-card>
             </swiper-item>
           </swiper>
-        </uni-row>
-      </uni-row>
-      <uni-row class="page-container-footer" v-if="!isShowCost">
-        <uni-row class="block1">
+        </view>
+      </view>
+      <view class="page-container-footer" v-if="!isShowCost">
+        <view class="block1">
           <swiper class="swiper-tab" :current="curNavIndex" @change="switchTab">
             <swiper-item class="swiper-item">
               <view class="extend">
@@ -199,17 +197,17 @@
 
           </swiper>
 
-        </uni-row>
+        </view>
 
-        <uni-row class="block2">
+        <view class="block2">
           <swiper class="swiper-ad" circular="true" autoplay="true">
             <swiper-item class="swiper-item" v-for="item in imgUrls" :key="item">
               <cover-image :src="item" />
             </swiper-item>
           </swiper>
-        </uni-row>
-      </uni-row>
-    </uni-row>
+        </view>
+      </view>
+    </view>
 
 
 
