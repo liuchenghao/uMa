@@ -1,221 +1,222 @@
 <template>
-    <view class="page-container">
-      <view class="page-container-header">
-          <view class="nav-wrapper">
-            <view class="nav-me" @click.stop="navigateToLogin">
-              <cover-image src="@/static/img/nav-me.png" alt=""></cover-image>
-            </view>
-            <scroll-view class="nav" scroll-x="true" scroll-with-animation="true" :scroll-left="navScrollLeft">
-              <view v-for="(item,index) in navData" :key="item.id" class="nav-item" :class="{active:index==curNavIndex}"
-                @click.stop="switchNav(item.id)">
-                {{item.name}}
-              </view>
-            </scroll-view>
-            <view class="nav-all" @click.stop="navigateToCars">
-              <cover-image src="../../static/img/nav-all.png" alt=""></cover-image>
-            </view>
+  <view class="page-container">
+    <view class="page-container-header">
+      <view class="nav-wrapper">
+        <view class="nav-me" @click.stop="navigateToLogin">
+          <cover-image src="@/static/img/nav-me.png" alt=""></cover-image>
+        </view>
+        <scroll-view class="nav" scroll-x="true" scroll-with-animation="true" :scroll-left="navScrollLeft">
+          <view v-for="(item,index) in navData" :key="item.id" class="nav-item" :class="{active:index==curNavIndex}"
+            @click.stop="switchNav(item.id)">
+            {{item.name}}
           </view>
-      </view>
-      <view class="page-container-bodyer">
-        <view class="block1">
-          <swiper class="swiper-bodyer" :current="curNavIndex" @change="switchTab">
-            <swiper-item class="swiper-item">
-              <uni-card>
-                <div class="card" :class="{'noWhite':isShowCost}">
-                  <div v-if="isLoading" class="loading-wrapper">
-                    <loading-sprinner></loading-sprinner>
-                  </div>
-                  <div class="card-time">
-                    <span class="circle-blue"></span>
-                    <span class="card-time-input">
-                      <uni-datetime-picker hide-second :border="false" placeHolder="请选择预约时间" @show="changePicker"></uni-datetime-picker>
-                    </span>
-                    <!-- {{waitingTimes}} -->
-                  </div>
-                  <div class="card-start">
-                    <span class="circle-green"></span>
-                    <span class="card-address" @click.stop="navigateToStarting">{{startFormattedPlace}}</span>
-                  </div>
-                  <div class="card-destination">
-                    <span class="circle-orange"></span>
-                    <span class="card-input-destination" @click.stop="navigateToDestination">{{destination}}</span>
-                  </div>
-                </div>
-                <button v-if="!isShowCost" @click.stop="showCost" class="btn-call-car">
-                  预约
-                </button>
-                <div v-if="isShowCost" class="cost">
-                  <div class="cost-header">
-                    <div class="header-item" v-for="item in chooseArr" :key="item.id">
-                      <img width="15" height="15" :src="item.url" alt="">
-                      <span>{{item.name}}</span>
-                    </div>
-                  </div>
-                  <div class="cost-footer">
-                    <div class="carpooling" :class="{active:index==curCostIndex}" v-for="(item,index) in carCostArr"
-                      :key="item.id" @click.stop="chooseCost(item)">
-                      <span class="carpooling-name">{{item.name}}</span>
-                      <img :src="item.imgUrl">
-                      <span class="carpooling-cost">预计 {{item.cost}} 元</span>
-                    </div>
-                  </div>
-                </div>
-                <button v-if="isShowCost" @click.stop="confirmCost" class="btn-confirm">确认
-                </button>
-              </uni-card>
-            </swiper-item>
-            <swiper-item class="swiper-item">
-              <uni-card>
-                <div class="card" :class="{'noWhite':isShowCost}">
-                  <div v-if="isLoading" class="loading-wrapper">
-                    <loading-sprinner></loading-sprinner>
-                  </div>
-                  <div class="card-time">
-                    <span class="circle-blue"></span>
-                    <span class="card-time-input">
-                      <input type="text" v-model="city" placeholder="请输入预约航班班次" />
-                    </span>
-                  </div>
-                  <div class="card-start">
-                    <span class="circle-green"></span>
-                    <span class="card-address" @click.stop="navigateToStarting">{{startFormattedPlace}}</span>
-                  </div>
-                  <div class="card-destination">
-                    <span class="circle-orange"></span>
-                    <span class="card-input-destination" @click.stop="navigateToDestination">{{destination}}</span>
-                  </div>
-                </div>
-                <button v-if="!isShowCost" @click.stop="showCost" class="btn-call-car">
-                  预约
-                </button>
-                <div v-if="isShowCost" class="cost">
-                  <div class="cost-header">
-                    <div class="header-item" v-for="item in chooseArr" :key="item.id">
-                      <img width="15" height="15" :src="item.url" alt="">
-                      <span>{{item.name}}</span>
-                    </div>
-                  </div>
-                  <div class="cost-footer">
-                    <div class="carpooling" :class="{active:index==curCostIndex}" v-for="(item,index) in carCostArr"
-                      :key="item.id" @click.stop="chooseCost(item)">
-                      <span class="carpooling-name">{{item.name}}</span>
-                      <img :src="item.imgUrl">
-                      <span class="carpooling-cost">预计 {{item.cost}} 元</span>
-                    </div>
-                  </div>
-                </div>
-                <button v-if="isShowCost" @click.stop="confirmCost" class="btn-confirm">确认
-                </button>
-              </uni-card>
-            </swiper-item>
-            <swiper-item class="swiper-item">
-              <uni-card>
-                <div class="card" :class="{'noWhite':isShowCost}">
-                  <div v-if="isLoading" class="loading-wrapper">
-                    <loading-sprinner></loading-sprinner>
-                  </div>
-                  <div class="card-time">
-                    <span class="circle-blue"></span>
-                    <span class="card-time-input">
-                      <input type="text" v-model="city" placeholder="请输入预约列车车次" />
-                    </span>
-                  </div>
-                  <div class="card-start">
-                    <span class="circle-green"></span>
-                    <span class="card-address" @click.stop="navigateToStarting">{{startFormattedPlace}}</span>
-                  </div>
-                  <div class="card-destination">
-                    <span class="circle-orange"></span>
-                    <span class="card-input-destination" @click.stop="navigateToDestination">{{destination}}</span>
-                  </div>
-                </div>
-                <button v-if="!isShowCost" @click.stop="showCost" class="btn-call-car">
-                  预约
-                </button>
-                <div v-if="isShowCost" class="cost">
-                  <div class="cost-header">
-                    <div class="header-item" v-for="item in chooseArr" :key="item.id">
-                      <img width="15" height="15" :src="item.url" alt="">
-                      <span>{{item.name}}</span>
-                    </div>
-                  </div>
-                  <div class="cost-footer">
-                    <div class="carpooling" :class="{active:index==curCostIndex}" v-for="(item,index) in carCostArr"
-                      :key="item.id" @click.stop="chooseCost(item)">
-                      <span class="carpooling-name">{{item.name}}</span>
-                      <img :src="item.imgUrl">
-                      <span class="carpooling-cost">预计 {{item.cost}} 元</span>
-                    </div>
-                  </div>
-                </div>
-                <button v-if="isShowCost" @click.stop="confirmCost" class="btn-confirm">确认
-                </button>
-              </uni-card>
-            </swiper-item>
-          </swiper>
-        </view>
-      </view>
-      <view class="page-container-footer" v-if="!isShowCost">
-        <view class="block1">
-          <swiper class="swiper-tab" :current="curNavIndex" @change="switchTab">
-            <swiper-item class="swiper-item">
-              <view class="extend">
-                <div class="item-content">
-                  <img src="../../static/img/members.png" alt="">
-                  <span class="item-text">会员</span>
-                </div>
-                <div class="item-content">
-                  <img src="../../static/img/package.png" alt="">
-                  <span class="item-text">套餐</span>
-                </div>
-                <div class="item-content">
-                  <img class="img-no-round" src="/static/img/recruiting.png" alt="">
-                  <span class="item-text">招募</span>
-                </div>
-              </view>
-
-            </swiper-item>
-
-            <swiper-item class="swiper-item">
-              <view class="extend">
-                <div class="item-content">
-                  <img src="/static/img/pick-send.png" alt="">
-                  <span class="item-text">接机</span>
-                </div>
-                <div class="item-content">
-                  <img src="/static/img/pick-up.png" alt="">
-                  <span class="item-text">送机</span>
-                </div>
-              </view>
-            </swiper-item>
-
-            <swiper-item class="swiper-item" v-for="(item,index) in swipers" :key="index">
-              <view class="extend">
-                <span class="item-text">{{item}}</span>
-              </view>
-            </swiper-item>
-
-          </swiper>
-
-        </view>
-
-        <view class="block2">
-          <swiper class="swiper-ad" circular="true" autoplay="true">
-            <swiper-item class="swiper-item" v-for="item in imgUrls" :key="item">
-              <cover-image :src="item" />
-            </swiper-item>
-          </swiper>
+        </scroll-view>
+        <view class="nav-all" @click.stop="navigateToCars">
+          <cover-image src="../../static/img/nav-all.png" alt=""></cover-image>
         </view>
       </view>
     </view>
+    <view class="page-container-bodyer">
+      <view class="block1">
+        <swiper class="swiper-bodyer" :current="curNavIndex" @change="switchTab">
+          <swiper-item class="swiper-item">
+            <uni-card>
+              <div class="card" :class="{'noWhite':isShowCost}">
+                <div v-if="isLoading" class="loading-wrapper">
+                  <loading-sprinner></loading-sprinner>
+                </div>
+                <div class="card-time">
+                  <span class="circle-blue"></span>
+                  <span class="card-time-input">
+                    <uni-datetime-picker hide-second :border="false" placeHolder="请选择预约时间" @show="changePicker">
+                    </uni-datetime-picker>
+                  </span>
+                  <!-- {{waitingTimes}} -->
+                </div>
+                <div class="card-start">
+                  <span class="circle-green"></span>
+                  <span class="card-address" @click.stop="navigateToStarting">{{startFormattedPlace}}</span>
+                </div>
+                <div class="card-destination">
+                  <span class="circle-orange"></span>
+                  <span class="card-input-destination" @click.stop="navigateToDestination">{{destination}}</span>
+                </div>
+              </div>
+              <button v-if="!isShowCost" @click.stop="showCost" class="btn-call-car">
+                预约
+              </button>
+              <div v-if="isShowCost" class="cost">
+                <div class="cost-header">
+                  <div class="header-item" v-for="item in chooseArr" :key="item.id">
+                    <img width="15" height="15" :src="item.url" alt="">
+                    <span>{{item.name}}</span>
+                  </div>
+                </div>
+                <div class="cost-footer">
+                  <div class="carpooling" :class="{active:index==curCostIndex}" v-for="(item,index) in carCostArr"
+                    :key="item.id" @click.stop="chooseCost(item)">
+                    <span class="carpooling-name">{{item.name}}</span>
+                    <img :src="item.imgUrl">
+                    <span class="carpooling-cost">预计 {{item.cost}} 元</span>
+                  </div>
+                </div>
+              </div>
+              <button v-if="isShowCost" @click.stop="confirmCost" class="btn-confirm">确认
+              </button>
+            </uni-card>
+          </swiper-item>
+          <swiper-item class="swiper-item">
+            <uni-card>
+              <div class="card" :class="{'noWhite':isShowCost}">
+                <div v-if="isLoading" class="loading-wrapper">
+                  <loading-sprinner></loading-sprinner>
+                </div>
+                <div class="card-time">
+                  <span class="circle-blue"></span>
+                  <span class="card-time-input">
+                    <input type="text" v-model="city" placeholder="请输入预约航班班次" />
+                  </span>
+                </div>
+                <div class="card-start">
+                  <span class="circle-green"></span>
+                  <span class="card-address" @click.stop="navigateToStarting">{{startFormattedPlace}}</span>
+                </div>
+                <div class="card-destination">
+                  <span class="circle-orange"></span>
+                  <span class="card-input-destination" @click.stop="navigateToDestination">{{destination}}</span>
+                </div>
+              </div>
+              <button v-if="!isShowCost" @click.stop="showCost" class="btn-call-car">
+                预约
+              </button>
+              <div v-if="isShowCost" class="cost">
+                <div class="cost-header">
+                  <div class="header-item" v-for="item in chooseArr" :key="item.id">
+                    <img width="15" height="15" :src="item.url" alt="">
+                    <span>{{item.name}}</span>
+                  </div>
+                </div>
+                <div class="cost-footer">
+                  <div class="carpooling" :class="{active:index==curCostIndex}" v-for="(item,index) in carCostArr"
+                    :key="item.id" @click.stop="chooseCost(item)">
+                    <span class="carpooling-name">{{item.name}}</span>
+                    <img :src="item.imgUrl">
+                    <span class="carpooling-cost">预计 {{item.cost}} 元</span>
+                  </div>
+                </div>
+              </div>
+              <button v-if="isShowCost" @click.stop="confirmCost" class="btn-confirm">确认
+              </button>
+            </uni-card>
+          </swiper-item>
+          <swiper-item class="swiper-item">
+            <uni-card>
+              <div class="card" :class="{'noWhite':isShowCost}">
+                <div v-if="isLoading" class="loading-wrapper">
+                  <loading-sprinner></loading-sprinner>
+                </div>
+                <div class="card-time">
+                  <span class="circle-blue"></span>
+                  <span class="card-time-input">
+                    <input type="text" v-model="city" placeholder="请输入预约列车车次" />
+                  </span>
+                </div>
+                <div class="card-start">
+                  <span class="circle-green"></span>
+                  <span class="card-address" @click.stop="navigateToStarting">{{startFormattedPlace}}</span>
+                </div>
+                <div class="card-destination">
+                  <span class="circle-orange"></span>
+                  <span class="card-input-destination" @click.stop="navigateToDestination">{{destination}}</span>
+                </div>
+              </div>
+              <button v-if="!isShowCost" @click.stop="showCost" class="btn-call-car">
+                预约
+              </button>
+              <div v-if="isShowCost" class="cost">
+                <div class="cost-header">
+                  <div class="header-item" v-for="item in chooseArr" :key="item.id">
+                    <img width="15" height="15" :src="item.url" alt="">
+                    <span>{{item.name}}</span>
+                  </div>
+                </div>
+                <div class="cost-footer">
+                  <div class="carpooling" :class="{active:index==curCostIndex}" v-for="(item,index) in carCostArr"
+                    :key="item.id" @click.stop="chooseCost(item)">
+                    <span class="carpooling-name">{{item.name}}</span>
+                    <img :src="item.imgUrl">
+                    <span class="carpooling-cost">预计 {{item.cost}} 元</span>
+                  </div>
+                </div>
+              </div>
+              <button v-if="isShowCost" @click.stop="confirmCost" class="btn-confirm">确认
+              </button>
+            </uni-card>
+          </swiper-item>
+        </swiper>
+      </view>
+    </view>
+    <view class="page-container-footer" v-if="!isShowCost">
+      <view class="block1">
+        <swiper class="swiper-tab" :current="curNavIndex" @change="switchTab">
+          <swiper-item class="swiper-item">
+            <view class="extend">
+              <div class="item-content">
+                <img src="../../static/img/members.png" alt="">
+                <span class="item-text">会员</span>
+              </div>
+              <div class="item-content">
+                <img src="../../static/img/package.png" alt="">
+                <span class="item-text">套餐</span>
+              </div>
+              <div class="item-content">
+                <img class="img-no-round" src="/static/img/recruiting.png" alt="">
+                <span class="item-text">招募</span>
+              </div>
+            </view>
 
+          </swiper-item>
 
+          <swiper-item class="swiper-item">
+            <view class="extend">
+              <div class="item-content">
+                <img src="/static/img/pick-send.png" alt="">
+                <span class="item-text">接机</span>
+              </div>
+              <div class="item-content">
+                <img src="/static/img/pick-up.png" alt="">
+                <span class="item-text">送机</span>
+              </div>
+            </view>
+          </swiper-item>
 
+          <swiper-item class="swiper-item" v-for="(item,index) in swipers" :key="index">
+            <view class="extend">
+              <span class="item-text">{{item}}</span>
+            </view>
+          </swiper-item>
 
+        </swiper>
+
+      </view>
+
+      <view class="block2">
+        <swiper class="swiper-ad" circular="true" autoplay="true">
+          <swiper-item class="swiper-item" v-for="item in imgUrls" :key="item">
+            <cover-image :src="item" />
+          </swiper-item>
+        </swiper>
+      </view>
+    </view>
+    <uni-drawer :visible.sync="isShowUser">
+      <uma-my></uma-my>
+    </uni-drawer>
+  </view>
 </template>
 
 <script type="text/ecmascript-6">
   import LoadingSprinner from '../../components/loading-sprinner.vue';
+  import umaMy from '@/components/sysm/uma-my.vue';
   import {
     mapState,
     mapMutations,
@@ -234,7 +235,7 @@
   export default {
     data() {
       return {
-        city:'',
+        city: '',
         isLoading: true,
         isShowCost: false,
         navScrollLeft: 0,
@@ -243,6 +244,7 @@
         waitingTimes: [],
         chooseArr: [],
         car: '快车',
+        isShowUser: false,
         carCostArr: [{
             id: 0,
             name: '拼车',
@@ -281,7 +283,7 @@
       ];
     },
     methods: {
-      changePicker(val){
+      changePicker(val) {
         this.isShowCost = val;
       },
       async getInitData() {
@@ -330,8 +332,10 @@
         this.saveCurNavIndex(e.mp.detail.current);
       },
       navigateToLogin() {
+        this.isShowUser = true;
+        console.info("=====isShowUser======", this.isShowUser);
         //如果没有用户信息就跳转到登陆页
-        if (!this.$store.state.phone) {
+        /* if (!this.$store.state.phone) {
           uni.navigateTo({
             url: '/pages/sysm/login'
           });
@@ -340,7 +344,7 @@
             title: '已成功登录!',
             icon: 'success'
           });
-        }
+        } */
       },
       navigateToCars() {
         uni.navigateTo({
@@ -404,7 +408,8 @@
       }
     },
     components: {
-      LoadingSprinner
+      LoadingSprinner,
+      umaMy
     }
   };
 </script>
@@ -442,9 +447,11 @@
       .block1 {
         height: 100px;
       }
+
       .block2 {
         height: 72px;
       }
+
       // height: 172px;
     }
   }
