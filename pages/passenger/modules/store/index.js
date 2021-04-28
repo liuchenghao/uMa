@@ -18,43 +18,43 @@ const state = {
 // mutations
 const mutations = {
   [types.SET_INDEX_INFO](state, indexInfo) {
-    state.indexInfo = indexInfo
+    state.indexInfo = indexInfo;
   },
   [types.SET_CUR_NAV_INDEX](state, index) {
-    console.info(index, "--------", this)
-    state.curNavIndex = index
+    console.info(index, "--------", this);
+    state.curNavIndex = index;
   },
   [types.SET_PHONE](state, phone) {
-    state.phone = phone
+    state.phone = phone;
   },
   [types.SET_START_PLACE](state, startPlace) {
-    state.startPlace = startPlace
+    state.startPlace = startPlace;
   },
   [types.SET_FORMATTED_START_PLACE](state, startFormattedPlace) {
-    state.startFormattedPlace = startFormattedPlace
+    state.startFormattedPlace = startFormattedPlace;
   },
   [types.SET_DESTINATION](state, destination) {
-    state.destination = destination
+    state.destination = destination;
   },
   [types.SET_START_POSITION](state, startPosition) {
-    state.startPosition = startPosition
+    state.startPosition = startPosition;
   },
   [types.SET_END_POSITION](state, endPosition) {
-    state.endPosition = endPosition
+    state.endPosition = endPosition;
   },
   [types.SET_CUR_CITY](state, curCity) {
-    state.curCity = curCity
+    state.curCity = curCity;
   },
   [types.SET_DRIVER](state, driver) {
-    state.driver = driver
+    state.driver = driver;
   },
   [types.SET_COST](state, cost) {
-    state.cost = cost
+    state.cost = cost;
   }
 };
 // actions
 const actions = {
-  [types.GET_INDEX_INFO](context, params) {
+  /* [types.GET_INDEX_INFO](context, params) {
     console.info("========================",this.$http)
     return this.$http.get('/static/mock/didi/comments.json', {}).then(res => {
         console.log('全局http 更新用户信息 post success----期望custom 含有custom: 66');
@@ -65,6 +65,218 @@ const actions = {
       .catch(err => {
         console.info(err, "[==d--d-d-]")
       });
+  }, */
+  [types.GET_DRIVERS](context, params) {
+    return Promise.resolve({
+      "errorCode": 200,
+      "success": true,
+      "data": {
+        "drivers": [{
+            "id": "0",
+            "name": "@cword()师傅",
+            "stars": "@float(1, 4, 1, 1) @integer(1, 9)w+单",
+            "Cartnumber": "赣A30H75",
+            "cart": "黑色●宝马Q@integer(1, 9)"
+          },
+          {
+            "id": "1",
+            "name": "@cword()师傅",
+            "stars": "@float(1, 4, 1, 1) @integer(1, 9)w+单",
+            "Cartnumber": "赣A66666",
+            "cart": "红色●路虎Q@integer(1, 9)"
+          },
+          {
+            "id": "2",
+            "name": "@cword()师傅",
+            "stars": "@float(1, 4, 1, 1) @integer(1, 9)w+单",
+            "Cartnumber": "赣A365K2",
+            "cart": "蓝色●奔驰Q@integer(1, 9)"
+          },
+          {
+            "id": "3",
+            "name": "@cword()师傅",
+            "stars": "@float(1, 4, 1, 1) @integer(1, 9)w+单",
+            "Cartnumber": "赣A85IHG",
+            "cart": "白色●宝马Q@integer(1, 9)"
+          },
+          {
+            "id": "4",
+            "name": "@cword()师傅",
+            "stars": "@float(1, 4, 1, 1) @integer(1, 9)w+单",
+            "Cartnumber": "赣AHGN42",
+            "cart": "白色●大众Q@integer(1, 9)"
+          },
+          {
+            "id": "5",
+            "name": "@cword()师傅",
+            "stars": "@float(1, 4, 1, 1) @integer(1, 9)w+单",
+            "Cartnumber": "赣A88888",
+            "cart": "黑色●哈福Q@integer(1, 9)"
+          }
+        ],
+      }
+    });
+
+  },
+  [types.GET_TAB_MENUS](context, params) {
+    return Promise.resolve({
+      "errorCode": 200,
+      "success": true,
+      "data": {
+        "tabMenus": [{
+            "id": "0",
+            "name": "预约",
+            "url": "/static/img/car/cart1.png"
+          },
+          {
+            "id": "1",
+            "name": "飞机",
+            "url": "/static/img/car/cart2.png"
+          },
+          {
+            "id": "2",
+            "name": "火车",
+            "url": "/static/img/car/cart3.png"
+          }
+        ],
+      }
+    });
+
+  },
+  [types.GET_COST_DATA](context, params) {
+    return Promise.resolve({
+      "errorCode": 200,
+      "success": true,
+      "data": {
+        "costData": [{
+            "id": "0",
+            "name": "现在出发",
+            "url": "/static/img/time.png"
+          },
+          {
+            "id": "1",
+            "name": "换乘车人",
+            "url": "/static/img/people.png"
+          },
+          {
+            "id": "2",
+            "name": "个人支付",
+            "url": "/static/img/play.png"
+          }
+        ],
+      }
+    });
+  },
+  [types.GET_AD_SERVICE](context, params) {
+    return Promise.resolve({
+      "errorCode": 200,
+      "success": true,
+      "data": {
+        "ads": ["/static/img/swiper/swiper-1.png", "/static/img/swiper/swiper-2.png",
+          "/static/img/swiper/swiper-3.png"
+        ],
+      }
+    });
+
+  },
+  [types.GET_INDEX_INFO](context, params) {
+    return Promise.resolve({
+      "errorCode": 200,
+      "success": true,
+      "data": {
+        "waitingTimes": [
+          "最快3分钟接驾",
+          "最快2分钟接驾",
+          "最快2分钟接驾",
+          "最快1分钟接驾",
+          "最快2分钟接驾",
+          "最快4分钟接驾",
+          "最快3分钟接驾",
+          "最快5分钟接驾",
+          "最快3分钟接驾",
+          "附近暂无车可用，请稍等"
+        ],
+        "drivers": [{
+            "id": "0",
+            "name": "@cword()师傅",
+            "stars": "@float(1, 4, 1, 1) @integer(1, 9)w+单",
+            "Cartnumber": "赣A30H75",
+            "cart": "黑色●宝马Q@integer(1, 9)"
+          },
+          {
+            "id": "1",
+            "name": "@cword()师傅",
+            "stars": "@float(1, 4, 1, 1) @integer(1, 9)w+单",
+            "Cartnumber": "赣A66666",
+            "cart": "红色●路虎Q@integer(1, 9)"
+          },
+          {
+            "id": "2",
+            "name": "@cword()师傅",
+            "stars": "@float(1, 4, 1, 1) @integer(1, 9)w+单",
+            "Cartnumber": "赣A365K2",
+            "cart": "蓝色●奔驰Q@integer(1, 9)"
+          },
+          {
+            "id": "3",
+            "name": "@cword()师傅",
+            "stars": "@float(1, 4, 1, 1) @integer(1, 9)w+单",
+            "Cartnumber": "赣A85IHG",
+            "cart": "白色●宝马Q@integer(1, 9)"
+          },
+          {
+            "id": "4",
+            "name": "@cword()师傅",
+            "stars": "@float(1, 4, 1, 1) @integer(1, 9)w+单",
+            "Cartnumber": "赣AHGN42",
+            "cart": "白色●大众Q@integer(1, 9)"
+          },
+          {
+            "id": "5",
+            "name": "@cword()师傅",
+            "stars": "@float(1, 4, 1, 1) @integer(1, 9)w+单",
+            "Cartnumber": "赣A88888",
+            "cart": "黑色●哈福Q@integer(1, 9)"
+          }
+        ],
+        "navData": [{
+            "id": "0",
+            "name": "预约",
+            "url": "/static/img/car/cart1.png"
+          },
+          {
+            "id": "1",
+            "name": "飞机",
+            "url": "/static/img/car/cart2.png"
+          },
+          {
+            "id": "2",
+            "name": "火车",
+            "url": "/static/img/car/cart3.png"
+          }
+        ],
+        "imgUrls": ["/static/img/swiper/swiper-1.png", "/static/img/swiper/swiper-2.png",
+          "/static/img/swiper/swiper-3.png"
+        ],
+        "cost": [{
+            "id": "0",
+            "name": "现在出发",
+            "url": "/static/img/time.png"
+          },
+          {
+            "id": "1",
+            "name": "换乘车人",
+            "url": "/static/img/people.png"
+          },
+          {
+            "id": "2",
+            "name": "个人支付",
+            "url": "/static/img/play.png"
+          }
+        ],
+
+      }
+    });
   },
   [types.SET_CUR_CITY](context, params) {
     context.commit(types.SET_CUR_CITY, params);

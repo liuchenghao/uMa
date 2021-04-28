@@ -282,7 +282,6 @@
     },
     methods: {
       changePicker(val){
-        // console.info(val, "=============");
         this.isShowCost = val;
       },
       async getInitData() {
