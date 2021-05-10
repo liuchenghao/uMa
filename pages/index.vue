@@ -12,7 +12,7 @@
           </view>
         </scroll-view>
         <view class="nav-all" @click.stop="navigateToCars">
-          <cover-image src="../../static/img/nav-all.png" alt=""></cover-image>
+          <cover-image src="../static/img/nav-all.png" alt=""></cover-image>
         </view>
       </view>
     </view>
@@ -162,11 +162,11 @@
           <swiper-item class="swiper-item">
             <view class="extend">
               <div class="item-content">
-                <img src="../../static/img/members.png" alt="">
+                <img src="../static/img/members.png" alt="">
                 <span class="item-text">会员</span>
               </div>
               <div class="item-content">
-                <img src="../../static/img/package.png" alt="">
+                <img src="../static/img/package.png" alt="">
                 <span class="item-text">套餐</span>
               </div>
               <div class="item-content">
@@ -215,7 +215,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import LoadingSprinner from '../../components/loading-sprinner.vue';
+  import LoadingSprinner from '../components/loading-sprinner.vue';
   import umaMy from '@/components/sysm/uma-my.vue';
   import {
     mapState,
@@ -233,6 +233,15 @@
   const NAV_BIG_WIDTH = 68;
 
   export default {
+    onReady(){
+      console.info("====onAccelerometerChange===",  uni.onAccelerometerChange);
+      uni.onAccelerometerChange( (res) => {
+        console.info("===========++++==========");
+          console.log(res.x);
+          console.log(res.y);
+          console.log(res.z);
+      });
+    },
     data() {
       return {
         city: '',
@@ -415,8 +424,8 @@
 </script>
 
 <style scoped lang="less" rel="stylesheet/less">
-  @import '../../common/less/mixin1';
-  @import "../../common/less/variable";
+  @import '../common/less/mixin1';
+  @import "../common/less/variable";
 
   .page-container {
     height: 100%;
