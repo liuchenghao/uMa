@@ -215,8 +215,9 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import LoadingSprinner from '../components/loading-sprinner.vue';
+  import LoadingSprinner from '@/components/loading-sprinner.vue';
   import umaMy from '@/components/sysm/uma-my.vue';
+  import StepDetector from '@/common/utils/StepDetector';
   import {
     mapState,
     mapMutations,
@@ -233,13 +234,13 @@
   const NAV_BIG_WIDTH = 68;
 
   export default {
-    onReady(){
-      console.info("====onAccelerometerChange===",  uni.onAccelerometerChange);
+    onReady1(){
+      console.info(1,new StepDetector().oriValues,"===11=onAccelerometerChange===",  uni.onAccelerometerChange);
+      let stepDetector = new StepDetector();
       uni.onAccelerometerChange( (res) => {
-        console.info("===========++++==========");
-          console.log(res.x);
-          console.log(res.y);
-          console.log(res.z);
+        // console.info(res,"=======11====++++==========");
+        let values = [res.x, res.y,res.z];
+        stepDetector.calcSensorData(values);
       });
     },
     data() {
