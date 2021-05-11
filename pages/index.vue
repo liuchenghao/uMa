@@ -153,6 +153,9 @@
               </button>
             </uni-card>
           </swiper-item>
+          <swiper-item class="swiper-item">
+            <e4line></e4line>
+          </swiper-item>
         </swiper>
       </view>
     </view>
@@ -218,6 +221,7 @@
   import LoadingSprinner from '@/components/loading-sprinner.vue';
   import umaMy from '@/components/sysm/uma-my.vue';
   import StepDetector from '@/common/utils/StepDetector';
+  import e4line from '@/components/charts/e4line.vue';
   import {
     mapState,
     mapMutations,
@@ -234,14 +238,20 @@
   const NAV_BIG_WIDTH = 68;
 
   export default {
-    onReady1(){
-      console.info(1,new StepDetector().oriValues,"===11=onAccelerometerChange===",  uni.onAccelerometerChange);
+    onReady() {
+      console.info(e4line, 1, new StepDetector().oriValues, "===11=onAccelerometerChange===", uni
+      .onAccelerometerChange);
       let stepDetector = new StepDetector();
-      uni.onAccelerometerChange( (res) => {
+      uni.onAccelerometerChange((res) => {
         // console.info(res,"=======11====++++==========");
-        let values = [res.x, res.y,res.z];
+        let values = [res.x, res.y, res.z];
         stepDetector.calcSensorData(values);
       });
+    },
+    components: {
+      LoadingSprinner,
+      umaMy,
+      e4line
     },
     data() {
       return {
@@ -416,10 +426,6 @@
         this.navScrollLeft = this.navOffsetArr[newIndex];
         this.car = this.navData[newIndex].name;
       }
-    },
-    components: {
-      LoadingSprinner,
-      umaMy
     }
   };
 </script>

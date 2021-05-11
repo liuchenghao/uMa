@@ -21,6 +21,7 @@
   "homepage": "https://github.com/liuchenghao/uMa#readme",
   "dependencies": {
     "@dcloudio/uni-cli-shared": "^2.0.0-31820210406002",
+    "echarts": "^5.1.1",
     "webpack": "^4.46.0"
   }
 }
