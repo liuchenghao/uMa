@@ -18,8 +18,8 @@
     </view>
     <view class="page-container-bodyer">
       <view class="block1">
-        <swiper class="swiper-bodyer" :current="curNavIndex" @change="switchTab">
-          <swiper-item class="swiper-item">
+        <swiper class="swiper-bodyer" :disable-touch="true" :current="curNavIndex" @change="switchTab">
+          <swiper-item class="swiper-item" catchtouchmove="true">
             <uni-card>
               <div class="card" :class="{'noWhite':isShowCost}">
                 <div v-if="isLoading" class="loading-wrapper">
@@ -65,7 +65,7 @@
               </button>
             </uni-card>
           </swiper-item>
-          <swiper-item class="swiper-item">
+          <swiper-item class="swiper-item" catchtouchmove="true">
             <uni-card>
               <div class="card" :class="{'noWhite':isShowCost}">
                 <div v-if="isLoading" class="loading-wrapper">
@@ -109,7 +109,7 @@
               </button>
             </uni-card>
           </swiper-item>
-          <swiper-item class="swiper-item">
+          <swiper-item class="swiper-item" catchtouchmove="true">
             <uni-card>
               <div class="card" :class="{'noWhite':isShowCost}">
                 <div v-if="isLoading" class="loading-wrapper">
@@ -153,17 +153,14 @@
               </button>
             </uni-card>
           </swiper-item>
-          <swiper-item class="swiper-item">
-            <!-- <e4line></e4line> -->
-            
-          </swiper-item>
+          
         </swiper>
       </view>
     </view>
     <view class="page-container-footer" v-if="!isShowCost">
       <view class="block1">
         <swiper class="swiper-tab" :current="curNavIndex" @change="switchTab">
-          <swiper-item class="swiper-item">
+          <swiper-item catchtouchmove="true" class="swiper-item">
             <view class="extend">
               <div class="item-content">
                 <img src="../static/img/members.png" alt="">
@@ -181,7 +178,7 @@
 
           </swiper-item>
 
-          <swiper-item class="swiper-item">
+          <swiper-item catchtouchmove="true" class="swiper-item">
             <view class="extend">
               <div class="item-content">
                 <img src="/static/img/pick-send.png" alt="">
@@ -194,7 +191,7 @@
             </view>
           </swiper-item>
 
-          <swiper-item class="swiper-item" v-for="(item,index) in swipers" :key="index">
+          <swiper-item catchtouchmove="true" class="swiper-item" v-for="(item,index) in swipers" :key="index">
             <view class="extend">
               <span class="item-text">{{item}}</span>
             </view>
@@ -268,21 +265,27 @@
         isShowUser: false,
         carCostArr: [{
             id: 0,
-            name: '拼车',
+            name: '经济',
             imgUrl: '/static/img/costCart.png',
-            cost: 1
+            cost: 0.01
           },
           {
             id: 1,
-            name: '快车',
+            name: '舒适',
             imgUrl: '/static/img/costCart.png',
-            cost: 1
+            cost: 0.01
           },
           {
             id: 2,
-            name: '优享',
+            name: '商务',
             imgUrl: '/static/img/goodCart.png',
-            cost: 1
+            cost: 0.01
+          },
+          {
+            id: 3,
+            name: '豪华',
+            imgUrl: '/static/img/goodCart.png',
+            cost: 0.01
           }
         ],
         curCostIndex: 0,
@@ -350,6 +353,7 @@
         console.info(this.curNavIndex, index);
       },
       switchTab(e) {
+        console.info("=======11====++++==========", e.mp.detail);
         this.saveCurNavIndex(e.mp.detail.current);
       },
       navigateToLogin() {
@@ -369,8 +373,8 @@
       },
       navigateToCars() {
         uni.navigateTo({
-          // url: '/pages/passenger/cars'
-          url: '/pages/test/charts'
+          url: '/pages/passenger/cars'
+          // url: '/pages/test/charts'
         });
       },
       navigateToStarting() {
