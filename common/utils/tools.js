@@ -1,21 +1,21 @@
 export function formatNumber(n) {
-  const str = n.toString()
-  return str[1] ? str : `0${str}`
+  const str = n.toString();
+  return str[1] ? str : `0${str}`;
 }
 
 export function formatTime(date) {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
 
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  const second = date.getSeconds();
 
-  const t1 = [year, month, day].map(formatNumber).join('/')
-  const t2 = [hour, minute, second].map(formatNumber).join(':')
+  const t1 = [year, month, day].map(formatNumber).join('/');
+  const t2 = [hour, minute, second].map(formatNumber).join(':');
 
-  return `${t1} ${t2}`
+  return `${t1} ${t2}`;
 }
 
 
@@ -23,21 +23,33 @@ export function showToast(title) {
   uni.showToast({
     title: title,
     icon: 'none'
-  })
+  });
 }
 
 export function debounce(func, delay) {
-  let timer
-  return function () {
+  let timer;
+  return function() {
     if (timer) {
-      clearTimeout(timer)
+      clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      func.apply(this)
-    }, delay)
-  }
+      func.apply(this);
+    }, delay);
+  };
 }
 
+export function throttle(delay, func) {
+  let previous = 0;
+  return function(cFunc) {
+    let now = Date.now();
+    let context = this;
+    let args = arguments;
+    if (now - previous > delay) {
+      (cFunc || func).apply(context, args);
+      previous = now;
+    }
+  };
+}
 /**
  *
  * @param min 最小值
@@ -45,7 +57,7 @@ export function debounce(func, delay) {
  * @returns {string} 带一位小数的随机数
  */
 export function getRandomDecimal(min, max) {
-  return (min + (max - min) * Math.random()).toFixed(1)
+  return (min + (max - min) * Math.random()).toFixed(1);
 }
 
 /**
@@ -55,12 +67,15 @@ export function getRandomDecimal(min, max) {
  * @returns {Number} 整数随机数
  */
 export function getRandomNum(min, max) {
-  return parseInt(min + (max - min) * Math.random())
+  return parseInt(min + (max - min) * Math.random());
 }
 
 
 //将位置转换为地址
-export function reverseGeocoder(qqmapsdk, {latitude, longitude}) {
+export function reverseGeocoder(qqmapsdk, {
+  latitude,
+  longitude
+}) {
   return new Promise((resolve, reject) => {
     qqmapsdk.reverseGeocoder({
       location: {
@@ -69,8 +84,8 @@ export function reverseGeocoder(qqmapsdk, {latitude, longitude}) {
       },
       success: (res) => resolve(res),
       fail: (res) => reject(res)
-    })
-  })
+    });
+  });
 }
 
 
@@ -79,7 +94,5 @@ export function reverseGeocoder(qqmapsdk, {latitude, longitude}) {
  * @returns {boolean} 是小数返回true
  */
 export function isDecimalNum(num) {
-  return String(num).indexOf('.') !== -1
+  return String(num).indexOf('.') !== -1;
 }
-
-

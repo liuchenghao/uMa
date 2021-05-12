@@ -1,11 +1,17 @@
 {
   "pages": [{
-    "path": "pages/index",
+    "path": "pages/test/charts",
     "style": {
       "navigationBarTitleText": "uMa出行"
     }
   }],
-  "subPackages": [{
+  "subPackages": [/* {
+    "root": "pages/test",
+    "pages": [{
+      "path": "charts",
+      "style": {}
+    }]
+  }, */{
     "root": "pages/passenger",
     "pages": [{
       "path": "cars",

@@ -154,7 +154,8 @@
             </uni-card>
           </swiper-item>
           <swiper-item class="swiper-item">
-            <e4line></e4line>
+            <!-- <e4line></e4line> -->
+            
           </swiper-item>
         </swiper>
       </view>
@@ -220,8 +221,8 @@
 <script type="text/ecmascript-6">
   import LoadingSprinner from '@/components/loading-sprinner.vue';
   import umaMy from '@/components/sysm/uma-my.vue';
-  import StepDetector from '@/common/utils/StepDetector';
-  import e4line from '@/components/charts/e4line.vue';
+  // import StepDetector from '@/common/utils/StepDetector';
+  // import e4line from '@/components/charts/e4line.vue';
   import {
     mapState,
     mapMutations,
@@ -238,20 +239,20 @@
   const NAV_BIG_WIDTH = 68;
 
   export default {
-    onReady() {
-      console.info(e4line, 1, new StepDetector().oriValues, "===11=onAccelerometerChange===", uni
-      .onAccelerometerChange);
+    /* onReady() {
+      // console.info(e4line, 1, new StepDetector().oriValues, "===11=onAccelerometerChange===", uni
+        // .onAccelerometerChange);
       let stepDetector = new StepDetector();
       uni.onAccelerometerChange((res) => {
         // console.info(res,"=======11====++++==========");
         let values = [res.x, res.y, res.z];
         stepDetector.calcSensorData(values);
       });
-    },
+    }, */
     components: {
       LoadingSprinner,
       umaMy,
-      e4line
+      // e4line
     },
     data() {
       return {
@@ -368,7 +369,8 @@
       },
       navigateToCars() {
         uni.navigateTo({
-          url: '/pages/passenger/cars'
+          // url: '/pages/passenger/cars'
+          url: '/pages/test/charts'
         });
       },
       navigateToStarting() {
