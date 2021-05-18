@@ -12,36 +12,35 @@
       <div class="card-footer">
         <p class="evaluation">匿名评价司机</p>
         <div class="star-wrapper">
-          <star :score="stars"
-                @chooseStar="chooseStar">
+          <star :score="stars" @chooseStar="chooseStar">
           </star>
         </div>
       </div>
     </div>
-    <common-footer
-      @clickLeft="clickFooterLeft"
-      @clickRight="clickFooterRight">
+    <common-footer @clickLeft="clickFooterLeft" @clickRight="clickFooterRight">
     </common-footer>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import {mapState} from 'vuex'
+  import {
+    mapState
+  } from 'vuex'
   import DriverHeader from '../../components/driver-header.vue'
   import Star from '../../components/star.vue'
   import CommonFooter from '../../components/common-footer.vue'
 
-  export default{
-    data(){
+  export default {
+    data() {
       return {
         stars: 0
       }
     },
     methods: {
-      chooseStar(num){
+      chooseStar(num) {
         this.stars = num
       },
-      clickFooterRight(){
+      clickFooterRight() {
         wx.showLoading({
           title: '提交中',
           success: () => {
@@ -53,7 +52,7 @@
           }
         })
       },
-      clickFooterLeft(){
+      clickFooterLeft() {
         wx.showToast({
           title: '尚未开发！',
           icon: 'none',
@@ -84,26 +83,33 @@
     padding: 12px 12px 0;
     height: 100vh;
     box-sizing: border-box;
+
     .card {
       .card-shadow();
-      border: ~"1rpx" solid @border-color-light;
+      border: ~"1rpx"solid @border-color-light;
+
       .cost {
-        border-top: ~"1rpx" solid @border-color-light;
-        border-bottom: ~"1rpx" solid @border-color-light;
+        border-top: ~"1rpx"solid @border-color-light;
+        border-bottom: ~"1rpx"solid @border-color-light;
+
         .cost-number {
           margin-top: 10px;
           text-align: center;
           font-size: 18px;
+
           span {
             font-size: 16px;
           }
         }
+
         .cost-desc {
           margin: 10px 0;
           color: #666666;
           font-size: 0;
           text-align: center;
-          .obvious, .invoice {
+
+          .obvious,
+          .invoice {
             height: 20px;
             line-height: 20px;
             padding-right: 10px;
@@ -111,17 +117,20 @@
             font-size: 14px;
             .right-arrow(#666666)
           }
+
           .obvious {
             margin-right: 30px;
           }
         }
       }
+
       .card-footer {
         .evaluation {
           margin-top: 20px;
           text-align: center;
           color: #666;
         }
+
         .star-wrapper {
           margin: 10px 0;
           text-align: center;

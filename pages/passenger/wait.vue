@@ -7,7 +7,7 @@
       </p>
     </div>
     <div class="container">
-      <div class="text-desc-up">正在为您寻找车辆和拼友</div>
+      <div class="text-desc-up">正在为您寻找车辆请稍后</div>
       <div class="text-desc-down">每人一小步，更快更顺路</div>
       <div class="circle-progress-wrapper">
         <canvas class="progress-bg" canvas-id="progressBg"></canvas>
@@ -18,13 +18,13 @@
         </div>
       </div>
     </div>
-    <CommonFooter noShadow="true" leftText="取消订单" rightText="不拼车" @clickLeft="cancel" @clickRight="back">
+    <CommonFooter noShadow="true" rightText="取消订单" @clickLeft="back" @clickRight="cancel">
     </CommonFooter>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import CommonFooter from '../../components/common-footer.vue';
+  import CommonFooter from '@/components/common-footer.vue';
   import {
     mapState
   } from 'vuex';
@@ -98,9 +98,14 @@
         this.clearData();
       },
       back() {
-        uni.redirectTo({
+        wx.showToast({
+          title: '尚未开发！',
+          icon: 'none',
+          duration: 2000
+        })
+        /* uni.redirectTo({
           url: "/pages/passenger/index",
-        });
+        }); */
       },
       clearData() {
         clearInterval(countTimer);

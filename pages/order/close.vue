@@ -55,7 +55,7 @@
           success: () => {
             setTimeout(() => {
               wx.redirectTo({
-                url: '/pages/index/index',
+                url: '/pages/index',
               });
             }, 800);
           }

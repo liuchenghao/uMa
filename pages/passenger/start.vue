@@ -182,7 +182,7 @@
         //这里只需要再保存位置就好了
         this.saveStartPosition([this.latitude, this.longitude]);
         uni.redirectTo({
-          url: "/pages/index/index",
+          url: "/pages/index",
         });
       },
       ...mapMutations({

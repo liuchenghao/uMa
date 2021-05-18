@@ -5,10 +5,10 @@
 
       <cover-view class="driver" v-if="driver.name">
         <driver-header :driver="driver"></driver-header>
-        <cover-view class="driver-body">
+        <!-- <cover-view class="driver-body">
           <cover-image class="img-looking" src="/static/img/looking.png"></cover-image>
           <cover-view class="text-looking">寻找拼友</cover-view>
-        </cover-view>
+        </cover-view> -->
         <cover-view class="driver-footer">
           请在2分1秒内走到上车点
         </cover-view>

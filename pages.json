@@ -1,7 +1,7 @@
 {
   "pages": [{
-    "path": "pages/test/charts",
-    // "path": "pages/index",
+    // "path": "pages/test/charts",
+    "path": "pages/index",
     "style": {
       "navigationBarTitleText": "uMa出行"
     }

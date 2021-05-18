@@ -67,7 +67,7 @@
           icon: 'success',
           success: setTimeout(() => {
             uni.redirectTo({
-              url: '/pages/passenger/index'
+              url: '/pages/index'
             });
             this.clearPhoneNum();
           }, 500)
