@@ -4,7 +4,10 @@
       <img :src="item.url" alt="">
       <span>{{item.name}}</span>
     </div>
-    <qiun-data-charts type="line" :chartData="chartData" :animation="false"/>
+    <qiun-data-charts type="line" :chartData="chartData" :animation="false" />
+    <qiun-data-charts type="line" :chartData="chartDataAll" :animation="false" />
+    <view>{{stepCount}}</view>
+    <view>{{calcData}}</view>
   </div>
 </template>
 
@@ -16,8 +19,10 @@
     mapMutations
   } from 'vuex';
   import StepDetector from '@/common/utils/StepDetector';
-  import { throttle } from '@/common/utils/tools';
-
+  import {
+    throttle
+  } from '@/common/utils/tools';
+  let count = 0;
   export default {
     onReady() {
       let stepDetector = new StepDetector();
@@ -29,12 +34,16 @@
           z
         } = res;
         let {
-          series
+          series,
+          categories
         } = this.chartData;
         let tempSeries = [];
+        let valueAll = 0;
         let values = [x, y, z];
         for (let i = 0; i < 3; i++) {
           let value = values[i];
+          valueAll += value * value;
+          value = value.toFixed(2);
           let serie = series[i];
           let {
             name,
@@ -43,29 +52,73 @@
           let tempData = data.concat(value);
           let len = tempData.length;
           // data.push(value);
-          len > 6 && tempData.shift();
+          len > 20 && tempData.shift();
           tempSeries[i] = {
             name,
             data: tempData,
-            "type": "curve",
+            // "type": "curve",
           };
         }
+        valueAll = Math.sqrt(valueAll);
+        let {
+          series: seriesAll,
+          categories: categoriesAll
+        } = this.chartDataAll;
+        let {
+          name: nameAll,
+          data: dataAll
+        } = seriesAll[0];
+        valueAll = valueAll.toFixed(2);
+        let tempDataAll = dataAll.concat(valueAll);
+        let tempSeriesAll = [{
+          name: nameAll,
+          data: tempDataAll
+        }];
+        let lenAll = tempDataAll.length;
+        // data.push(value);
+        lenAll > 20 && tempDataAll.shift();
         cThrottle(() => {
+          categories = categories.concat(count++);
+          categoriesAll = categoriesAll.concat(count++);
+          
+          let len = categories.length;
+          len > 20 && categories.shift();
+          let lenAll = categoriesAll.length;
+          lenAll > 20 && categoriesAll.shift();
           this.chartData = {
+            categories,
             series: tempSeries
+          };
+          this.chartDataAll = {
+            categories: categoriesAll,
+            series: tempSeriesAll
           };
         });
         // console.info(this.chartData, "=++++==========");
         // console.info(series[0].data, "=======11===", series[1].data, "=++++==========", series[2].data);
-        stepDetector.calcSensorData(values);
+        let calcData = stepDetector.calcSensorData(values);
+        let {
+          isStep
+        } = calcData;
+        isStep && this.stepCount++;
+        this.calcData += "\n" +JSON.stringify(calcData);
       };
       uni.onAccelerometerChange(calcFunc);
     },
     data() {
       return {
+        calcData: {},
+        stepCount: 0,
         cars: [],
+        chartDataAll: {
+          "categories": [],
+          "series": [{
+            "name": "A",
+            "data": []
+          }]
+        },
         chartData: {
-          // "categories": ["2012", "2013", "2014", "2015", "2016", "2017"],
+          "categories": [],
           "series": [{
             "name": "X",
             "data": []
@@ -78,7 +131,7 @@
             "name": "Z",
             "data": []
           }]
-        }
+        },
       };
     },
     mounted() {

@@ -60,7 +60,7 @@ class StepDetector {
     }
     let gravityNew = this.gravityNew = Math.sqrt(oriValues[0] * oriValues[0] +
       oriValues[1] * oriValues[1] + oriValues[2] * oriValues[2]);
-    this.detectorNewStep(gravityNew);
+    return this.detectorNewStep(gravityNew);
   }
   /*
    * 检测步子，并开始计步
@@ -68,7 +68,7 @@ class StepDetector {
    * 2.如果检测到了波峰，并且符合时间差以及阈值的条件，则判定为1步
    * 3.符合时间差条件，波峰波谷差值大于initialValue，则将该差值纳入阈值的计算中
    * */
-  detectorNewStep(values: number): void {
+  detectorNewStep(values: number): boolean {
     let gravityOld = this.gravityOld;
     if (gravityOld == 0) {
       this.gravityOld = values;
@@ -93,15 +93,28 @@ class StepDetector {
            * */
           // mStepListeners.countStep();
           console.info("=============next===========")
+          return {
+            isStep: true,
+            diff: peakOfWave - valleyOfWave,
+            ThreadValue: ThreadValue
+          };
         }
         if (timeOfNow - timeOfLastPeak >= TimeInterval &&
           (peakOfWave - valleyOfWave >= InitialValue)) {
           this.timeOfThisPeak = timeOfNow;
           this.ThreadValue = this.peakValleyThread(peakOfWave - valleyOfWave);
         }
+        return {
+          isStep: false,
+          d: peakOfWave - valleyOfWave,
+          t: ThreadValue
+        };
       }
     }
     this.gravityOld = values;
+    return {
+      isStep: false,
+    };
   }
   /*
    * 检测波峰
