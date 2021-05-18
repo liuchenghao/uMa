@@ -21,23 +21,23 @@
   export default {
     methods: {
       showCancelDialog() {
-        wx.showModal({
+        uni.showModal({
           content: '确定要取消行程吗',
           cancelColor: '#cccccc',
           confirmColor: '#fc9c56',
           success: function(res) {
             if (res.confirm) {
-              wx.redirectTo({
+              uni.redirectTo({
                 url: "/pages/order/why",
               });
             } else if (res.cancel) {
-              wx.navigateBack();
+              uni.navigateBack();
             }
           }
         });
       },
       noCancel() {
-        wx.navigateBack();
+        uni.navigateBack();
       }
     }
   };

@@ -50,11 +50,11 @@
     },
     methods: {
       clickFooterRight() {
-        wx.showLoading({
+        uni.showLoading({
           title: '提交中',
           success: () => {
             setTimeout(() => {
-              wx.redirectTo({
+              uni.redirectTo({
                 url: '/pages/index',
               });
             }, 800);
@@ -62,7 +62,7 @@
         });
       },
       clickFooterLeft() {
-        wx.showToast({
+        uni.showToast({
           title: '尚未开发！',
           icon: 'none',
           duration: 2000

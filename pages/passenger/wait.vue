@@ -51,7 +51,7 @@
     },
     methods: {
       drawProgressBg() {
-        const ctx = wx.createCanvasContext('progressBg');
+        const ctx = uni.createCanvasContext('progressBg');
         ctx.setLineWidth(4);
         ctx.setStrokeStyle("#e5e5e5");
         ctx.setLineCap("round");
@@ -74,7 +74,7 @@
           } else {
             this.progressTxt = '匹配成功';
             clearInterval(countTimer);
-            wx.redirectTo({
+            uni.redirectTo({
               url: "/pages/order/service",
             });
           }
@@ -98,11 +98,11 @@
         this.clearData();
       },
       back() {
-        wx.showToast({
+        uni.showToast({
           title: '尚未开发！',
           icon: 'none',
           duration: 2000
-        })
+        });
         /* uni.redirectTo({
           url: "/pages/passenger/index",
         }); */

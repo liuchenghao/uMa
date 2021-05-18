@@ -25,39 +25,39 @@
 <script type="text/ecmascript-6">
   import {
     mapState
-  } from 'vuex'
-  import DriverHeader from '../../components/driver-header.vue'
-  import Star from '../../components/star.vue'
-  import CommonFooter from '../../components/common-footer.vue'
+  } from 'vuex';
+  import DriverHeader from '../../components/driver-header.vue';
+  import Star from '../../components/star.vue';
+  import CommonFooter from '../../components/common-footer.vue';
 
   export default {
     data() {
       return {
         stars: 0
-      }
+      };
     },
     methods: {
       chooseStar(num) {
-        this.stars = num
+        this.stars = num;
       },
       clickFooterRight() {
-        wx.showLoading({
+        uni.showLoading({
           title: '提交中',
           success: () => {
             setTimeout(() => {
-              wx.redirectTo({
+              uni.redirectTo({
                 url: '/pages/passenger/index',
-              })
-            }, 800)
+              });
+            }, 800);
           }
-        })
+        });
       },
       clickFooterLeft() {
-        wx.showToast({
+        uni.showToast({
           title: '尚未开发！',
           icon: 'none',
           duration: 2000
-        })
+        });
       }
     },
     computed: {
@@ -65,13 +65,14 @@
         'driver',
         'cost'
       ])
+      
     },
     components: {
       DriverHeader,
       Star,
       CommonFooter
     }
-  }
+  };
 </script>
 
 <style lang="less" scoped rel="stylesheet/less">
