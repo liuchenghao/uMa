@@ -255,9 +255,9 @@ const actions = {
             "url": "/static/img/car/cart3.png"
           }
         ],
-        "imgUrls": ["/static/img/swiper/swiper-1.png", "/static/img/swiper/swiper-2.png",
-          "/static/img/swiper/swiper-3.png"
-        ],
+        // "imgUrls": ["/static/img/swiper/swiper-1.png", "/static/img/swiper/swiper-2.png",
+        //   "/static/img/swiper/swiper-3.png"
+        // ],
         "cost": [{
             "id": "0",
             "name": "现在出发",

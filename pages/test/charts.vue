@@ -6,7 +6,8 @@
     </div>
     <qiun-data-charts type="line" :chartData="chartData" :animation="false" />
     <qiun-data-charts type="line" :chartData="chartDataAll" :animation="false" />
-    <view>{{stepCount}}</view>
+    <view>{{stepCount}}--</view>
+    <view>{{direction}}</view>
     <view>{{calcData}}</view>
   </div>
 </template>
@@ -25,6 +26,10 @@
   let count = 0;
   export default {
     onReady() {
+      uni.onCompassChange( (res)=> {
+          console.log(res);
+          this.direction = res.direction;
+      });
       let stepDetector = new StepDetector();
       let cThrottle = throttle(1000);
       let calcFunc = (res) => {
@@ -68,7 +73,18 @@
           name: nameAll,
           data: dataAll
         } = seriesAll[0];
-        valueAll = valueAll.toFixed(2);
+        let calcData = stepDetector.calcSensorData(values);
+        let {
+          isStep,
+          v,
+          d,
+          c
+        } = calcData;
+        isStep && this.stepCount++;
+        // this.calcData += "\n" +JSON.stringify(calcData);
+        
+        valueAll = [d.toFixed(2), v.toFixed(2)];
+        
         let tempDataAll = dataAll.concat(valueAll);
         let tempSeriesAll = [{
           name: nameAll,
@@ -77,13 +93,13 @@
         let lenAll = tempDataAll.length;
         // data.push(value);
         lenAll > 20 && tempDataAll.shift();
-        cThrottle(() => {
+        // cThrottle(() => {
           categories = categories.concat(count++);
           categoriesAll = categoriesAll.concat(count++);
           
           let len = categories.length;
           len > 20 && categories.shift();
-          let lenAll = categoriesAll.length;
+          lenAll = categoriesAll.length;
           lenAll > 20 && categoriesAll.shift();
           this.chartData = {
             categories,
@@ -93,21 +109,17 @@
             categories: categoriesAll,
             series: tempSeriesAll
           };
-        });
+        // });
         // console.info(this.chartData, "=++++==========");
         // console.info(series[0].data, "=======11===", series[1].data, "=++++==========", series[2].data);
-        let calcData = stepDetector.calcSensorData(values);
-        let {
-          isStep
-        } = calcData;
-        isStep && this.stepCount++;
-        this.calcData += "\n" +JSON.stringify(calcData);
+        
       };
       uni.onAccelerometerChange(calcFunc);
     },
     data() {
       return {
         calcData: {},
+        direction: 0,
         stepCount: 0,
         cars: [],
         chartDataAll: {
