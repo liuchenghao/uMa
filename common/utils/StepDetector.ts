@@ -11,7 +11,7 @@ class StepDetector {
   ValueNum: number = 4;
   //用于存放计算阈值的波峰波谷差值
   // float[] tempValue = new float[ValueNum];
-  tempValue: number[] = new Array < number > (this.ValueNum);
+  tempValue: number[] = [];
   // int tempCount = 0;
   tempCount: number = 0;
   // //是否上升的标志位
@@ -99,7 +99,7 @@ class StepDetector {
     currentAccel[2] = z;
   
     // First step is to update our guess of where the global z vector is.
-    let accelRingCounter = ++this.accelRingCounter;
+    let accelRingCounter = this.accelRingCounter;
     let ACCEL_RING_SIZE = this.ACCEL_RING_SIZE
     let accelRingX = this.accelRingX;
     let accelRingY = this.accelRingY;
@@ -107,18 +107,18 @@ class StepDetector {
     accelRingX[accelRingCounter % ACCEL_RING_SIZE] = currentAccel[0];
     accelRingY[accelRingCounter % ACCEL_RING_SIZE] = currentAccel[1];
     accelRingZ[accelRingCounter % ACCEL_RING_SIZE] = currentAccel[2];
-  
+    
     let worldZ = new Array(3);
     worldZ[0] = basic.sum(accelRingX) / Math.min(accelRingCounter, ACCEL_RING_SIZE);
     worldZ[1] = basic.sum(accelRingY) / Math.min(accelRingCounter, ACCEL_RING_SIZE);
     worldZ[2] = basic.sum(accelRingZ) / Math.min(accelRingCounter, ACCEL_RING_SIZE);
-  
+    
     let normalization_factor = matrix.vectorNorm(worldZ);
   
     worldZ[0] = worldZ[0] / normalization_factor;
     worldZ[1] = worldZ[1] / normalization_factor;
     worldZ[2] = worldZ[2] / normalization_factor;
-  
+    this.accelRingCounter++;
     // Next step is to figure out the component of the current acceleration
     // in the direction of world_z and subtract gravity's contribution
     let currentZ = matrix.dotproduct(worldZ, currentAccel) - normalization_factor;
@@ -159,8 +159,8 @@ class StepDetector {
     let gravityOld = this.gravityOld;
     let peakOfWave = this.peakOfWave;
     let valleyOfWave = this.valleyOfWave;
-    let ThreadValue = this.ThreadValue;
-    let InitialValue = this.InitialValue;
+    let ThreadValue = this.ThreadValue / 2;
+    let InitialValue = this.InitialValue / 2;
     let isStep = false;
     if (gravityOld == 0) {
       this.gravityOld = values;
@@ -191,7 +191,7 @@ class StepDetector {
         }
         if (timeOfNow - timeOfLastPeak >= TimeInterval &&
           (peakOfWave - valleyOfWave >= InitialValue)) {
-          console.info("=============calc===========")
+          console.info(peakOfWave - valleyOfWave, "=============calc===========")
           this.timeOfThisPeak = timeOfNow;
           this.ThreadValue = this.peakValleyThread(peakOfWave - valleyOfWave);
         }
@@ -260,8 +260,11 @@ class StepDetector {
     let tempCount = this.tempCount;
     let ValueNum = this.ValueNum;
     let tempValue = this.tempValue;
-    console.info(ValueNum,tempCount, "========tempCount========")
-    if (tempCount < ValueNum) {
+    console.info(ValueNum,tempCount, "========tempCount========", tempValue)
+    tempValue[tempCount % ValueNum] = value;
+    this.tempCount = tempCount++;
+    tempThread = this.averageValue(tempValue);
+    /* if (tempCount < ValueNum) {
       tempValue[tempCount] = value;
       tempCount++;
       this.tempCount = tempCount;
@@ -271,7 +274,7 @@ class StepDetector {
         tempValue[i - 1] = tempValue[i];
       }
       tempValue[ValueNum - 1] = value;
-    }
+    } */
     return tempThread;
   }
   /*
@@ -279,14 +282,16 @@ class StepDetector {
    * 1.计算数组的均值
    * 2.通过均值将阈值梯度化在一个范围里
    * */
-  averageValue(value: number[], n: number): number {
+  averageValue(value: number[]): number {
     let ave = 0;
-    let ValueNum = this.ValueNum;
+    // let ValueNum = this.ValueNum;
+    let n = value.length;
     for (let i = 0; i < n; i++) {
       ave += value[i];
     }
     console.info(ave, "=========ave==========")
-    ave = ave / ValueNum;
+    // ave = ave / ValueNum;
+    ave = ave / n;
     if (ave >= 8)
       ave = 4.3;
     else if (ave >= 7 && ave < 8)

@@ -27,7 +27,7 @@
   export default {
     onReady() {
       uni.onCompassChange( (res)=> {
-          console.log(res);
+          // console.log(res);
           this.direction = res.direction;
       });
       let stepDetector = new StepDetector();
@@ -83,7 +83,7 @@
         isStep && this.stepCount++;
         // this.calcData += "\n" +JSON.stringify(calcData);
         
-        valueAll = [d.toFixed(2), v.toFixed(2)];
+        valueAll = (d-v).toFixed(2);//[d.toFixed(2), v.toFixed(2)];
         
         let tempDataAll = dataAll.concat(valueAll);
         let tempSeriesAll = [{
