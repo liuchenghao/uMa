@@ -16,7 +16,7 @@
       <image class="arc-line" src="/static/icon/arc.png" mode="aspectFill"></image>
     </view>
 
-    <view class="money-wrap">
+    <!-- <view class="money-wrap">
       <view class="item center" hover-class="hover-gray" :hover-stay-time="50"
         @click="navTo('/pages/wallet/index', {login: true})">
         <text class="num">{{ userInfo.money || 0 }}</text>
@@ -27,12 +27,11 @@
         <text class="num">{{ couponCount }}</text>
         <text>优惠券</text>
       </view>
-      <!--  hover-class="hover-gray" :hover-stay-time="50" -->
       <view class="item center">
         <text class="num">{{ userInfo.score || 0 }}</text>
         <text>积分</text>
       </view>
-    </view>
+    </view> -->
     <!-- 订单 -->
     <view class="order-wrap">
       <view class="o-header row" @click="navTo('/pages/order/list?current=0', {login: true})">
@@ -75,11 +74,11 @@
         </view>
       </scroll-view>
       <uni-list>
-        <uni-list-item title="我的钱包" :extra-icon="{color:'#fa436a' ,type: 'shop'}" link show-extra-icon></uni-list-item>
-        <uni-list-item title="地址管理" :extra-icon="{color:'#5fcda2' ,type: 'home'}" link show-extra-icon></uni-list-item>
+        <uni-list-item title="我的信息" :extra-icon="{color:'#fa436a' ,type: 'shop'}" link show-extra-icon></uni-list-item>
+        <!-- <uni-list-item title="地址管理" :extra-icon="{color:'#5fcda2' ,type: 'home'}" link show-extra-icon></uni-list-item>
         <uni-list-item title="我的收藏" :extra-icon="{color:'#54b4ef' ,type: 'heart'}" link show-extra-icon></uni-list-item>
         <uni-list-item title="意见反馈" :extra-icon="{color:'#ee883b' ,type: 'chat'}" link show-extra-icon></uni-list-item>
-        <uni-list-item title="设置" :extra-icon="{color:'#37b0fb' ,type: 'gear'}" link show-extra-icon></uni-list-item>
+        <uni-list-item title="设置" :extra-icon="{color:'#37b0fb' ,type: 'gear'}" link show-extra-icon></uni-list-item> -->
       </uni-list>
       <!-- <mix-modal ref="clearHistoryModal" text="确定要清空浏览记录吗" confirmText="清空" @onConfirm="clearHistory"></mix-modal> -->
     </view>
@@ -125,7 +124,8 @@
   .top {
     position: relative;
     overflow: hidden;
-    padding-top: calc(var(--status-bar-height) + 52rpx);
+    /* padding-top: calc(var(--status-bar-height) + 52rpx); */
+    padding-top: calc(var(--status-bar-height));
     padding-bottom: 6rpx;
 
     .u-bg {

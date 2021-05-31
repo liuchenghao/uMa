@@ -161,7 +161,7 @@
       <view class="block1">
         <swiper class="swiper-tab" :current="curNavIndex" @change="switchTab">
           <swiper-item catchtouchmove="true" class="swiper-item">
-            <view class="extend">
+            <!-- <view class="extend">
               <div class="item-content">
                 <img src="../static/img/members.png" alt="">
                 <span class="item-text">会员</span>
@@ -174,7 +174,7 @@
                 <img class="img-no-round" src="/static/img/recruiting.png" alt="">
                 <span class="item-text">招募</span>
               </div>
-            </view>
+            </view> -->
 
           </swiper-item>
 
@@ -190,12 +190,13 @@
               </div>
             </view>
           </swiper-item>
-
-          <swiper-item catchtouchmove="true" class="swiper-item" v-for="(item,index) in swipers" :key="index">
+          <swiper-item catchtouchmove="true" class="swiper-item">
+          </swiper-item>
+          <!-- <swiper-item catchtouchmove="true" class="swiper-item" v-for="(item,index) in swipers" :key="index">
             <view class="extend">
               <span class="item-text">{{item}}</span>
             </view>
-          </swiper-item>
+          </swiper-item> -->
 
         </swiper>
 
@@ -289,7 +290,7 @@
           }
         ],
         curCostIndex: 0,
-        swipers: ['出租车后续完善', '顺风车后续完善', '公交后续完善', '代驾后续完善', '自驾租车后续完善', '二手车后续完善']
+        // swipers: ['出租车后续完善', '顺风车后续完善', '公交后续完善', '代驾后续完善', '自驾租车后续完善', '二手车后续完善']
       };
     },
     created() {
