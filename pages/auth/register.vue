@@ -1,8 +1,8 @@
 <template>
-  <view class="">
+  <view class="uma-register">
     <uni-section title="身份证" type="line"></uni-section>
     <view>
-    	<uni-card :is-shadow="true" mode="style" extra=" " thumbnail="./static/img/card-1.png" @click="clickCard">
+    	<uni-card :is-shadow="true" mode="style" extra=" " thumbnail="/pages/auth/static/img/card-1.png" @click="clickCard">
         <view class="icon-background">
           <view class="icon-style">
             <uni-icons type="camera" color="#ffffff" size="25"></uni-icons>
@@ -95,7 +95,9 @@
           title: '注册成功!',
           icon: 'success',
           success: setTimeout(() => {
-            let userInfo = {};
+            let userInfo = {
+              username: "测试用户",
+            };
             let hasLogin = true;
             let isDriver = true;
             this.setLoginInfo({
@@ -134,71 +136,36 @@
 </script>
 
 <style lang="less" scoped rel="stylesheet/less">
-  .icon-background{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #000;
-    opacity: 0.4;
-    .icon-style{
+  .uma-register{
+    .icon-background{
       position: absolute;
-      left: 50%;
-      top: 50%;
-      opacity: 1.4;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      color: #FFFFFF;
-    }
-  }
-  /deep/.uni-card__content--pd{
-    padding: 0px;
-  }
-  /deep/.uni-card__thumbnailimage{
-    height: 180px;
-    
-    uni-image{
-      height: 180px;
-    }
-  }
-  .login-page {
-    padding: 0 16px;
-    header {
-      margin-top: 60px;
-      height: 40px;
-      line-height: 40px;
-      text-indent: 2px;
-      text-align: center;
-      color: #000;
-      font-size: 20px;
-    }
-    .login-content {
-      margin-top: 10px;
-      position: relative;
-      height: 60px;
-      width: 100%;
-      box-sizing: border-box;
-      border: 1px solid #eeeff0;
-      box-shadow: 0 0 1px #e5e6e7;
-      .input-login {
-        margin-left: 20px;
-        display: inline-block;
-        width: calc(100% - 20px - 18px - 20px);
-        height: 60px;
-      }
-      img {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #000;
+      opacity: 0.4;
+      .icon-style{
         position: absolute;
-        top: 21px;
-        right: 20px;
-        display: inline-block;
-        width: 18px;
-        height: 18px;
+        left: 50%;
+        top: 50%;
+        opacity: 1.4;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #FFFFFF;
       }
     }
-    .btn-next {
-      margin-top: 20px;
-      color: #fff;
+    /deep/.uni-card__content--pd{
+      padding: 0px;
+    }
+    /deep/.uni-card__thumbnailimage{
+      height: 180px;
+      image{
+        height: 180px;
+      }
+      uni-image{
+        height: 180px;
+      }
     }
   }
 </style>

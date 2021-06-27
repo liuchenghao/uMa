@@ -3,10 +3,10 @@
     <view class="top">
       <image class="u-bg" src="/static/icon/user.jpg"></image>
       <view class="user-wrapper">
-        <image class="avatar" :src="userInfo.avatar || '/static/icon/default-avatar.png'"
+        <image class="avatar" :src="loginInfo.userInfo.avatar || '/static/icon/default-avatar.png'"
           @click="navTo('/pages/auth/userInfo', {login: true})"></image>
-        <view class="cen column" v-if="hasLogin">
-          <text class="username f-m">{{ userInfo.nickname || userInfo.username }}</text>
+        <view class="cen column" v-if="loginInfo.hasLogin">
+          <text class="username f-m">{{ loginInfo.userInfo.nickname || loginInfo.userInfo.username }}</text>
           <text class="user-group">普通会员</text>
         </view>
         <view class="login-box" v-else @click="navTo('/pages/auth/login')">
@@ -112,7 +112,10 @@
           // url: '/pages/test/charts'
         });
       }
-    }
+    },
+    computed: {
+      ...mapState(["loginInfo"])
+    },
   };
 </script>
 
