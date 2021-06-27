@@ -66,8 +66,20 @@
           title: '登录成功!',
           icon: 'success',
           success: setTimeout(() => {
+            let userInfo = {
+              username: "测试用户",
+              telephone: this.phone
+            };
+            let hasLogin = true;
+            let isDriver = true;
+            this.setLoginInfo({
+              userInfo,
+              hasLogin,
+              isDriver
+            });
             uni.redirectTo({
-              url: '/pages/index'
+              // url: '/pages/index'
+              url: '/pages/auth/register'
             });
             this.clearPhoneNum();
           }, 500)
@@ -78,6 +90,9 @@
       },
       ...mapMutations("passenger/index", {
         savePhone: 'SET_PHONE'
+      }),
+      ...mapMutations({
+        setLoginInfo: 'SET_LOGIN_INFO'
       })
     },
     watch: {

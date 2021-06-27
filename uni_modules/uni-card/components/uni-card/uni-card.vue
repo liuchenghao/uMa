@@ -26,7 +26,7 @@
 		<!-- 图文 -->
 		<view v-if="mode === 'style'" class="uni-card__thumbnailimage" @click.stop="onClick">
 			<view class="uni-card__thumbnailimage-box">
-				<image class="uni-card__thumbnailimage-image" :src="thumbnail" mode="aspectFill" />
+				<image class="uni-card__thumbnailimage-image" :src="thumbnail" mode="scaleToFill" />
 			</view>
 			<view v-if="title" class="uni-card__thumbnailimage-title"><text class="uni-card__thumbnailimage-title-text">{{ title }}</text></view>
 		</view>
@@ -103,10 +103,10 @@
 		},
 		methods: {
 			onClick() {
-				this.$emit('click')
+				this.$emit('click');
 			}
 		}
-	}
+	};
 </script>
 
 <style lang="scss" scoped>

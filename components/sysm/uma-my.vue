@@ -4,7 +4,7 @@
       <image class="u-bg" src="/static/icon/user.jpg"></image>
       <view class="user-wrapper">
         <image class="avatar" :src="userInfo.avatar || '/static/icon/default-avatar.png'"
-          @click="navTo('/pages/set/userInfo', {login: true})"></image>
+          @click="navTo('/pages/auth/userInfo', {login: true})"></image>
         <view class="cen column" v-if="hasLogin">
           <text class="username f-m">{{ userInfo.nickname || userInfo.username }}</text>
           <text class="user-group">普通会员</text>
@@ -105,7 +105,13 @@
       //加载浏览记录
       loadHistory() {},
       //清空浏览记录
-      clearHistory() {}
+      clearHistory() {},
+      navTo(url){
+        uni.navigateTo({
+          url
+          // url: '/pages/test/charts'
+        });
+      }
     }
   };
 </script>

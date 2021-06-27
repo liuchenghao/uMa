@@ -8,7 +8,12 @@ const state = {
   destination: '你要去哪儿', //目的地
   endPosition: [], //包含endLatitude和endLongitude
   driver: {}, //司机信息 包含Cartnumber:"赣A66666"cart: "红色●路虎Q5" id: "1" name: "李师傅" stars: "5.0 2w+单"
-  cost: 0 //花费
+  cost: 0, //花费
+  loginInfo: {
+    userInfo: {},
+    hasLogin: false,
+    isDriver: false
+  }
 }
 
 

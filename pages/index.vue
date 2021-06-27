@@ -325,6 +325,15 @@
           this.waitingTimes = arr[index];
           this.isLoading = false;
         }, 800);
+        this.resetInitAddress();
+      },
+      resetInitAddress(){
+        /* this.saveStartPosition([]);
+        this.saveStartPlace([]);
+        this.saveFormattedStartPlace('');
+        this.saveCurCity('');
+        this.saveEndPosition([]);
+        this.saveDestination(''); */
         uni.getLocation({
           type: 'gcj02',
           success: (res) => {
@@ -356,6 +365,7 @@
       switchTab(e) {
         console.info("=======11====++++==========", e.mp.detail);
         this.saveCurNavIndex(e.mp.detail.current);
+        // this.resetInitAddress();
       },
       navigateToLogin() {
         this.isShowUser = true;
@@ -417,7 +427,9 @@
         saveCurCity: 'SET_CUR_CITY',
         saveStartPosition: 'SET_START_POSITION',
         saveCost: 'SET_COST',
-        getIndexInfo: 'GET_INDEX_INFO'
+        getIndexInfo: 'GET_INDEX_INFO',
+        saveDestination: 'SET_DESTINATION',
+        saveEndPosition: 'SET_END_POSITION'
       })
     },
     computed: {
@@ -468,7 +480,7 @@
 
     .page-container-footer {
       .block1 {
-        height: 100px;
+        height: 80px;
       }
 
       .block2 {
@@ -724,7 +736,7 @@
     .swiper-tab {
       // margin-top: 24px;
       width: 100%;
-      height: 100px;
+      height: 80px;
 
       .swiper-item .extend {
         display: flex;

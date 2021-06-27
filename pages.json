@@ -54,12 +54,18 @@
   }, {
     "root": "pages/sysm",
     "pages": [ {
-    "path": "login",
-    "style": {}
+      "path": "logs",
+      "style": {}
+    }]
   }, {
-    "path": "logs",
-    "style": {}
-  }]
+    "root": "pages/auth",
+    "pages": [ {
+      "path": "login",
+      "style": {}
+    }, {
+      "path": "register",
+      "style": {}
+    }]
   }],
   "globalStyle": {
     "navigationBarTextStyle": "black",
