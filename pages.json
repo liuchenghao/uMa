@@ -66,6 +66,12 @@
       "path": "register",
       "style": {}
     }]
+  }, {
+    "root": "pages/driver",
+    "pages": [ {
+      "path": "index",
+      "style": {}
+    }]
   }],
   "globalStyle": {
     "navigationBarTextStyle": "black",
