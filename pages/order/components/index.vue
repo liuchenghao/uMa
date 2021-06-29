@@ -1,10 +1,47 @@
 <template>
   <view class="page-container">
+    <view class="page-container-header">
+      <view class="nav-wrapper">
+        <!-- <view class="nav-me" @click.stop="navigateToLogin">
+          <cover-image src="@/static/img/nav-me.png" alt=""></cover-image>
+        </view> -->
+        <scroll-view class="nav" scroll-x="true" scroll-with-animation="true">
+          <view v-for="(item,index) in navData" :key="item.id" class="nav-item" :class="{active:index==curNavIndex}"
+            @click.stop="switchNav(item.id)">
+            {{item.name}}
+          </view>
+        </scroll-view>
+      </view>
+    </view>
     <view class="page-container-bodyer">
       <view class="block1">
-        <swiper class="swiper-bodyer" :disable-touch="true" :current="curNavIndex">
-          <swiper-item class="swiper-item" catchtouchmove="true">
-            <order></order>
+        <swiper class="swiper-bodyer" :disable-touch="true" :current="curNavIndex" @change="switchTab">
+          <swiper-item class="swiper-item">
+            <scroll-view class="swiper-scroll" scroll-y="true" scroll-with-animation="true" @scrolltolower="scrollList">
+              <uni-list>
+                <uni-list-item>
+                  <uni-card slot="body" title="订单类型: 接机(经济型)" extra="115" isFull isShadow @click="clickCard">
+                    <uni-list :border="false">
+                      <uni-list-item title="05月31日 22:55" :extra-icon="{color:'#0800de' ,type: 'paperclip'}" show-extra-icon>
+                      </uni-list-item>
+                      <uni-list-item title="首都国际机场T3航站楼" :extra-icon="{color:'#3cbca3' ,type: 'location-filled'}" show-extra-icon>
+                      </uni-list-item>
+                      <uni-list-item title="昌平区南环里西区(南环路北)" :extra-icon="{color:'#fc9153' ,type: 'location-filled'}" show-extra-icon>
+                      </uni-list-item>
+                      <uni-list-item title="查看详情" class="uma-order-info">
+                      </uni-list-item>
+                    
+                    </uni-list>
+                  </uni-card>
+
+                </uni-list-item>
+                <uni-list-item title="地址管理" :extra-icon="{color:'#5fcda2' ,type: 'home'}" link show-extra-icon>
+                </uni-list-item>
+                <uni-list-item title="我的收藏" :extra-icon="{color:'#54b4ef' ,type: 'heart'}" link show-extra-icon>
+                </uni-list-item>
+
+              </uni-list>
+            </scroll-view>
           </swiper-item>
           <swiper-item class="swiper-item" catchtouchmove="true">
             <uni-card>
@@ -110,7 +147,6 @@
 <script type="text/ecmascript-6">
   import LoadingSprinner from '@/components/loading-sprinner.vue';
   import umaMy from '@/components/sysm/uma-my.vue';
-  import order from '@/pages/order/components/index.vue';
   import {
     mapState,
     mapMutations,
@@ -127,10 +163,20 @@
   const NAV_BIG_WIDTH = 68;
 
   export default {
+    /* onReady() {
+      // console.info(e4line, 1, new StepDetector().oriValues, "===11=onAccelerometerChange===", uni
+        // .onAccelerometerChange);
+      let stepDetector = new StepDetector();
+      uni.onAccelerometerChange((res) => {
+        // console.info(res,"=======11====++++==========");
+        let values = [res.x, res.y, res.z];
+        stepDetector.calcSensorData(values);
+      });
+    }, */
     components: {
       LoadingSprinner,
       umaMy,
-      order
+      // e4line
     },
     data() {
       return {
@@ -170,6 +216,7 @@
           }
         ],
         curCostIndex: 0,
+        curNavIndex: 0,
         buttonGroup: [{
             text: '订单',
             backgroundColor: '#ffa200',
@@ -186,8 +233,7 @@
             color: '#fff'
           }
         ],
-        options: [],
-        curNavIndex: 0
+        options: []
         // swipers: ['出租车后续完善', '顺风车后续完善', '公交后续完善', '代驾后续完善', '自驾租车后续完善', '二手车后续完善']
       };
     },
@@ -207,7 +253,7 @@
     },
     methods: {
       changePicker(val) {
-        this.isShowCost = val;
+        // this.isShowCost = val;
       },
       async getInitData() {
 
@@ -277,17 +323,18 @@
         });
       },
       switchNav(index) {
+        this.curNavIndex = index;
         // this.saveCurNavIndex(index);
-        console.info(this.curNavIndex, index);
+        // console.info(this.curNavIndex, index);
       },
       switchTab(e) {
-        console.info("=======11====++++==========", e.mp.detail);
+        // console.info("=======11====++++==========", e.mp.detail);
         // this.saveCurNavIndex(e.mp.detail.current);
         // this.resetInitAddress();
       },
       navigateToLogin() {
-        this.isShowUser = true;
-        console.info("=====isShowUser======", this.isShowUser);
+        // this.isShowUser = true;
+        // console.info("=====isShowUser======", this.isShowUser);
         //如果没有用户信息就跳转到登陆页
         /* if (!this.$store.state.phone) {
           uni.navigateTo({
@@ -301,64 +348,49 @@
         } */
       },
       navigateToCars() {
-        uni.navigateTo({
-          url: '/pages/passenger/cars'
-          // url: '/pages/test/charts'
-        });
+        // uni.navigateTo({
+        //   url: '/pages/passenger/cars'
+        //   // url: '/pages/test/charts'
+        // });
       },
       navigateToStarting() {
-        uni.navigateTo({
-          url: '/pages/passenger/map'
-        });
+        // uni.navigateTo({
+        //   url: '/pages/passenger/map'
+        // });
       },
       navigateToDestination() {
-        uni.navigateTo({
-          url: '/pages/passenger/dist'
-        });
+        // uni.navigateTo({
+        //   url: '/pages/passenger/dist'
+        // });
       },
       showCost() {
-        if (this.destination == '你要去哪儿' || this.destination == null) {
+        /* if (this.destination == '你要去哪儿' || this.destination == null) {
           uni.showToast({
             title: '请先选择目的地!',
             icon: 'none'
           });
           return;
         }
-        this.isShowCost = true;
+        this.isShowCost = true; */
       },
       chooseCost(item) {
-        this.curCostIndex = item.id;
+        // this.curCostIndex = item.id;
       },
       confirmCost() {
-        this.saveCost(this.carCostArr[this.curCostIndex].cost);
+        /* this.saveCost(this.carCostArr[this.curCostIndex].cost);
         uni.navigateTo({
           url: "/pages/passenger/wait",
           success: () => {
             this.isShowCost = false;
           }
-        });
+        }); */
       },
-      buttonClick(params) {
-        let {
-          index,
-          content
-        } = params;
-        let buttonGroup = this.buttonGroup;
-        for (let i = 0; i < buttonGroup.length; i++) {
-          let item = buttonGroup[i];
-          item.color = "#ffffff";
-          item.backgroundColor = "#ff0000";
-        }
-        content.backgroundColor = "#ffa200";
-        content.color = "#fff";
-        if (index == 2) {
-          this.isShowUser = true;
-        } else {
-          // this.saveCurNavIndex(index);
-          this.curNavIndex = index;
-        }
-        // console.log(e);
+      buttonClick(e) {
+        console.log(e);
         // this.options[2].info++;
+      },
+      scrollList() {
+        console.info(arguments, "==========");
       },
       ...mapActions("passenger/index", {
         // saveCurNavIndex: 'SET_CUR_NAV_INDEX',
@@ -382,7 +414,7 @@
     watch: {
       //利用watch 更好的模拟navScrollLeft
       curNavIndex(newIndex) {
-        // this.navScrollLeft = this.navOffsetArr[newIndex];
+        this.navScrollLeft = this.navOffsetArr[newIndex];
         // this.car = this.navData[newIndex].name;
       }
     }
@@ -415,7 +447,22 @@
           height: 100%;
         }
       }
-
+      .swiper-scroll {
+        height: 100%;
+        overflow: hidden auto;
+      }
+      /deep/ .uni-card__header-extra-text{
+        flex: none;
+      }
+      .uni-card--full{
+        border-radius: 5px;
+      }
+      .uma-order-info{
+       /deep/ .uni-list-item__content-title{
+          text-align: right;
+          color: #fc9153;
+        }
+      }
     }
 
     .page-container-footer {
@@ -432,7 +479,6 @@
   }
 
   .page-container {
-    // padding: 0 12px;
     position: fixed;
     top: 0;
     left: 0;
@@ -443,6 +489,8 @@
     overflow: hidden;
     box-sizing: border-box;
     background-color: @page-bg-color;
+
+    
 
     .nav-wrapper {
       display: flex;
@@ -473,7 +521,7 @@
 
       .nav {
         flex: 1;
-        margin: 0 5px;
+        margin: 0 25px;
         height: 54px;
         line-height: 54px;
         overflow: hidden;
@@ -585,135 +633,6 @@
 
         .card-address {
           .border-1px(#f5f5f5)
-        }
-      }
-    }
-
-    .btn-call-car,
-    .btn-confirm {
-      margin-top: 20px;
-      .long-btn(#fff, #4a4c5b);
-    }
-
-    .cost {
-      width: 100%;
-      background: #fff;
-      border-radius: 5px;
-
-      .cost-header,
-      .cost-footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        width: 100%;
-      }
-
-      .cost-header {
-        height: 60px;
-        color: #666666;
-        border-bottom: 1px solid @border-color-light;
-
-        .header-item {
-          flex: 0 0 auto;
-          height: 60px;
-          line-height: 60px;
-          font-size: 0;
-
-          img {
-            vertical-align: middle;
-            display: inline-block;
-            width: 15px;
-            height: 15px;
-          }
-
-          span {
-            margin-left: 5px;
-            vertical-align: middle;
-            display: inline-block;
-            font-size: 14px;
-          }
-        }
-      }
-
-      .cost-footer {
-        height: 130px;
-
-        .carpooling {
-          opacity: .6;
-          transform: scale(.7);
-          font-size: 0;
-
-          &.active {
-            opacity: 1;
-            transform: scale(1);
-          }
-
-          .carpooling-name,
-          .carpooling-cost {
-            display: block;
-            text-align: center;
-          }
-
-          .carpooling-name {
-            font-size: 16px;
-            margin-bottom: 6px;
-          }
-
-          .carpooling-cost {
-            font-size: 14px;
-            margin-top: 6px;
-          }
-
-          img {
-            display: block;
-            width: 75px;
-            height: 35px;
-          }
-        }
-      }
-    }
-
-    .swiper-tab {
-      // margin-top: 24px;
-      width: 100%;
-      height: 80px;
-
-      .swiper-item .extend {
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-
-        .item-content {
-          img {
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;
-          }
-
-          .img-no-round {
-            height: 50px;
-            width: 74px;
-            border-radius: 50% 0 0 50%;
-          }
-
-          .item-text {
-            display: block;
-            font-size: 12px;
-            text-align: center;
-          }
-        }
-      }
-    }
-
-    .swiper-ad {
-      // margin-top: 30px;
-      height: 72px;
-      width: 100%;
-
-      .swiper-item {
-        img {
-          width: 100%;
-          height: 100%;
         }
       }
     }
