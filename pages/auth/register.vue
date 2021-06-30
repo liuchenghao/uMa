@@ -106,7 +106,7 @@
               isDriver
             });
             uni.redirectTo({
-              url: '/pages/index'
+              url: '/pages/driver/index'
             });
             this.clearPhoneNum();
           }, 500)
