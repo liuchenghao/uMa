@@ -65,6 +65,67 @@
     onShow() {
       this.mapCtx.moveToLocation();
       this.requestDriver();
+      console.info(this.mapCtx, "==============")
+      this.$map.direction({
+        mode: "driving",
+        // from: {
+        //   latitude: 39.984039,
+        //   longitude: 116.307630
+        // },
+        // to: {
+        //   latitude: 39.977263,
+        //   longitude: 116.337063
+        // },
+        // waypoints: [39.977263, 116.337063],
+        from: {
+          latitude: this.startPosition[0],
+          longitude: this.startPosition[1]
+        },
+        to: {
+          latitude: this.endPosition[0],
+          longitude: this.endPosition[1]
+        },
+        waypoints: this.endPosition,
+        success: (res) => {
+          console.log(res)
+          var coors = res.result.routes[0].polyline,
+            pl = [];
+          //坐标解压（返回的点串坐标，通过前向差分进行压缩，因此需要解压）
+          var kr = 1000000;
+          for (var i = 2; i < coors.length; i++) {
+            coors[i] = Number(coors[i - 2]) + Number(coors[i]) / kr;
+          }
+          for (var i = 0; i < coors.length; i += 2) {
+            pl.push({
+              latitude: coors[i],
+              longitude: coors[i + 1]
+            });
+          }
+          this.polyline = [{
+            points: pl,
+            color: "#f44336",
+            width: 4,
+            dottedLine: true,
+          }]
+          /* this.polyline = [{
+            points: [{
+              latitude: this.startPosition[0],
+              longitude: this.startPosition[1]
+            }, {
+              latitude: this.endPosition[0],
+              longitude: this.endPosition[1]
+            }],
+            color: "#f44336",
+            width: 4,
+            dottedLine: true,
+          }] */
+          console.info("=============", this.polyline)
+        },
+        fail: function(res) {
+          console.log(res)
+          
+        }
+      })
     },
     onUnload() {
       clearInterval(animationTimer);
@@ -86,7 +147,8 @@
           width: 30,
           height: 30
         }];
-        this.polyline = [{
+
+        /* this.polyline = [{
           points: [{
             latitude: this.startPosition[0],
             longitude: this.startPosition[1]
@@ -97,7 +159,7 @@
           color: "#f44336",
           width: 4,
           dottedLine: true,
-        }];
+        }]; */
       },
       setMapView() {
         if (this.startPosition.length && this.endPosition.length) {
@@ -144,7 +206,7 @@
       })
     },
     computed: {
-      ...mapState("passenger/index",[
+      ...mapState("passenger/index", [
         'startPosition',
         'endPosition'
       ])

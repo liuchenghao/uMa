@@ -503,5 +503,37 @@ class QQMapWS {
       data: requestParam
     });
   }
+  direction(i) {
+    var l = this;
+    i = i || {};
+    Utils.polyfillParam(i);
+    if (Utils.checkParamKeyEmpty(i, "to")) {
+      return;
+    }
+    var to = Utils.getLocationParam(i.to);
+    var k = {
+      to: to.latitude + "," + to.longitude,
+      policy: i.policy || "REAL_TRAFFIC",
+      waypoints: i.waypoints || "",
+      // output: "json",
+      key: l.key
+    };
+    var mode = i.mode || 'driving';
+    var m = function m(o) {
+      k.from = o.latitude + "," + o.longitude;
+      /* wx.request(Utils.buildWxRequestConfig(i, {
+        url: URL_DIRECTION + mode + "/",
+        data: k
+      })); */
+      Utils.requestData(i, {
+        url: URL_DIRECTION + mode + "/",
+        data: k
+      });
+    };
+    if (i.from) {
+      i.location = i.from;
+    }
+    Utils.locationProcess(i, m);
+  }
 }
 export default QQMapWS;
