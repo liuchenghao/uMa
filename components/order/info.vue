@@ -3,7 +3,7 @@
     <scroll-view class="uma-scroll" scroll-y="true" scroll-with-animation="true" @scrolltolower="scrollList">
       <uni-list>
         <uni-list-item :border="false" v-for="(item, index) in items" :key="index">
-          <uni-card slot="body" :title="getTypeText(item)" :extra="'¥'+item.orderCost" isFull isShadow>
+          <uni-card slot="body" :title="getNumText(item)"  note=" " isFull isShadow>
             <uni-list :border="false">
               <uni-list-item :title="item.orderTime" :extra-icon="{color:'#0800de' ,type: 'paperclip'}" show-extra-icon>
               </uni-list-item>
@@ -13,17 +13,15 @@
               <uni-list-item :title="item.orderDist" :extra-icon="{color:'#fc9153' ,type: 'location-filled'}"
                 show-extra-icon>
               </uni-list-item>
-              <uni-list-item>
-                <view slot="body" class="uma-order-info">
-                  <button v-if="state==0" class="mini-btn" type="primary" size="mini" disabled>待服务</button>
-                  <button v-if="state==1" class="mini-btn" type="default" size="mini" disabled>已完成</button>
-                  <button v-if="state==2" class="mini-btn" type="default" size="mini" disabled>未完成</button>
-                  <button v-if="state==3" class="mini-btn" type="default" size="mini" disabled>已取消</button>
-                  <button v-if="state==4" class="mini-btn" type="primary" size="mini">抢</button>
-                  <button class="mini-btn" type="warn" size="mini" @click="goNextPage">查看详情</button>
-                </view>
-              </uni-list-item>
+              <uni-list-item :title="getTypeText(item)"></uni-list-item>
+              <uni-list-item :title="getTypeCar(item)"></uni-list-item>
+              <uni-list-item :title="getTypeClass(item)"></uni-list-item>
             </uni-list>
+            <template slot="footer">
+            	<view class="footer-box">
+                <button class="max-btn" type="primary" >抢单</button>
+            	</view>
+            </template>
           </uni-card>
         </uni-list-item>
         <uni-list-item :border="false" class="uma-list-addtion"></uni-list-item>
@@ -44,6 +42,7 @@
         type: Array,
         default: function() {
           return [{
+            orderNum: 88798822004820112,
             //订单类型
             type: 0,
             // 用车类型
@@ -54,19 +53,8 @@
             orderStar: "首都国际机场T3航站楼",
             orderDist: "昌平区南环里西区(南环路北)",
             //订单状态
-            state: 0
-          }, {
-            //订单类型
-            type: 0,
-            // 用车类型
-            carType: 0,
-            // 订单时间
-            orderTime: "05月31日 22:55",
-            orderCost: "115.00",
-            orderStar: "首都国际机场T3航站楼",
-            orderDist: "昌平区南环里西区(南环路北)",
-            //订单状态
-            state: 1
+            state: 0,
+            classes: "SC4881"
           }];
         }
       }
@@ -83,16 +71,29 @@
           url
         });
       },
+      getTypeClass(item){
+        return `航班号/车次: ${item.classes}`;
+      },
+      getTypeCar(item){
+        let {
+          type,
+          carType
+        } = item;
+        let carTypeMapping = ["经济", "舒适", "商务", "豪华"];
+        let carTypeText = carTypeMapping[carType] || "经济";
+        return `车辆类型: ${carTypeText}`;
+      },
       getTypeText(item) {
         let {
           type,
           carType
         } = item;
         let typeMapping = ["接机", "送机"];
-        let carTypeMapping = ["经济", "舒适", "商务", "豪华"];
         let typeText = typeMapping[type] || "接机";
-        let carTypeText = carTypeMapping[carType] || "经济";
-        return `订单类型: ${typeText}(${carTypeText})`;
+        return `订单类型: ${typeText}`;
+      },
+      getNumText(item) {
+        return `订单编号: ${item.orderNum}`;
       },
       scrollList() {
         console.info(arguments, "==========");
@@ -103,6 +104,7 @@
 </script>
 <style scoped lang="scss" rel="stylesheet/scss">
   .uma-page {
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -117,7 +119,9 @@
     /deep/ .uni-card__header-extra-text {
       flex: none;
     }
-
+    /deep/ .uni-list-item__container{
+      padding: 0;
+    }
     .uni-card--full {
       border-radius: 8px;
     }

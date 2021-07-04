@@ -71,6 +71,9 @@
     "pages": [ {
       "path": "index",
       "style": {}
+    }, {
+      "path": "info",
+      "style": {}
     }]
   }],
   "globalStyle": {
