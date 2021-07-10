@@ -120,7 +120,7 @@
       flex: none;
     }
     /deep/ .uni-list-item__container{
-      padding: 0;
+      // padding: 0;
     }
     .uni-card--full {
       border-radius: 8px;

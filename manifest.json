@@ -86,6 +86,7 @@
                 }
             }
         },
-        "domain" : "www.skyrrrt.xyz"
+        "domain" : "www.skyrrrt.xyz",
+        "template" : "template.h5.html"
     }
 }

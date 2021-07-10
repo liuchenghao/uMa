@@ -267,12 +267,12 @@
         // display: flex;
         // align-items: center;
         // flex-direction: column;
-        position: absolute;
+        position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
         height: 43px;
-        line-height: 43px;
+        // line-height: 43px;
         box-sizing: border-box;
         overflow: hidden;
         background-color: #fff;
@@ -281,6 +281,8 @@
         }
         .uma-order-info{
           padding-left: 12px;
+          height: 43px;
+          line-height: 43px;
         }
       }
     }

@@ -50,6 +50,9 @@
     }, {
       "path": "why",
       "style": {}
+    }, {
+      "path": "list",
+      "style": {}
     }]
   }, {
     "root": "pages/sysm",

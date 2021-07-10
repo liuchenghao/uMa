@@ -37,6 +37,15 @@
     components: {
       list
     },
+    props: {
+      current: {
+        type: Number,
+        default: 0
+      },
+    },
+    mounted(){
+      this.curNavIndex = this.current;
+    },
     data() {
       return {
         navData: [{
@@ -68,15 +77,21 @@
       switchNav(index) {
         this.curNavIndex = +index;
       },
-      switchTab(){
-        
+      switchTab() {
+
       }
     },
+    watch: {
+      current(index) {
+        this.curNavIndex = +index;
+      }
+    }
   };
 </script>
 
 <style scoped lang="scss" rel="stylesheet/scss">
   @import "@/common/scss/variable";
+
   .page-container {
     position: fixed;
     top: 0;

@@ -40,19 +40,19 @@
         <text class="mix-icon icon-you"></text>
       </view>
       <view class="o-list">
-        <view class="item center" @click="navTo('/pages/order/list?current=1', {login: true})" hover-class="hover-gray"
+        <view class="item center" @click="navTo('/pages/order/list?current=0', {login: true})" hover-class="hover-gray"
           :hover-stay-time="50">
           <text class="mix-icon icon-daifukuan"></text>
           <text>待付款</text>
           <text v-if="orderCount.c0 > 0" class="number">{{ orderCount.c0 }}</text>
         </view>
-        <view class="item center" @click="navTo('/pages/order/list?current=3', {login: true})" hover-class="hover-gray"
+        <view class="item center" @click="navTo('/pages/order/list?current=1', {login: true})" hover-class="hover-gray"
           :hover-stay-time="50">
           <text class="mix-icon icon-yishouhuo"></text>
           <text>待评价</text>
           <text v-if="orderCount.c2 > 0" class="number">{{ orderCount.c2 }}</text>
         </view>
-        <view class="item center" @click="navTo('/pages/order/list?current=4', {login: true})" hover-class="hover-gray"
+        <view class="item center" @click="navTo('/pages/order/list?current=1', {login: true})" hover-class="hover-gray"
           :hover-stay-time="50">
           <text class="mix-icon icon-daipingjia"></text>
           <text>已完成</text>
