@@ -19,7 +19,7 @@
 
       <!-- <cover-image class="marker walk-marker" src="/static/img/walk.png" @click.stop="onClickMark"></cover-image> -->
 
-      <cover-image class="car-marker" src="/static/img/mapCart.png"></cover-image>
+      <!-- <cover-image class="car-marker" src="/static/img/mapCart.png"></cover-image> -->
 
       <cover-view class="footer-bar">
         <cover-view class="text" @click.stop="cancel">取消订单
@@ -44,8 +44,9 @@
     mapMutations
   } from 'vuex';
 
-  const START_ID = 0,
-    END_ID = 1;
+  const START_ID = 0;
+  const END_ID = 1;
+  const CAR_ID = 2;
 
   let animationTimer, num = 1;
 
@@ -56,6 +57,7 @@
         driver: {},
         markers: [],
         polyline: [],
+        carPosition: this.startPosition
       };
     },
     onLoad() {
@@ -65,73 +67,220 @@
     onShow() {
       this.mapCtx.moveToLocation();
       this.requestDriver();
-      console.info(this.mapCtx, "==============")
-      this.$map.direction({
-        mode: "driving",
-        // from: {
-        //   latitude: 39.984039,
-        //   longitude: 116.307630
-        // },
-        // to: {
-        //   latitude: 39.977263,
-        //   longitude: 116.337063
-        // },
-        // waypoints: [39.977263, 116.337063],
-        from: {
-          latitude: this.startPosition[0],
-          longitude: this.startPosition[1]
-        },
-        to: {
-          latitude: this.endPosition[0],
-          longitude: this.endPosition[1]
-        },
-        waypoints: this.endPosition,
-        success: (res) => {
-          console.log(res)
-          var coors = res.result.routes[0].polyline,
-            pl = [];
-          //坐标解压（返回的点串坐标，通过前向差分进行压缩，因此需要解压）
-          var kr = 1000000;
-          for (var i = 2; i < coors.length; i++) {
-            coors[i] = Number(coors[i - 2]) + Number(coors[i]) / kr;
+      console.info(this.mapCtx, "==============");
+      // this.$map.direction({
+      // 	mode: "driving",
+      // 	// from: {
+      // 	//   latitude: 39.984039,
+      // 	//   longitude: 116.307630
+      // 	// },
+      // 	// to: {
+      // 	//   latitude: 39.977263,
+      // 	//   longitude: 116.337063
+      // 	// },
+      // 	// waypoints: [39.977263, 116.337063],
+      // 	from: {
+      // 		latitude: this.startPosition[0],
+      // 		longitude: this.startPosition[1]
+      // 	},
+      // 	to: {
+      // 		latitude: this.endPosition[0],
+      // 		longitude: this.endPosition[1]
+      // 	},
+      // 	waypoints: this.endPosition,
+      // 	success: (res) => {
+      // 		console.log(res)
+      // 		var coors = res.result.routes[0].polyline,
+      // 			pl = [];
+      // 		//坐标解压（返回的点串坐标，通过前向差分进行压缩，因此需要解压）
+      // 		var kr = 1000000;
+      // 		for (var i = 2; i < coors.length; i++) {
+      // 			coors[i] = Number(coors[i - 2]) + Number(coors[i]) / kr;
+      // 		}
+      // 		for (var i = 0; i < coors.length; i += 2) {
+      // 			pl.push({
+      // 				latitude: coors[i],
+      // 				longitude: coors[i + 1]
+      // 			});
+      // 		}
+      // 		this.polyline = [{
+      // 			points: pl,
+      // 			color: "#f44336",
+      // 			width: 4,
+      // 			dottedLine: true,
+      // 		}]
+      // 		/* this.polyline = [{
+      // 		  points: [{
+      // 		    latitude: this.startPosition[0],
+      // 		    longitude: this.startPosition[1]
+      // 		  }, {
+      // 		    latitude: this.endPosition[0],
+      // 		    longitude: this.endPosition[1]
+      // 		  }],
+      // 		  color: "#f44336",
+      // 		  width: 4,
+      // 		  dottedLine: true,
+      // 		}] */
+      // 		console.info(this.mapCtx.translateMarker,"= = === ==++==3== ==", this.polyline)
+      // 	},
+      // 	fail: function(res) {
+      // 		console.log(res)
+
+      // 	}
+      // })
+      this.getMapPath(this.startPosition, this.endPosition).then((pl) => {
+        this.polyline = [{
+          points: pl,
+          color: "#f44336",
+          width: 4,
+          dottedLine: true,
+        }];
+      });
+      this.getMapPath(this.carPosition, this.startPosition).then((data) => {
+        let pl = [];
+        data.reduce((curr, next) => {
+          console.info(curr, next);
+          let {
+            latitude: clat,
+            longitude: clng
+          } = curr;
+          let {
+            latitude: nlat,
+            longitude: nlng
+          } = next;
+          if (clat == nlat && clng == nlng) {
+
+          } else {
+            pl.push(curr);
           }
-          for (var i = 0; i < coors.length; i += 2) {
-            pl.push({
-              latitude: coors[i],
-              longitude: coors[i + 1]
-            });
-          }
-          this.polyline = [{
-            points: pl,
-            color: "#f44336",
-            width: 4,
-            dottedLine: true,
-          }]
-          /* this.polyline = [{
-            points: [{
-              latitude: this.startPosition[0],
-              longitude: this.startPosition[1]
-            }, {
-              latitude: this.endPosition[0],
-              longitude: this.endPosition[1]
-            }],
-            color: "#f44336",
-            width: 4,
-            dottedLine: true,
-          }] */
-          console.info("=============", this.polyline)
-        },
-        fail: function(res) {
-          console.log(res)
-          
-        }
-      })
+          return next;
+        });
+        /* this.polyline = [{
+        	points: pl,
+        	color: "#f44336",
+        	width: 4,
+        	dottedLine: true,
+        }] */
+        this.moveCarByPath(pl);
+        /* pl.map((item)=>{
+        	(function(item){
+        		this.mapCtx.translateMarker({
+        			markerId: CAR_ID,
+        			destination:item,
+        			// autoRotate: true,
+        			duration: 10000,
+        			animationEnd: function() {
+        				console.info("++ +++++ +++++++")
+        			},
+        			fail: function() {
+        				console.info("++++------------++ +++d+ ++++")
+        			}
+        		})
+        	})(item)
+        	
+        }) */
+        /* this.mapCtx.moveAlong({
+        	markerId: CAR_ID,
+        	path: pl,
+        	autoRotate: true,
+        	duration: 1000,
+        	success: function() {
+        		console.info("++++++aa++++ee++ss++")
+        	},
+        	fail: function() {
+        		console.info("++++---- --------++ ++++++++")
+        	},
+        	complete: function() {
+        		console.info("++++---- --------++ ++++d++++")
+        	},
+        }) */
+      });
+
+      /* this.mapCtx.translateMarker({
+      	markerId: CAR_ID,
+      	destination: {
+      		latitude: this.startPosition[0],
+      		longitude: this.startPosition[1],
+      	},
+      	autoRotate: true,
+      	duration: 5000,
+      	animationEnd: function() {
+      		console.info("++++++++++++++")
+      	},
+      	fail: function() {
+      		console.info("++++------------++ ++++++++")
+      	}
+      }) */
     },
     onUnload() {
       clearInterval(animationTimer);
     },
     methods: {
+      moveCarByPath(pl) {
+        let item = pl.shift();
+        console.info(item);
+        this.mapCtx.translateMarker({
+          markerId: CAR_ID,
+          destination: item,
+          // autoRotate: true,
+          duration: 1000,
+          animationEnd: () => {
+            console.info(pl, "++++---- -- ---v---++c +++d++f+++", this);
+            this.moveCarByPath(pl);
+          },
+          fail: function() {
+            console.info("++++------ -----f-++ + ++d+++++");
+          }
+        });
+      },
+      getMapPath(startPosition, endPosition) {
+        return new Promise((resolve, reject) => {
+          this.$map.direction({
+            mode: "driving",
+            from: {
+              latitude: startPosition[0],
+              longitude: startPosition[1]
+            },
+            to: {
+              latitude: endPosition[0],
+              longitude: endPosition[1]
+            },
+            waypoints: endPosition,
+            success: (res) => {
+              var coors = res.result.routes[0].polyline,
+                pl = [];
+              //坐标解压（返回的点串坐标，通过前向差分进行压缩，因此需要解压）
+              var kr = 1000000;
+              for (var i = 2; i < coors.length; i++) {
+                coors[i] = Number(coors[i - 2]) + Number(coors[i]) / kr;
+              }
+              for (var i = 0; i < coors.length; i += 2) {
+                pl.push({
+                  latitude: coors[i],
+                  longitude: coors[i + 1]
+                });
+              }
+              resolve(pl);
+              /* this.polyline = [{
+              	points: pl,
+              	color: "#f44336",
+              	width: 4,
+              	dottedLine: true,
+              }] */
+            },
+            fail: function(res) {
+              console.log(res);
+              reject(res);
+            }
+          });
+        });
+
+      },
       getInitData() {
+        this.carPosition = [
+          Number(this.startPosition[0]) + (Math.ceil(Math.random() * 99)) * 0.00008,
+          Number(this.startPosition[1]) + (Math.ceil(Math.random() * 99)) * 0.00008,
+        ];
         this.markers = [{
           iconPath: '/static/img/str.png',
           id: START_ID,
@@ -146,7 +295,16 @@
           longitude: this.endPosition[1],
           width: 30,
           height: 30
+        }, {
+          iconPath: "/static/img/car/cart1.png",
+          id: CAR_ID,
+          latitude: this.carPosition[0],
+          longitude: this.carPosition[1],
+          width: 35,
+          height: 15
         }];
+
+        console.info(this.markers, "==+ +  =+ =");
 
         /* this.polyline = [{
           points: [{
